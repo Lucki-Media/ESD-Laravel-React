@@ -119,7 +119,7 @@
                                     <thead>
                                         <tr>
                                             <th data-ordering="false">ID</th>
-                                            <th data-ordering="false" width="50%">Title</th>
+                                            <th data-ordering="false">Title</th>
                                             <th>Create Date</th>
                                             <th>Status</th>
                                             <th>View</th>
