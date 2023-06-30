@@ -20,7 +20,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //CONVERGE
 Route::get("convergeData", 'App\Http\Controllers\ConvergeController@convergeData');
-Route::get("collaborateData", 'App\Http\Controllers\CollaborateController@collaborateData');
 Route::get("cogitateData", 'App\Http\Controllers\CogitateController@cogitateData');
 Route::get("communicateData", 'App\Http\Controllers\CommunicateController@communicateData');
 Route::post("sendRequest", 'App\Http\Controllers\CommunicateController@sendRequest');
+Route::get("collaborateData", 'App\Http\Controllers\CollaborateController@portfolioData');
+Route::get("cacheData", 'App\Http\Controllers\CollaborateController@archiveData');
+
+// Route::get("collaborateData", 'App\Http\Controllers\CollaborateController@collaborateData');

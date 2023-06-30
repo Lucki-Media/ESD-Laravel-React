@@ -26,16 +26,39 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Heading Quote</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Portfolio Heading Quote</h4>
                 <div class="flex-shrink-0">
                     <div class="form-check form-switch form-switch-right form-switch-md">
-                        <a href="{{url('admin\update_heading').'/collaborate'}}" class="btn btn-primary "><i class="ri-edit-box-line  align-bottom me-1"></i> Edit</a>
+                        <a href="{{url('admin\update_heading').'/collaborate_portfolio'}}" class="btn btn-primary "><i class="ri-edit-box-line  align-bottom me-1"></i> Edit</a>
                     </div>
                 </div>
             </div><!-- end card header -->
 
             <div class="card-body">
-                <p class="text-muted">{{ \App\Models\Headings::where('type','collaborate')->value('heading')}}</p>
+                <p class="text-muted">{{ \App\Models\Headings::where('type','collaborate_portfolio')->value('heading')}}</p>
+
+            </div><!-- end card-body -->
+        </div><!-- end card -->
+    </div><!-- end col -->
+    <!-- Heading Quote End -->
+</div>
+<!--end row-->
+
+<div class="row">
+    <!-- Heading Quote Start -->
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Archive Heading Quote</h4>
+                <div class="flex-shrink-0">
+                    <div class="form-check form-switch form-switch-right form-switch-md">
+                        <a href="{{url('admin\update_heading').'/collaborate_archive'}}" class="btn btn-primary "><i class="ri-edit-box-line  align-bottom me-1"></i> Edit</a>
+                    </div>
+                </div>
+            </div><!-- end card header -->
+
+            <div class="card-body">
+                <p class="text-muted">{{ \App\Models\Headings::where('type','collaborate_archive')->value('heading')}}</p>
 
             </div><!-- end card-body -->
         </div><!-- end card -->

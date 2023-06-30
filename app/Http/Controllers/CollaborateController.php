@@ -183,7 +183,7 @@ class CollaborateController extends Controller
         $portfolio = [];
         $archive = [];
         foreach ($data as $value) {
-            if($value['status'] == 'portfolio'){
+            if ($value['status'] == 'portfolio') {
                 $features = PivotFeatures::where('portfolio_id', $value['id'])->pluck('feature')->toArray();
                 $imageData = PivotImages::where('portfolio_id', $value['id'])->pluck('image')->toArray();
                 $images = [];
@@ -191,11 +191,11 @@ class CollaborateController extends Controller
                     $images[] = URL::asset('thumbnail/' . $image);
                 }
                 $array = [
-                    'title'     => $value['title'],
-                    'content'   => $value['content'],
-                    'status'    => $value['status'],
-                    'images'    => $images,
-                    'features'  => $features,
+                    'title' => $value['title'],
+                    'content' => $value['content'],
+                    'status' => $value['status'],
+                    'images' => $images,
+                    'features' => $features,
                 ];
                 $portfolio[] = $array;
             }
@@ -223,6 +223,68 @@ class CollaborateController extends Controller
             'data' => [
                 'heading' => $heading,
                 'portfolioData' => $portfolio,
+                'archiveData' => $archive,
+            ],
+        ], 200);
+    }
+    public function portfolioData()
+    {
+        $heading = Headings::where('type', 'collaborate_portfolio')->value('heading');
+        $data = Portfolio::where('status', 'portfolio')->get()->toArray();
+        // return $data;
+        $portfolio = [];
+        foreach ($data as $value) {
+            $features = PivotFeatures::where('portfolio_id', $value['id'])->pluck('feature')->toArray();
+            $imageData = PivotImages::where('portfolio_id', $value['id'])->pluck('image')->toArray();
+            $images = [];
+            foreach ($imageData as $image) {
+                $images[] = URL::asset('thumbnail/' . $image);
+            }
+            $array = [
+                'title' => $value['title'],
+                'content' => $value['content'],
+                'status' => $value['status'],
+                'images' => $images,
+                'features' => $features,
+            ];
+            $portfolio[] = $array;
+        }
+        return response([
+            'status' => 'success',
+            'message' => 'Portfolio Data Get Successfully..',
+            'data' => [
+                'heading' => $heading,
+                'portfolioData' => $portfolio,
+            ],
+        ], 200);
+    }
+    public function archiveData()
+    {
+        $heading = Headings::where('type', 'collaborate_archive')->value('heading');
+        $data = Portfolio::where('status', 'archive')->get()->toArray();
+        // return $data;
+        $archive = [];
+        foreach ($data as $value) {
+            $features = PivotFeatures::where('portfolio_id', $value['id'])->pluck('feature')->toArray();
+            $imageData = PivotImages::where('portfolio_id', $value['id'])->pluck('image')->toArray();
+            $images = [];
+            foreach ($imageData as $image) {
+                $images[] = URL::asset('thumbnail/' . $image);
+            }
+            $array = [
+                'title' => $value['title'],
+                'content' => $value['content'],
+                'status' => $value['status'],
+                'images' => $images,
+                'features' => $features,
+            ];
+            $archive[] = $array;
+        }
+        return response([
+            'status' => 'success',
+            'message' => 'Archive Data Get Successfully..',
+            'data' => [
+                'heading' => $heading,
                 'archiveData' => $archive,
             ],
         ], 200);

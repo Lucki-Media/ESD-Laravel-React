@@ -31,7 +31,7 @@ class HeadingController extends Controller
 
         if($request->type == "converge"){
             return redirect(route('admin.converge-index'))->with('success', "Heading has been updated Successfully.");
-        } elseif ($request->type == "collaborate") {
+        } elseif ($request->type == "collaborate_portfolio" || $request->type == "collaborate_archive") {
             return redirect(route('admin.collaborate_heading'))->with('success', "Heading has been updated Successfully.");
         } elseif ($request->type == "cogitate") {
             return redirect(route('admin.cogitate_heading'))->with('success', "Heading has been updated Successfully.");
