@@ -43,13 +43,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth:admin
     Route::post('/update_topic/{id}', 'App\Http\Controllers\ConvergeTopicController@update')->name('update_topic');
     Route::get('/delete_topic/{id}', 'App\Http\Controllers\ConvergeTopicController@delete')->name('delete_topic');
 
-    //CONVERGE LINK
-    Route::get('/add_converge_link', 'App\Http\Controllers\ConvergeLinkController@add')->name('add_converge_link');
-    Route::post('/save_converge_link', 'App\Http\Controllers\ConvergeLinkController@insert')->name('save_converge_link');
-    Route::get('/edit_link/{id}', 'App\Http\Controllers\ConvergeLinkController@edit')->name('edit_link');
-    Route::post('/update_link/{id}', 'App\Http\Controllers\ConvergeLinkController@update')->name('update_link');
-    Route::get('/delete_link/{id}', 'App\Http\Controllers\ConvergeLinkController@delete')->name('delete_link');
-
     //COLLABORATE HEADING
     Route::get('/collaborate_heading', 'App\Http\Controllers\CollaborateController@collaborate_heading')->name('collaborate_heading');
     
@@ -88,5 +81,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth:admin
     //COMMUNICATE MESSAGE
     Route::get('/communicate_message', 'App\Http\Controllers\CommunicateController@communicate_message')->name('communicate_message');
     Route::get('/view_data/{id}', 'App\Http\Controllers\CommunicateController@view_data')->name('view_data');
+
+    //PARTNERS
+    Route::get('/partners', 'App\Http\Controllers\ConvergeLinkController@index')->name('partners-index');
+    Route::get('/add_converge_link', 'App\Http\Controllers\ConvergeLinkController@add')->name('add_converge_link');
+    Route::post('/save_converge_link', 'App\Http\Controllers\ConvergeLinkController@insert')->name('save_converge_link');
+    Route::get('/edit_link/{id}', 'App\Http\Controllers\ConvergeLinkController@edit')->name('edit_link');
+    Route::post('/update_link/{id}', 'App\Http\Controllers\ConvergeLinkController@update')->name('update_link');
+    Route::get('/delete_link/{id}', 'App\Http\Controllers\ConvergeLinkController@delete')->name('delete_link');
+
 
 });

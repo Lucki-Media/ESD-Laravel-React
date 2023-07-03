@@ -8,6 +8,7 @@ use App\Models\Service;
 use App\Models\ServiceLinks;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use DB;
 
 class CogitateController extends Controller
 {
@@ -19,42 +20,61 @@ class CogitateController extends Controller
     //  SERVICE PART START
     public function serviceIndex()
     {
-        $data = Service::all();
-        return view('Cogitate.Service.index')->with('data', $data);
+        $data = Service::select('*', DB::raw('(SELECT GROUP_CONCAT(service_links.title) FROM service_links WHERE service_links.service_id = services.id) as sub_service'))
+            ->where('services.deleted_status', '1')
+            ->get()->toArray();
+        // return $data;
+        return view('Service.index')->with('data', $data);
     }
 
     public function add_service()
     {
-        return view('Cogitate.Service.add');
+        return view('Service.add');
     }
 
     public function save_service(Request $request)
     {
+        // echo "<pre>";print_r($request->all()); exit;
         $request->validate([
-            'service' => 'required|unique:services,service,NULL,id',
+            'service' => 'required|unique:services,service,NULL,id,deleted_status,1',
+            'sub_service' => 'required',
         ], [
+            'sub_service.required' => 'Add Atleast 1 Sub Services.',
             'service.required' => 'Service field is required.',
             'service.unique' => 'Service is already taken.',
         ]);
-        // echo "<pre>";print_r($request->all()); exit;
 
-        Service::insert(['service' => $request->service, 'created_at' => Carbon::now()]);
+        $service_id = Service::insertGetId(['service' => $request->service, 'created_at' => Carbon::now()]);
+
+        $sub_services = explode(',', $request->sub_service);
+        foreach ($sub_services as $value) {
+            $data = new ServiceLinks;
+            $data->service_id = $service_id;
+            $data->title = $value;
+            // $data->link = $request->link;
+            $data->created_at = Carbon::now();
+            $data->save();
+        }
         return redirect(route('admin.serviceIndex'))->with('success', "Service has been added Successfully.");
     }
 
     public function edit_service($id)
     {
         $data = Service::where('id', $id)->first();
-        return view('Cogitate.Service.edit')->with([
+        $sub_details = ServiceLinks::where('service_id', $id)->pluck('title')->toArray();
+        return view('Service.edit')->with([
             'data' => $data,
+            'sub_details' => implode(',', $sub_details),
         ]);
     }
 
     public function update_service(Request $request, $id)
     {
         $request->validate([
-            'service' => 'required|unique:services,service,'.$id.',id',
+            'service' => 'required|unique:services,service,' . $id . ',id,deleted_status,1',
+            'sub_service' => 'required',
         ], [
+            'sub_service.required' => 'Add Atleast 1 Sub Services.',
             'service.required' => 'Service field is required.',
             'service.unique' => 'Service is already taken.',
         ]);
@@ -62,12 +82,24 @@ class CogitateController extends Controller
         $service = Service::where('id', $id)->first();
         $service->service = $request->service;
         $service->save();
+
+        $sub_details = ServiceLinks::where('service_id', $id)->delete();
+        $sub_services = explode(',', $request->sub_service);
+        foreach ($sub_services as $value) {
+            $data = new ServiceLinks;
+            $data->service_id = $id;
+            $data->title = $value;
+            // $data->link = $request->link;
+            $data->created_at = Carbon::now();
+            $data->save();
+        }
+
         return redirect(route('admin.serviceIndex'))->with('success', "Service has been updated Successfully.");
     }
 
     public function delete_service($id)
     {
-        Service::where('id', $id)->delete();
+        Service::where('id', $id)->update(['deleted_status' => '0']);
         ServiceLinks::where('service_id', $id)->delete();
 
         return redirect(route('admin.serviceIndex'))->with('success', "Service has been deleted Successfully.");
@@ -77,7 +109,7 @@ class CogitateController extends Controller
     //  SERVICE LINK  PART START
     public function serviceLinkIndex()
     {
-        $data = ServiceLinks::select('service_links.*','services.service')
+        $data = ServiceLinks::select('service_links.*', 'services.service')
             ->join('services', 'service_links.service_id', '=', 'services.id')
             ->get()->toArray();
 
@@ -138,7 +170,7 @@ class CogitateController extends Controller
             'link.url' => 'Link field must be a valid URL.',
         ]);
 
-        $data = ServiceLinks::where('id',$id)->first();
+        $data = ServiceLinks::where('id', $id)->first();
         $data->service_id = $request->service;
         $data->title = $request->title;
         $data->link = $request->link;
@@ -166,15 +198,15 @@ class CogitateController extends Controller
             $links = ServiceLinks::where('service_id', $value['id'])->get()->toArray();
             foreach ($links as $link) {
                 $array = [
-                    'title'     => $link['title'],
-                    'link'      => $link['link'],
+                    'title' => $link['title'],
+                    'link' => $link['link'],
                 ];
                 $link_array[] = $array;
             }
 
             $service_array = [
-                'service_title'     => $value['service'],
-                'service_links'     => $link_array,
+                'service_title' => $value['service'],
+                'service_links' => $link_array,
             ];
             $data[] = $service_array;
         }

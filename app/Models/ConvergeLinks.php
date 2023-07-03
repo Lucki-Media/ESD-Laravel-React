@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class ConvergeLinks extends Model
 {
     use HasFactory;
-    protected $table = 'converge_links';
+    protected $table = 'partners';
 }

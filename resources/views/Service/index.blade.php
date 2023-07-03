@@ -1,40 +1,39 @@
-
-<?php $__env->startSection('title'); ?> Cogitate <?php $__env->stopSection(); ?>
-<?php $__env->startSection('css'); ?>
+@extends('layouts.master')
+@section('title') Cogitate @endsection
+@section('css')
 <!--datatable css-->
 <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
 <!--datatable responsive css-->
 <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
-<?php $__env->stopSection(); ?>
-<?php $__env->startSection('content'); ?>
-<?php $__env->startComponent('components.breadcrumb'); ?>
-<?php $__env->slot('li_1'); ?> ERGOSUMDEUS <?php $__env->endSlot(); ?>
-<?php $__env->slot('title'); ?>Cogitate <?php $__env->endSlot(); ?>
-<?php echo $__env->renderComponent(); ?>
+@endsection
+@section('content')
+@component('components.breadcrumb')
+@slot('li_1') ERGOSUMDEUS @endslot
+@slot('title')Cogitate @endslot
+@endcomponent
 
 <div class="row">
     <div class="col-lg-12">
-        <?php if(session()->has('success')): ?>
+        @if(session()->has('success'))
         <div class="alert alert-success">
-            <?php echo e(session()->get('success')); ?>
-
+            {{ session()->get('success') }}
         </div>
-        <?php endif; ?>
-        <?php if($errors->any()): ?>
+        @endif
+        @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
-                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <li><?php echo e($error); ?></li>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
             </ul>
         </div>
-        <?php endif; ?>
+        @endif
         <div class="card">
             <div class="card-header d-flex align-items-center">
                 <h5 class="card-title mb-0 flex-grow-1">Services</h5>
                 <div>
-                    <a href="<?php echo e(url('admin\add_service')); ?>" class="btn btn-primary "><i class="ri-add-line  align-bottom me-1"></i> Add</a>
+                    <a href="{{url('admin\add_service')}}" class="btn btn-primary "><i class="ri-add-line  align-bottom me-1"></i> Add</a>
                 </div>
             </div>
             <div class="card-body">
@@ -55,28 +54,28 @@
                         </tr>
                         <?php 
                         }else{ ?>
-                        <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        @foreach ($data as $value)
                         <tr>
-                            <td><?php echo e($value['id']); ?></td>
-                            <td><?php echo e($value['service']); ?></td>
-                            <!-- <td><?php echo e($value['service']); ?></td> -->
+                            <td>{{$value['id']}}</td>
+                            <td>{{$value['service']}}</td>
+                            <!-- <td>{{$value['service']}}</td> -->
                             <td>
-                                <?php $__currentLoopData = explode(',',$value['sub_service']); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tag): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <h5><span class="badge text-bg-primary"><?php echo e($tag); ?></span></h5>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                @foreach (explode(',',$value['sub_service']) as $tag)
+                                    <h5><span class="badge text-bg-primary">{{$tag}}</span></h5>
+                                @endforeach
                             </td>
                             <td>
                                 <div class="d-flex gap-2">
                                     <div class="edit">
-                                        <a href="<?php echo e(url('admin/edit_service/'.$value['id'])); ?>" class="btn btn-sm btn-primary edit-item-btn">Edit</a>
+                                        <a href="{{url('admin/edit_service/'.$value['id'])}}" class="btn btn-sm btn-primary edit-item-btn">Edit</a>
                                     </div>
                                     <div class="remove">
-                                        <a href="#" onclick="JSconfirm(<?php echo e($value['id']); ?>)" class="btn btn-sm btn-danger remove-item-btn">Remove</a>
+                                        <a href="#" onclick="JSconfirm({{$value['id']}})" class="btn btn-sm btn-danger remove-item-btn">Remove</a>
                                     </div>
                                 </div>
                             </td>
                         </tr>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        @endforeach
                         <?php } ?>
                     </tbody>
                 </table>
@@ -86,8 +85,8 @@
     <!--end col-->
 </div>
 
-<?php $__env->stopSection(); ?>
-<?php $__env->startSection('script'); ?>
+@endsection
+@section('script')
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
@@ -96,8 +95,8 @@
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
 
-<script src="<?php echo e(URL::asset('build/js/pages/datatables.init.js')); ?>"></script>
-<script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
+<script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
+<script src="{{ URL::asset('build/js/app.js') }}"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
@@ -118,7 +117,7 @@
         },
         function(isConfirm){
             if (isConfirm){
-                window.location = "<?php echo e(url('admin/delete_service')); ?>"+'/'+id;
+                window.location = "{{url('admin/delete_service')}}"+'/'+id;
             }
             else{
                 window.location.reload();
@@ -127,6 +126,4 @@
     }
 </script>    
 
-<?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_7.4\htdocs\ESD-Laravel\resources\views/Cogitate/Service/index.blade.php ENDPATH**/ ?>
+@endsection

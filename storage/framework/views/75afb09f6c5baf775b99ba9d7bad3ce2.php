@@ -38,6 +38,11 @@
                             </div>
                         </div>
 
+                        <div class="mb-3">
+                            <label for="choices-text-unique-values" class="form-label">Sub Services </label>
+                            <input class="form-control" id="choices-text-unique-values" data-choices data-choices-text-unique-true type="text" data-choices-removeItem name="sub_service" value="<?php echo e($sub_details); ?>"/>
+                        </div>
+
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Submit</button>
                         </div>
@@ -49,6 +54,7 @@
 
     <?php $__env->stopSection(); ?>
     <?php $__env->startSection('script'); ?>
+        <script src="<?php echo e(URL::asset('build/libs/choices.js/public/assets/scripts/choices.min.js')); ?>"></script>
         <script src="<?php echo e(URL::asset('build/libs/prismjs/prism.js')); ?>"></script>
         <script src="<?php echo e(URL::asset('build/js/pages/form-validation.init.js')); ?>"></script>
         <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>

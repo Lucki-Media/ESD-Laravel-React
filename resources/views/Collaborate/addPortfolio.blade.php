@@ -59,7 +59,7 @@
                         
                         <div class="">
                             <div class="d-flex align-items-center">
-                                <label class="flex-grow-1 form-label">Features</label>
+                                <label class="flex-grow-1 form-label">Partners</label>
                                 <div class="mb-2">
                                     <button class="btn btn-primary" id="add_feature" type="button">Add one more</button>
                                 </div>

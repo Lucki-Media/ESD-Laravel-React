@@ -27,14 +27,14 @@ class ConvergeTopicController extends Controller
 
         $data = new ConvergeTopics;
         $data->title = $request->title;
-        $data->description = $request->snow_picker_content;
+        $data->description = '<p>' . $request->snow_picker_content . '</p>';
         $data->created_at = Carbon::now();
         $data->save();
         return redirect(route('admin.converge-index'))->with('success', "Topic has been added Successfully.");
     }
 
     public function edit($id)
-    {   
+    {
         // return $id;
         $data = ConvergeTopics::where('topic_id', $id)->first();
         return view('ConvergeTopic.edit')->with(['data' => $data]);
@@ -53,7 +53,7 @@ class ConvergeTopicController extends Controller
 
         $data = ConvergeTopics::where('topic_id', $id)->update([
             'title' => $request->title,
-            'description' => $request->snow_picker_content,
+            'description' => '<p>' . $request->snow_picker_content . '</p>',
         ]);
 
 
