@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 // use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
@@ -29,10 +30,6 @@ Route::get('/logout', 'App\Http\Controllers\AuthController@logout')->name('logou
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth:admin'], function () {
     Route::get('/dashboard', 'App\Http\Controllers\DashboardController@dashboard')->name('dashboard');
 
-    //HEADING
-    Route::get('/update_heading/{type}', 'App\Http\Controllers\HeadingController@update_heading')->name('update_heading');
-    Route::post('/heading_update', 'App\Http\Controllers\HeadingController@heading_update')->name('heading_update');
-
     //CONVERGE
     Route::get('/converge', 'App\Http\Controllers\ConvergeController@index')->name('converge-index');
 
@@ -45,7 +42,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth:admin
 
     //COLLABORATE HEADING
     Route::get('/collaborate_heading', 'App\Http\Controllers\CollaborateController@collaborate_heading')->name('collaborate_heading');
-    
+
     //COLLABORATE PORTFOLIO
     Route::get('/collaborate_portfolio', 'App\Http\Controllers\CollaborateController@collaborate_portfolio')->name('collaborate_portfolio');
     Route::get('/add_portfolio', 'App\Http\Controllers\CollaborateController@add_portfolio')->name('add_portfolio');
@@ -89,6 +86,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth:admin
     Route::get('/edit_link/{id}', 'App\Http\Controllers\ConvergeLinkController@edit')->name('edit_link');
     Route::post('/update_link/{id}', 'App\Http\Controllers\ConvergeLinkController@update')->name('update_link');
     Route::get('/delete_link/{id}', 'App\Http\Controllers\ConvergeLinkController@delete')->name('delete_link');
+
+    //content
+    Route::get('/content/{page}', 'App\Http\Controllers\ContentController@index')->name('content-index');
+    Route::get('/add_content/{page}', 'App\Http\Controllers\ContentController@add_content')->name('add_content');
+    Route::post('/set_content', 'App\Http\Controllers\ContentController@set_content')->name('set_content');
+    Route::get('/delete_content/{page}/{id}', 'App\Http\Controllers\ContentController@delete_content')->name('delete_content');
+    Route::get('/edit_content/{page}/{id}', 'App\Http\Controllers\ContentController@edit_content')->name('edit_content');
+    Route::post('/update_content/{id}', 'App\Http\Controllers\ContentController@update_content')->name('update_content');
+
+    //HEADING
+    Route::get('/heading/{page}', 'App\Http\Controllers\ContentController@heading')->name('heading');
+    Route::get('/update_heading/{type}', 'App\Http\Controllers\HeadingController@update_heading')->name('update_heading');
+    Route::post('/heading_update', 'App\Http\Controllers\HeadingController@heading_update')->name('heading_update');
 
 
 });

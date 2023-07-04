@@ -26,16 +26,16 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Heading Quote</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Heading Quote for <?php echo e($page); ?></h4>
                 <div class="flex-shrink-0">
                     <div class="form-check form-switch form-switch-right form-switch-md">
-                        <a href="<?php echo e(url('admin\update_heading').'/communicate'); ?>" class="btn btn-primary "><i class="ri-edit-box-line  align-bottom me-1"></i> Edit</a>
+                        <a href="<?php echo e(url('admin\update_heading').'/'.$page); ?>" class="btn btn-primary "><i class="ri-edit-box-line  align-bottom me-1"></i> Edit</a>
                     </div>
                 </div>
             </div><!-- end card header -->
 
             <div class="card-body">
-                <p class="text-muted"><?php echo e(\App\Models\Headings::where('type','communicate')->value('heading')); ?></p>
+                <p class="text-muted"><?php echo e(\App\Models\Headings::where('type',$page)->value('heading')); ?></p>
 
             </div><!-- end card-body -->
         </div><!-- end card -->
@@ -50,4 +50,4 @@
 <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_7.4\htdocs\ESD-Laravel\resources\views/Communicate/headingIndex.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_7.4\htdocs\ESD-Laravel\resources\views/Content/heading.blade.php ENDPATH**/ ?>

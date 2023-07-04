@@ -6,7 +6,7 @@
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1') ERGOSUMDEUS @endslot
-        @slot('title') Collaborate @endslot
+        @slot('title') Portfolio @endslot
     @endcomponent
 
     <div class="row">
@@ -41,15 +41,6 @@
                                     <h2 class="text-center mt-1">No Image Found !</h2>
                                     <hr>
                                 <?php } ?>
-
-                                @if(count($features) != 0)
-                                <ul class="list-group mb-4 mt-4 ms-2">
-                                <h5 class="text-center">Features</h5>
-                                @foreach ($features as $value)
-                                    <li class="list-group-item"><i class="mdi mdi-check-bold align-middle lh-1 me-2"></i>{{$value}}</li>
-                                @endforeach
-                                </ul>
-                                @endif
                             </div>
                             <div class="col-md-8">
                                 <div class="card-header">
@@ -59,6 +50,39 @@
                                     <p class="card-text mb-2">{!!$portfolio['content']!!}</p>                                    
                                     <p class="card-text"><small class="text-muted"><?php echo \Carbon\Carbon::parse($portfolio['created_at'])->format('d F,Y');?></small></p>
                                 </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row g-0">
+                            <div class="col-md-6">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Partners</h5>
+                                </div>
+                                <?php $partnerTag = explode(',', $portfolio['partners'])?>
+                                <ul class="list-group">
+                                @if(count($partnerTag) != 0)
+                                    @foreach ($partnerTag as $value)
+                                        <li class="list-group-item"><i class="mdi mdi-check-bold align-middle lh-1 me-2"></i>{{ \App\Models\ConvergeLinks::where('id',$value)->value('partner')}}</li>
+                                    @endforeach
+                                @else
+                                    <li class="list-group-item list-group-item-dark">No Partners Added in this Project.</li>
+                                @endif
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Services</h5>
+                                </div>
+                                <?php $serviceTag = explode(',', $portfolio['services'])?>
+                                <ul class="list-group">
+                                @if(count($serviceTag) != 0)
+                                    @foreach ($serviceTag as $tag)
+                                        <li class="list-group-item"><i class="mdi mdi-check-bold align-middle lh-1 me-2"></i>{{ \App\Models\Service::where('id',$tag)->value('service')}}</li>
+                                    @endforeach
+                                @else
+                                    <li class="list-group-item list-group-item-dark">No Services Added in this Project.</li>
+                                @endif
+                                </ul>
                             </div>
                         </div>
                     </div><!-- end card -->

@@ -126,7 +126,7 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                        $portfolio = \App\Models\Portfolio::latest()->limit(5)->get()->toArray();
+                                        $portfolio = \App\Models\Portfolio::where('deleted_status', '1')->latest()->limit(5)->get()->toArray();
                                         if (count($portfolio) == 0) { ?>
                                         <tr>
                                             <td colspan="6" style="text-align: center;"> Oopps! No Data Found!</td>

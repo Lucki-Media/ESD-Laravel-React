@@ -1,5 +1,5 @@
 
-<?php $__env->startSection('title'); ?> Collaborate <?php $__env->stopSection(); ?>
+<?php $__env->startSection('title'); ?> Portfolio <?php $__env->stopSection(); ?>
 <?php $__env->startSection('css'); ?>
 <!--datatable css-->
 <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
@@ -10,7 +10,7 @@
 <?php $__env->startSection('content'); ?>
 <?php $__env->startComponent('components.breadcrumb'); ?>
 <?php $__env->slot('li_1'); ?> ERGOSUMDEUS <?php $__env->endSlot(); ?>
-<?php $__env->slot('title'); ?>Collaborate <?php $__env->endSlot(); ?>
+<?php $__env->slot('title'); ?>Portfolio <?php $__env->endSlot(); ?>
 <?php echo $__env->renderComponent(); ?>
 
 <div class="row">
@@ -42,7 +42,8 @@
                     <thead>
                         <tr>
                             <th data-ordering="false">ID</th>
-                            <th data-ordering="false" width="50%">Title</th>
+                            <th data-ordering="false" width="40%">Title</th>
+                            <th>Year</th>
                             <th>Create Date</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -52,7 +53,7 @@
                         <?php 
                         if (count($portfolio) == 0) { ?>
                         <tr>
-                            <td colspan="6" style="text-align: center;"> Oopps! No Data Found!</td>
+                            <td colspan="9" style="text-align: center;"> Oopps! No Data Found!</td>
                         </tr>
                         <?php 
                         }else{ ?>
@@ -60,6 +61,7 @@
                         <tr>
                             <td><?php echo e($topic['id']); ?></td>
                             <td><?php echo e($topic['title']); ?></td>
+                            <td><?php echo e($topic['year']); ?></td>
                             <td><?php echo \Carbon\Carbon::parse($topic['created_at'])->format('d F,Y');?></td>
                             <td><span class="badge badge-soft-<?php echo e($topic['status'] == 'portfolio' ? 'success' : 'secondary'); ?>"><?php echo e($topic['status'] == 'portfolio' ? 'Portfolio' : 'Archive'); ?></span></td>
                             <!-- <td><span class="badge badge-soft-success">New</span></td> -->

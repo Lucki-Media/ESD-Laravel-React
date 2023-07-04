@@ -10,15 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('portfolio', function (Blueprint $table) {
+        Schema::create('contents', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('page', 50)->nullable();
+            $table->string('type', 50)->nullable();
+            $table->string('module', 50)->nullable();
             $table->string('title', 255)->nullable();
-            $table->longText('content')->nullable();
-            $table->longText('services')->nullable();
-            $table->longText('partners')->nullable();
-            $table->string('year', 15)->nullable();
-            $table->string('status', 15)->nullable();
-            $table->string('show_details', 15)->nullable();
+            $table->longText('description')->nullable();
             $table->string('deleted_status', 11)->comment('0=deleted,1=not deleted')->default('1');
             $table->timestamps();
         });
@@ -29,6 +27,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('portfolio');
+        Schema::dropIfExists('contents');
     }
 };

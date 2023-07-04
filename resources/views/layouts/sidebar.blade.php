@@ -65,22 +65,34 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{url('admin\converge')}}">
-                        <i class="ri-focus-3-line"></i> <span>Converge</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button">
                         <i class="ri-file-list-line"></i> <span>Content</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarApps">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('admin\collaborate_heading')}}" class="nav-link">Heading</a>
+                                <a href="{{url('admin\content\converge')}}" class="nav-link">Converge</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('admin\content\collaborate')}}" class="nav-link">Collaborate</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('admin\heading\cache')}}" class="nav-link">Cache</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('admin\content\cogitate')}}" class="nav-link">Cogitate</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('admin\heading\communicate')}}" class="nav-link">Communicate</a>
                             </li>
                         </ul>
                     </div>
+                </li>
+
+                <!-- <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{url('admin\converge')}}">
+                        <i class="ri-focus-3-line"></i> <span>Converge</span>
+                    </a>
                 </li>
 
                 <li class="nav-item">
@@ -92,9 +104,6 @@
                             <li class="nav-item">
                                 <a href="{{url('admin\collaborate_heading')}}" class="nav-link">Heading</a>
                             </li>
-                            <!-- <li class="nav-item">
-                                <a href="{{url('admin\collaborate_portfolio')}}" class="nav-link">Portfolio</a>
-                            </li> -->
                         </ul>
                     </div>
                 </li>
@@ -109,13 +118,6 @@
                             <li class="nav-item">
                                 <a href="{{url('admin\cogitate_heading')}}" class="nav-link">Heading</a>
                             </li>
-
-                            <!-- <li class="nav-item">
-                                <a href="{{url('admin\serviceIndex')}}" class="nav-link">Services</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{url('admin\serviceLinkIndex')}}" class="nav-link">Service Links</a>
-                            </li> -->
                         </ul>
                     </div>
                 </li>
@@ -130,12 +132,9 @@
                             <li class="nav-item">
                                 <a href="{{url('admin\communicate_heading')}}" class="nav-link">Heading</a>
                             </li>
-                            <!-- <li class="nav-item">
-                                <a href="{{url('admin\communicate_message')}}" class="nav-link">Messages</a>
-                            </li> -->
                         </ul>
                     </div>
-                </li>
+                </li> -->
 
             </ul>
         </div>

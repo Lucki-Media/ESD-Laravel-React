@@ -27,7 +27,7 @@ class ConvergeTopicController extends Controller
 
         $data = new ConvergeTopics;
         $data->title = $request->title;
-        $data->description = '<p>' . $request->snow_picker_content . '</p>';
+        $data->description = $request->snow_picker_content;
         $data->created_at = Carbon::now();
         $data->save();
         return redirect(route('admin.converge-index'))->with('success', "Topic has been added Successfully.");
@@ -53,7 +53,7 @@ class ConvergeTopicController extends Controller
 
         $data = ConvergeTopics::where('topic_id', $id)->update([
             'title' => $request->title,
-            'description' => '<p>' . $request->snow_picker_content . '</p>',
+            'description' => $request->snow_picker_content,
         ]);
 
 

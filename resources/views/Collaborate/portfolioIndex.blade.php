@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title') Collaborate @endsection
+@section('title') Portfolio @endsection
 @section('css')
 <!--datatable css-->
 <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
@@ -10,7 +10,7 @@
 @section('content')
 @component('components.breadcrumb')
 @slot('li_1') ERGOSUMDEUS @endslot
-@slot('title')Collaborate @endslot
+@slot('title')Portfolio @endslot
 @endcomponent
 
 <div class="row">
@@ -41,7 +41,8 @@
                     <thead>
                         <tr>
                             <th data-ordering="false">ID</th>
-                            <th data-ordering="false" width="50%">Title</th>
+                            <th data-ordering="false" width="40%">Title</th>
+                            <th>Year</th>
                             <th>Create Date</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -51,7 +52,7 @@
                         <?php 
                         if (count($portfolio) == 0) { ?>
                         <tr>
-                            <td colspan="6" style="text-align: center;"> Oopps! No Data Found!</td>
+                            <td colspan="9" style="text-align: center;"> Oopps! No Data Found!</td>
                         </tr>
                         <?php 
                         }else{ ?>
@@ -59,6 +60,7 @@
                         <tr>
                             <td>{{$topic['id']}}</td>
                             <td>{{$topic['title']}}</td>
+                            <td>{{$topic['year']}}</td>
                             <td><?php echo \Carbon\Carbon::parse($topic['created_at'])->format('d F,Y');?></td>
                             <td><span class="badge badge-soft-{{$topic['status'] == 'portfolio' ? 'success' : 'secondary'}}">{{$topic['status'] == 'portfolio' ? 'Portfolio' : 'Archive'}}</span></td>
                             <!-- <td><span class="badge badge-soft-success">New</span></td> -->

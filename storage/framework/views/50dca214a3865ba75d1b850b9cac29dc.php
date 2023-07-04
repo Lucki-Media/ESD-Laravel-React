@@ -7,7 +7,7 @@
 <?php $__env->startSection('content'); ?>
 <?php $__env->startComponent('components.breadcrumb'); ?>
 <?php $__env->slot('li_1'); ?> ERGOSUMDEUS <?php $__env->endSlot(); ?>
-<?php $__env->slot('title'); ?>Collaborate Portfolio <?php $__env->endSlot(); ?>
+<?php $__env->slot('title'); ?>Portfolio <?php $__env->endSlot(); ?>
 <?php echo $__env->renderComponent(); ?>
 <div class="row">
     <div class="col-lg-12">
@@ -29,7 +29,7 @@
         <?php endif; ?>
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Edit Collaborate Portfolio</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Edit Portfolio</h4>
                 <div class="flex-shrink-0">
                     <div class="form-check form-switch form-switch-right form-switch-md">
                         <a href="<?php echo e(url()->previous()); ?>" class="btn btn-primary "><i class="ri-arrow-left-line align-bottom me-1"></i> Back</a>
@@ -57,29 +57,39 @@
                             </div> <!-- end Snow-editor-->
                             <input type="hidden" name="content" id="snow_picker_content">
                         </div>
-                        
-                        <div class="">
-                            <div class="d-flex align-items-center">
-                                <label class="flex-grow-1 form-label">Features</label>
-                                <div class="mb-2">
-                                    <button class="btn btn-primary" id="add_feature" type="button">Add one more</button>
-                                </div>
+
+                        <div class="mb-3">
+                            <label for="choices-multiple-remove-button" class="form-label">Partners</label>
+                            <select class="form-control" id="choices-multiple-remove-button" data-choices
+                                data-choices-removeItem name="partners[]" multiple>
+                                <?php $partnerTag = explode(',', $portfolio['partners'])?>
+                                <?php $__currentLoopData = $parners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($value['id']); ?>" <?php echo e((in_array($value['id'], $partnerTag))  ? 'selected' : ""); ?>>
+                                    <?php echo e($value['partner']); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="choices-multiple-remove-button" class="form-label">Services</label>
+                            <select class="form-control" id="choices-multiple-remove-button" data-choices
+                                data-choices-removeItem name="services[]" multiple>
+                                <?php $serviceTag = explode(',', $portfolio['services'])?>
+                                <?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($value['id']); ?>"
+                                    <?php echo e((in_array($value['id'], $serviceTag))  ? 'selected' : ""); ?>>
+                                    <?php echo e($value['service']); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="date-format" class="form-label">Year</label>
+                            <input type="text" class="form-control" name="year" placeholder="YYYY"
+                                value="<?php echo e($portfolio['year']); ?>" id="date-format " required>
+                            <div class="invalid-feedback">
+                                Please enter data in the Year field.
                             </div>
-                            <?php if(count($features) != 0){?>
-                                <?php foreach ($features as $value){?>
-                                    <div id="feature_input">
-                                        <div class="input-group mb-3">
-                                            <input type="text" class="form-control" name="features[]" value="<?php echo e($value); ?>" placeholder="Enter Feature Here...">
-                                        </div>
-                                    </div>
-                                <?php } ?>
-                            <?php }else{ ?>
-                                <div id="feature_input">
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="features[]" placeholder="Enter Feature Here...">
-                                    </div>
-                                </div>
-                            <?php } ?>
                         </div>
 
                         <div class="mb-3">
@@ -116,6 +126,22 @@
                             </div>
                         </div>
 
+                        <div class="mb-3">
+                            <label for="validationCustom01" class="form-label">Show details or not ?</label>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="show_details" value="yes" id="show1" <?php if($portfolio['show_details'] == 'yes'): ?> checked <?php endif; ?>>
+                                <label class="form-check-label" for="show1">
+                                    Show
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="show_details" value="no" id="show2" <?php if($portfolio['show_details'] == 'no'): ?> checked <?php endif; ?>>
+                                <label class="form-check-label" for="show2">
+                                    Don't show
+                                </label>
+                            </div>
+                        </div>
+
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Update</button>
                         </div>
@@ -127,6 +153,7 @@
 
     <?php $__env->stopSection(); ?>
     <?php $__env->startSection('script'); ?>
+        <script src="<?php echo e(URL::asset('build/libs/choices.js/public/assets/scripts/choices.min.js')); ?>"></script>
         <script src="<?php echo e(URL::asset('build/libs/prismjs/prism.js')); ?>"></script>
         <script src="<?php echo e(URL::asset('build/js/pages/form-validation.init.js')); ?>"></script>
         <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>

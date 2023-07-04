@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ConvergeLinks;
 use App\Models\Headings;
+use App\Models\Service;
 use Image;
 use URL;
+use DB;
 use App\Http\Controllers\Controller;
 use App\Models\PivotFeatures;
 use App\Models\PivotImages;
@@ -21,40 +24,47 @@ class CollaborateController extends Controller
 
     public function collaborate_portfolio()
     {
-        $portfolio = Portfolio::all();
+        $portfolio = Portfolio::where('deleted_status', '1')->get()->toArray();
         return view('Collaborate.portfolioIndex')->with([
             'portfolio' => $portfolio,
         ]);
     }
-    
+
     public function add_portfolio()
     {
-        return view('Collaborate.addPortfolio');
+        $parners = ConvergeLinks::where('deleted_status', '1')->get()->toArray();
+        $services = Service::where('deleted_status', '1')->get()->toArray();
+        return view('Collaborate.addPortfolio')->with([
+            'parners' => $parners,
+            'services' => $services,
+        ]);
     }
 
     public function save_portfolio(Request $request)
     {
         $request->validate([
             'title' => 'required',
-            // 'features.*' => 'distinct',
+            // 'partners' => 'required',
+            // 'services' => 'required',
+            'year' => 'required|digits:4|integer|min:1900|max:' . date('Y'),
         ], [
             'title.required' => 'Title field is required.',
-            // 'features.*.distinct' => 'Every Feature should be unique.',
+            // 'partners.required' => 'Add Atleast 1 Partner.',
+            // 'services.required' => 'Add Atleast 1 Service.',
+            'year.required' => 'Year field is required.',
         ]);
         // echo "<pre>";print_r($request->all()); exit;
 
         $portfolio_id = Portfolio::insertGetId([
             'title' => $request->title,
             'content' => $request->content,
+            'partners' => implode(',', $request->partners),
+            'services' => implode(',', $request->services),
+            'year' => $request->year,
             'status' => $request->status,
+            'show_details' => $request->show_details,
             'created_at' => Carbon::now(),
         ]);
-
-        foreach ($request->features as $value) {
-            if ($value != "") {
-                PivotFeatures::insert(['portfolio_id' => $portfolio_id, 'feature' => $value, 'created_at' => Carbon::now()]);
-            }
-        }
 
         if ($request->file('image')) {
             $image = $request->file('image');
@@ -82,11 +92,9 @@ class CollaborateController extends Controller
     {
         $portfolio = Portfolio::where('id', $id)->first();
         $images = PivotImages::where('portfolio_id', $id)->pluck('image')->toArray();
-        $features = PivotFeatures::where('portfolio_id', $id)->pluck('feature')->toArray();
         return view('Collaborate.view')->with([
             'portfolio' => $portfolio,
             'images' => $images,
-            'features' => $features,
         ]);
     }
 
@@ -94,11 +102,13 @@ class CollaborateController extends Controller
     {
         $portfolio = Portfolio::where('id', $id)->first();
         $images = PivotImages::where('portfolio_id', $id)->pluck('image')->toArray();
-        $features = PivotFeatures::where('portfolio_id', $id)->pluck('feature')->toArray();
+        $parners = ConvergeLinks::where('deleted_status', '1')->get()->toArray();
+        $services = Service::where('deleted_status', '1')->get()->toArray();
         return view('Collaborate.editPortfolio')->with([
             'portfolio' => $portfolio,
             'images' => $images,
-            'features' => $features,
+            'parners' => $parners,
+            'services' => $services,
         ]);
     }
 
@@ -106,25 +116,26 @@ class CollaborateController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            // 'features.*' => 'distinct',
+            // 'partners' => 'required',
+            // 'services' => 'required',
+            'year' => 'required|digits:4|integer|min:1900|max:' . date('Y'),
         ], [
             'title.required' => 'Title field is required.',
-            // 'features.*.distinct' => 'Every Feature should be unique.',
+            // 'partners.required' => 'Add Atleast 1 Partner.',
+            // 'services.required' => 'Add Atleast 1 Service.',
+            'year.required' => 'Year field is required.',
         ]);
 
         $portfolio = Portfolio::find($id);
         $portfolio->title = $request->title;
         $portfolio->content = $request->content;
+        $portfolio->partners = implode(',', $request->partners);
+        $portfolio->services = implode(',', $request->services);
+        $portfolio->year = $request->year;
         $portfolio->status = $request->status;
+        $portfolio->show_details = $request->show_details;
         $portfolio->save();
         // echo "<pre>";print_r($portfolio); exit;
-
-        PivotFeatures::where('portfolio_id', $id)->delete();
-        foreach ($request->features as $value) {
-            if ($value != "") {
-                PivotFeatures::insert(['portfolio_id' => $id, 'feature' => $value, 'created_at' => Carbon::now()]);
-            }
-        }
 
         if ($request->file('image')) {
             $image = $request->file('image');
@@ -156,22 +167,21 @@ class CollaborateController extends Controller
             unlink($imagePath);
         }
         PivotImages::where(['image' => $image])->delete();
-        return redirect(url('admin/edit_portfolio').'/'.$id)->with('success', "Image has been deleted Successfully.");
+        return redirect(url('admin/edit_portfolio') . '/' . $id)->with('success', "Image has been deleted Successfully.");
     }
 
     public function delete_portfolio($id)
     {
-        Portfolio::where('id', $id)->delete();
-        PivotFeatures::where('portfolio_id', $id)->delete();
+        Portfolio::where('id', $id)->update(['deleted_status' => '0']);
 
-        $images = PivotImages::where('portfolio_id', $id)->pluck('image')->toArray();
-        foreach ($images as $image) {
-            $imagePath = public_path('thumbnail/' . $image);
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
-            }
-            PivotImages::where(['image' => $image])->delete();
-        }
+        // $images = PivotImages::where('portfolio_id', $id)->pluck('image')->toArray();
+        // foreach ($images as $image) {
+        //     $imagePath = public_path('thumbnail/' . $image);
+        //     if (file_exists($imagePath)) {
+        //         unlink($imagePath);
+        //     }
+        //     PivotImages::where(['image' => $image])->delete();
+        // }
         return redirect(route('admin.collaborate_portfolio'))->with('success', "Portfolio has been deleted Successfully.");
     }
 
@@ -230,7 +240,7 @@ class CollaborateController extends Controller
     public function portfolioData()
     {
         $heading = Headings::where('type', 'collaborate_portfolio')->value('heading');
-        $data = Portfolio::where('status', 'portfolio')->get()->toArray();
+        $data = Portfolio::where('deleted_status', '1')->where('status', 'portfolio')->get()->toArray();
         // return $data;
         $portfolio = [];
         foreach ($data as $value) {
@@ -261,7 +271,7 @@ class CollaborateController extends Controller
     public function archiveData()
     {
         $heading = Headings::where('type', 'collaborate_archive')->value('heading');
-        $data = Portfolio::where('status', 'archive')->get()->toArray();
+        $data = Portfolio::where('deleted_status', '1')->where('status', 'archive')->get()->toArray();
         // return $data;
         $archive = [];
         foreach ($data as $value) {

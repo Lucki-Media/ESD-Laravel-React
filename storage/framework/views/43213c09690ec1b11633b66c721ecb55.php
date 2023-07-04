@@ -5,7 +5,7 @@
 <?php $__env->startSection('content'); ?>
     <?php $__env->startComponent('components.breadcrumb'); ?>
         <?php $__env->slot('li_1'); ?> ERGOSUMDEUS <?php $__env->endSlot(); ?>
-        <?php $__env->slot('title'); ?> Collaborate <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?> Portfolio <?php $__env->endSlot(); ?>
     <?php echo $__env->renderComponent(); ?>
 
     <div class="row">
@@ -40,15 +40,6 @@
                                     <h2 class="text-center mt-1">No Image Found !</h2>
                                     <hr>
                                 <?php } ?>
-
-                                <?php if(count($features) != 0): ?>
-                                <ul class="list-group mb-4 mt-4 ms-2">
-                                <h5 class="text-center">Features</h5>
-                                <?php $__currentLoopData = $features; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <li class="list-group-item"><i class="mdi mdi-check-bold align-middle lh-1 me-2"></i><?php echo e($value); ?></li>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </ul>
-                                <?php endif; ?>
                             </div>
                             <div class="col-md-8">
                                 <div class="card-header">
@@ -58,6 +49,39 @@
                                     <p class="card-text mb-2"><?php echo $portfolio['content']; ?></p>                                    
                                     <p class="card-text"><small class="text-muted"><?php echo \Carbon\Carbon::parse($portfolio['created_at'])->format('d F,Y');?></small></p>
                                 </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row g-0">
+                            <div class="col-md-6">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Partners</h5>
+                                </div>
+                                <?php $partnerTag = explode(',', $portfolio['partners'])?>
+                                <ul class="list-group">
+                                <?php if(count($partnerTag) != 0): ?>
+                                    <?php $__currentLoopData = $partnerTag; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <li class="list-group-item"><i class="mdi mdi-check-bold align-middle lh-1 me-2"></i><?php echo e(\App\Models\ConvergeLinks::where('id',$value)->value('partner')); ?></li>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php else: ?>
+                                    <li class="list-group-item list-group-item-dark">No Partners Added in this Project.</li>
+                                <?php endif; ?>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Services</h5>
+                                </div>
+                                <?php $serviceTag = explode(',', $portfolio['services'])?>
+                                <ul class="list-group">
+                                <?php if(count($serviceTag) != 0): ?>
+                                    <?php $__currentLoopData = $serviceTag; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tag): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <li class="list-group-item"><i class="mdi mdi-check-bold align-middle lh-1 me-2"></i><?php echo e(\App\Models\Service::where('id',$tag)->value('service')); ?></li>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php else: ?>
+                                    <li class="list-group-item list-group-item-dark">No Services Added in this Project.</li>
+                                <?php endif; ?>
+                                </ul>
                             </div>
                         </div>
                     </div><!-- end card -->

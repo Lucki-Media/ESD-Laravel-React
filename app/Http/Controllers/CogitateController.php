@@ -106,7 +106,7 @@ class CogitateController extends Controller
     }
     //  SERVICE PART END
 
-    //  SERVICE LINK  PART START
+    //  SERVICE LINK  PART START  // NOT MORE IN USE
     public function serviceLinkIndex()
     {
         $data = ServiceLinks::select('service_links.*', 'services.service')

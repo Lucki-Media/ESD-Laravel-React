@@ -26,16 +26,16 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Heading Quote</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Heading Quote for {{$page}}</h4>
                 <div class="flex-shrink-0">
                     <div class="form-check form-switch form-switch-right form-switch-md">
-                        <a href="{{url('admin\update_heading').'/communicate'}}" class="btn btn-primary "><i class="ri-edit-box-line  align-bottom me-1"></i> Edit</a>
+                        <a href="{{url('admin\update_heading').'/'.$page}}" class="btn btn-primary "><i class="ri-edit-box-line  align-bottom me-1"></i> Edit</a>
                     </div>
                 </div>
             </div><!-- end card header -->
 
             <div class="card-body">
-                <p class="text-muted">{{ \App\Models\Headings::where('type','communicate')->value('heading')}}</p>
+                <p class="text-muted">{{ \App\Models\Headings::where('type',$page)->value('heading')}}</p>
 
             </div><!-- end card-body -->
         </div><!-- end card -->

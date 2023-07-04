@@ -14,16 +14,16 @@ class ConvergeLinkController extends Controller
     public function index()
     {
         $link_data = ConvergeLinks::where('deleted_status', '1')->get()->toArray();
-        return view('ConvergeLink.index')->with([
+        return view('Partners.index')->with([
             'link_data' => $link_data
         ]);
     }
     public function add()
     {
-        // return view('ConvergeLink.add');
+        // return view('Partners.add');
         $services = Service::where('deleted_status', '1')->get()->toArray();
-        $projects = Portfolio::all();
-        return view('ConvergeLink.add')->with([
+        $projects = Portfolio::where('deleted_status', '1')->get()->toArray();
+        return view('Partners.add')->with([
             'services' => $services,
             'projects' => $projects
         ]);
@@ -67,8 +67,8 @@ class ConvergeLinkController extends Controller
         // return $id;
         $data = ConvergeLinks::where('id', $id)->first();
         $services = Service::where('deleted_status', '1')->get()->toArray();
-        $projects = Portfolio::all();
-        return view('ConvergeLink.edit')->with([
+        $projects = Portfolio::where('deleted_status', '1')->get()->toArray();
+        return view('Partners.edit')->with([
             'data' => $data,
             'services' => $services,
             'projects' => $projects
