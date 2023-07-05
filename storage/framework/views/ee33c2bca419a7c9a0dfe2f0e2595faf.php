@@ -71,7 +71,7 @@
                                         <a href="<?php echo e(url('admin/edit_service/'.$value['id'])); ?>" class="btn btn-sm btn-primary edit-item-btn">Edit</a>
                                     </div>
                                     <div class="remove">
-                                        <a href="#" onclick="JSconfirm(<?php echo e($value['id']); ?>)" class="btn btn-sm btn-danger remove-item-btn">Remove</a>
+                                        <a href="<?php echo e(url('admin/delete_service/'.$value['id'])); ?>" class="btn btn-sm btn-danger remove-item-btn">Remove</a>
                                     </div>
                                 </div>
                             </td>

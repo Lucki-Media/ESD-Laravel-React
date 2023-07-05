@@ -13,6 +13,7 @@ use App\Models\Service;
 use DB;
 use Illuminate\Http\Request;
 use URL;
+use Illuminate\Support\Collection;
 
 class ConvergeController extends Controller
 {
@@ -34,7 +35,7 @@ class ConvergeController extends Controller
         foreach ($data as $key => $value) {
             $array = [];
             $array['id'] = $value['id'];
-            $array['title'] = $value['title'];
+            $array['title'] = $value['title'] == null ? "" : $value['title'];
             if ($value['type'] == 'content'){
                 $array['type'] = $value['type'];
                 $array['description'] = $value['description'];
@@ -56,9 +57,9 @@ class ConvergeController extends Controller
                         }
 
                         foreach (explode(',', $project['partners']) as $partner_id) {
-                            $partner[] = ConvergeLinks::where('id', $partner_id)->value('partner');
+                            $partner[] = ConvergeLinks::where('id', $partner_id)->select('partner as partner_title', 'link as partner_link')->first();
                         }
-                        $array['description'] = [
+                        $array['description'][] = [
                             'portfolio_title' => $project['title'],
                             'content' => $project['content'],
                             'year' => $project['year'],
@@ -93,7 +94,7 @@ class ConvergeController extends Controller
                         foreach (explode(',', $partner_arr['projects']) as $project_id) {
                             $projects[] = Portfolio::where('id', $project_id)->value('title');
                         }
-                        $array['description'] = [
+                        $array['description'][] = [
                             'partner' => $partner_arr['partner'],
                             'link' => $partner_arr['link'],
                             'location' => $partner_arr['location'],
@@ -105,12 +106,13 @@ class ConvergeController extends Controller
             }
             $details[] = $array;
         }
-        // return $details;
+
+        // return $transformedArray;
         return response([
             'status' => 'success',
             'message' => 'Converge Data Get Successfully..',
             'data' => [
-                'heading' => $heading,
+                'heading' => $heading == null ? "" : $heading,
                 'details' => $details,
             ],
         ], 200);

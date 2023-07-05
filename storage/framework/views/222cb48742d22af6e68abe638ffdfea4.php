@@ -100,7 +100,7 @@
                             <div class="form-check mb-2">
                                 <input class="form-check-input" type="radio" name="status" value="portfolio" id="status1" checked>
                                 <label class="form-check-label" for="status1">
-                                    Porfolio
+                                    Portfolio
                                 </label>
                             </div>
                             <div class="form-check">

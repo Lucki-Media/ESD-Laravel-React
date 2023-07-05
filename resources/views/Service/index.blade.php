@@ -70,7 +70,7 @@
                                         <a href="{{url('admin/edit_service/'.$value['id'])}}" class="btn btn-sm btn-primary edit-item-btn">Edit</a>
                                     </div>
                                     <div class="remove">
-                                        <a href="#" onclick="JSconfirm({{$value['id']}})" class="btn btn-sm btn-danger remove-item-btn">Remove</a>
+                                        <a href="{{url('admin/delete_service/'.$value['id'])}}" class="btn btn-sm btn-danger remove-item-btn">Remove</a>
                                     </div>
                                 </div>
                             </td>
