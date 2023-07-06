@@ -3,7 +3,7 @@
     <!-- LOGO -->
     <div class="navbar-brand-box">
         <!-- Dark Logo-->
-        <a href="index" class="logo logo-dark">
+        <a href="<?php echo e(url('admin\dashboard')); ?>" class="logo logo-dark">
             <span class="logo-sm">
                 <img src="<?php echo e(URL::asset('build/images/esd_favicon.png')); ?>" alt="" height="25">
             </span>
@@ -12,7 +12,7 @@
             </span>
         </a>
         <!-- Light Logo-->
-        <a href="index" class="logo logo-light">
+        <a href="<?php echo e(url('admin\dashboard')); ?>" class="logo logo-light">
             <span class="logo-sm">
                 <img src="<?php echo e(URL::asset('build/images/esd_favicon.png')); ?>" alt="" height="25">
             </span>
@@ -34,39 +34,39 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="<?php echo e(url('admin\dashboard')); ?>">
-                        <i class="ri-dashboard-2-line"></i> <span><?php echo app('translator')->get('translation.dashboard'); ?></span>
+                        <i class="ri-home-3-line"></i> <span><?php echo app('translator')->get('translation.dashboard'); ?></span>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="<?php echo e(url('admin\partners')); ?>">
-                        <i class="ri-user-heart-fill"></i> <span>Partners</span>
+                        <i class="ri-user-heart-line"></i> <span>Partners</span>
                     </a>
 
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="<?php echo e(url('admin\serviceIndex')); ?>">
-                        <i class="ri-service-line"></i> <span>Services</span>
+                        <i class="ri-equalizer-line"></i> <span>Services</span>
                     </a>
 
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="<?php echo e(url('admin\collaborate_portfolio')); ?>">
-                        <i class="ri-profile-line"></i> <span>Portfolio</span>
+                        <i class="ri-layout-masonry-line"></i> <span>Portfolio</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="<?php echo e(url('admin\communicate_message')); ?>">
-                        <i class="ri-feedback-line"></i> <span>Communicate</span>
+                        <i class="ri-message-line"></i> <span>Communicate</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button">
-                        <i class="ri-file-list-line"></i> <span>Content</span>
+                        <i class="ri-article-line"></i> <span>Content</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarApps">
                         <ul class="nav nav-sm flex-column">

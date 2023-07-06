@@ -11,6 +11,12 @@ use Validator;
 
 class CommunicateController extends Controller
 {
+    public function messageData()
+    {
+        $data = Communicate::all()->toArray();
+        return response()->json($data);
+    }
+
     public function communicate_message()
     {
         $data = Communicate::all();

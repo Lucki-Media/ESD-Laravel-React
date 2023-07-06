@@ -1969,8 +1969,8 @@ Forms
                                         <div class="tab-pane fade p-4" id="alerts-tab1" role="tabpanel"
                                             aria-labelledby="alerts-tab">
                                             <div class="w-25 pt-3 mx-auto">
-                                                <img src="{{ URL::asset('build/images/svg/bell.svg') }}" class="img-fluid"
-                                                    alt="user-pic">
+                                                <!-- <img src="{{ URL::asset('build/images/svg/bell.svg') }}" class="img-fluid" -->
+                                                    <!-- alt="user-pic"> -->
                                             </div>
                                             <div class="text-center pb-5 mt-2">
                                                 <h6 class="fs-18 fw-semibold lh-base">Hey! You have no
@@ -2291,8 +2291,8 @@ Forms
                                         <div class="tab-pane fade p-4" id="alerts-tab2" role="tabpanel"
                                             aria-labelledby="alerts-tab">
                                             <div class="w-25 pt-3 mx-auto">
-                                                <img src="{{ URL::asset('build/images/svg/bell.svg') }}" class="img-fluid"
-                                                    alt="user-pic">
+                                                <!-- <img src="{{ URL::asset('build/images/svg/bell.svg') }}" class="img-fluid"
+                                                    alt="user-pic"> -->
                                             </div>
                                             <div class="text-center pb-5 mt-2">
                                                 <h6 class="fs-18 fw-semibold lh-base">Hey! You have no
@@ -2613,8 +2613,8 @@ Forms
                                         <div class="tab-pane fade p-4" id="alerts-tab3" role="tabpanel"
                                             aria-labelledby="alerts-tab">
                                             <div class="w-25 pt-3 mx-auto">
-                                                <img src="{{ URL::asset('build/images/svg/bell.svg') }}" class="img-fluid"
-                                                    alt="user-pic">
+                                                <!-- <img src="{{ URL::asset('build/images/svg/bell.svg') }}" class="img-fluid"
+                                                    alt="user-pic"> -->
                                             </div>
                                             <div class="text-center pb-5 mt-2">
                                                 <h6 class="fs-18 fw-semibold lh-base">Hey! You have no

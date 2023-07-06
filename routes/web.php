@@ -77,6 +77,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth:admin
 
     //COMMUNICATE MESSAGE
     Route::get('/communicate_message', 'App\Http\Controllers\CommunicateController@communicate_message')->name('communicate_message');
+    Route::get('/messageData', 'App\Http\Controllers\CommunicateController@messageData')->name('messageData');
     Route::get('/view_data/{id}', 'App\Http\Controllers\CommunicateController@view_data')->name('view_data');
 
     //PARTNERS

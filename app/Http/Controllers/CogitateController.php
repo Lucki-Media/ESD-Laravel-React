@@ -52,7 +52,7 @@ class CogitateController extends Controller
             $data = new ServiceLinks;
             $data->service_id = $service_id;
             $data->title = $value;
-            // $data->link = $request->link;
+            $data->deleted_status = '1';
             $data->created_at = Carbon::now();
             $data->save();
         }
@@ -62,7 +62,7 @@ class CogitateController extends Controller
     public function edit_service($id)
     {
         $data = Service::where('id', $id)->first();
-        $sub_details = ServiceLinks::where('service_id', $id)->pluck('title')->toArray();
+        $sub_details = ServiceLinks::where('service_id', $id)->where('deleted_status', '1')->pluck('title')->toArray();
         return view('Service.edit')->with([
             'data' => $data,
             'sub_details' => implode(',', $sub_details),
@@ -101,7 +101,7 @@ class CogitateController extends Controller
     public function delete_service($id)
     {
         Service::where('id', $id)->update(['deleted_status' => '0']);
-        ServiceLinks::where('service_id', $id)->delete();
+        ServiceLinks::where('service_id', $id)->update(['deleted_status' => '0']);
 
         return redirect(route('admin.serviceIndex'))->with('success', "Service has been deleted Successfully.");
     }

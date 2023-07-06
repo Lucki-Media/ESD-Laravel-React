@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('service_id', 255)->nullable();
             $table->string('title', 255)->nullable();
-            $table->longText('link')->nullable();
+            $table->string('deleted_status', 11)->comment('0=deleted,1=not deleted')->default('1');
             $table->timestamps();
         });
     }

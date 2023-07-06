@@ -1,4 +1,11 @@
 <?php $__env->startSection('title'); ?> Content <?php $__env->stopSection(); ?>
+<?php $__env->startSection('css'); ?>
+<!--datatable css-->
+<link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<!--datatable responsive css-->
+<link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
+<?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 <?php $__env->startComponent('components.breadcrumb'); ?>
 <?php $__env->slot('li_1'); ?> ERGOSUMDEUS <?php $__env->endSlot(); ?>
@@ -57,12 +64,12 @@
             </div><!-- end card header -->
 
             <div class="card-body">
-                <div class="live-preview">
+                <!-- <div class="live-preview"> -->
                     <div class="table-responsive">
-                        <table class="table align-middle table-bordered nowrap mb-0">
+                        <table id="example" class="table table-bordered table-striped align-middle" style="width:100%">
                             <thead class="table-light">
                                 <tr>
-                                    <!-- <th scope="col" >Type</th> -->
+                                    <th scope="col" >ID</th>
                                     <th scope="col" >Title</th>
                                     <th scope="col" width="50%">Description</th>
                                     <th scope="col" >Action</th>
@@ -78,7 +85,7 @@
                                 }else{ ?>
                                 <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $topic): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr class="align-top">
-                                    <!-- <td><?php echo e($topic['type']); ?> </td> -->
+                                    <td><?php echo e($topic['id']); ?> </td>
                                     <td><?php echo e($topic['title']); ?> </td>
                                     <td class="description__class">
                                         <?php if($topic['type'] == 'content'){ ?>
@@ -107,7 +114,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                <!-- </div> -->
             </div><!-- end card-body -->
         </div><!-- end card -->
     </div>
@@ -117,8 +124,14 @@
 <!--end row-->
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
-<script src="<?php echo e(URL::asset('build/libs/prismjs/prism.js')); ?>"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script> 
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+
+<script src="<?php echo e(URL::asset('build/js/pages/datatables.init.js')); ?>"></script>
 <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_7.4\htdocs\ESD-Laravel\resources\views/Content/index.blade.php ENDPATH**/ ?>

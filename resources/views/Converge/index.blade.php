@@ -57,7 +57,7 @@
             </div><!-- end card header -->
 
             <div class="card-body">
-                <div class="live-preview">
+                <!-- <div class="live-preview"> -->
                     <div class="table-responsive">
                         <table class="table align-middle table-bordered nowrap mb-0">
                             <thead class="table-light">
@@ -97,7 +97,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                <!-- </div> -->
             </div><!-- end card-body -->
         </div><!-- end card -->
     </div>

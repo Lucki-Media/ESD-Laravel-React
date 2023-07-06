@@ -130,7 +130,7 @@
                                 </div>
                             </div>
                             <div class="vr align-self-center mx-2"></div>
-                            <div class="dropdown">
+                            <div class="dropdown"> x 
                                 <button class="btn btn-ghost-secondary btn-icon btn-sm fs-16" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="ri-price-tag-3-fill align-bottom"></i>
                                 </button>
