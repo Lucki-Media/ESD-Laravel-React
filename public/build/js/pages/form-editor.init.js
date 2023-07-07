@@ -29,44 +29,66 @@ if (snowEditor) {
         var snowEditorData = {};
         var issnowEditorVal = item.classList.contains("snow-editor");
         if (issnowEditorVal == true) {
-            snowEditorData.theme = 'snow',
-                snowEditorData.modules = {
-                    'toolbar': [
-                        [{
-                            'font': []
-                        }, {
-                            'size': []
-                        }],
-                        ['bold', 'italic', 'underline', 'strike'],
-                        [{
-                            'color': []
-                        }, {
-                            'background': []
-                        }],
-                        [{
-                            'script': 'super'
-                        }, {
-                            'script': 'sub'
-                        }],
-                        [{
-                            'header': [false, 1, 2, 3, 4, 5, 6]
-                        }, 'blockquote', 'code-block'],
-                        [{
-                            'list': 'ordered'
-                        }, {
-                            'list': 'bullet'
-                        }, {
-                            'indent': '-1'
-                        }, {
-                            'indent': '+1'
-                        }],
-                        ['direction', {
-                            'align': []
-                        }],
-                        ['link', 'image', 'video'],
-                        ['clean']
-                    ]
-                }
+            (snowEditorData.theme = "snow"),
+                (snowEditorData.modules = {
+                    toolbar: [
+                        [
+                            {
+                                font: [],
+                            },
+                            {
+                                size: [],
+                            },
+                        ],
+                        ["bold", "italic", "underline", "strike"],
+                        [
+                            {
+                                color: [],
+                            },
+                            {
+                                background: [],
+                            },
+                        ],
+                        [
+                            {
+                                script: "super",
+                            },
+                            {
+                                script: "sub",
+                            },
+                        ],
+                        [
+                            {
+                                header: [false, 1, 2, 3, 4, 5, 6],
+                            },
+                            "blockquote",
+                            "code-block",
+                        ],
+                        [
+                            {
+                                list: "ordered",
+                            },
+                            {
+                                list: "bullet",
+                            },
+                            {
+                                indent: "-1",
+                            },
+                            {
+                                indent: "+1",
+                            },
+                        ],
+                        [
+                            "direction",
+                            {
+                                align: [],
+                            },
+                        ],
+                        ['link'],
+                        // ['link', 'image', 'video'],
+                        ["clean"],
+                    ],
+                });
         }
         new Quill(item, snowEditorData);
     });

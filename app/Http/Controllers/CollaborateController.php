@@ -23,11 +23,19 @@ class CollaborateController extends Controller
         return view('Collaborate.headingIndex');
     }
 
-    public function collaborate_portfolio()
+    public function collaborate_portfolio(Request $request)
     {
-        $portfolio = Portfolio::where('deleted_status', '1')->get()->toArray();
+        if ($request->search_project == "") {
+            $portfolio = Portfolio::where('deleted_status', '1')->orderBy('id', 'DESC')->paginate(12);
+        }else{
+            $portfolio = Portfolio::where('deleted_status', '1')
+            ->where('title', 'LIKE', '%' . $request->search_project . '%')
+            ->orderBy('id', 'DESC')
+            ->paginate(2);
+        }
         return view('Collaborate.portfolioIndex')->with([
             'portfolio' => $portfolio,
+            'search_project' => $request->search_project,
         ]);
     }
 
@@ -42,7 +50,7 @@ class CollaborateController extends Controller
     }
 
     public function save_portfolio(Request $request)
-    {
+    { 
         $request->validate([
             'title' => 'required',
             // 'partners' => 'required',
@@ -62,11 +70,21 @@ class CollaborateController extends Controller
             'partners' => implode(',', $request->partners),
             'services' => implode(',', $request->services),
             'year' => $request->year,
-            'status' => $request->status,
+            'priority' => $request->priority,
             'show_details' => $request->show_details,
             'created_at' => Carbon::now(),
         ]);
 
+        if ($request->file('logo_image')) {
+            $image = $request->file('logo_image');
+            $logoImage = uniqid() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('thumbnail/');
+            $img = Image::make($image->getRealPath());
+            $img->resize(1200, 1200, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath . $logoImage);
+            Portfolio::where('id', $portfolio_id)->update(['logo_image' => $logoImage]);
+        }
         if ($request->file('image')) {
             $image = $request->file('image');
             $portfolio_images = [];
@@ -133,7 +151,7 @@ class CollaborateController extends Controller
         $portfolio->partners = $request->partners ? implode(',', $request->partners) : "";
         $portfolio->services = $request->services ? implode(',', $request->services) : "";
         $portfolio->year = $request->year;
-        $portfolio->status = $request->status;
+        $portfolio->priority = $request->priority;
         $portfolio->show_details = $request->show_details;
         $portfolio->save();
         // echo "<pre>";print_r($portfolio); exit;
@@ -173,6 +191,7 @@ class CollaborateController extends Controller
 
     public function delete_portfolio($id)
     {
+        // return $id;
         Portfolio::where('id', $id)->update(['deleted_status' => '0']);
 
         // $images = PivotImages::where('portfolio_id', $id)->pluck('image')->toArray();

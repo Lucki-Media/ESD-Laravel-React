@@ -17,11 +17,46 @@
                     <!-- <h5 class="fs-12 text-uppercase text-muted mt-4">Labels</h5> -->
 
                     <div class="mail-list mt-1">
-                        <a href="#"><span class="ri-checkbox-blank-circle-line me-2 text-info"></span><span class="mail-list-link" data-type="label">Support</span> <span class="badge badge-soft-success ms-auto">3</span></a>
-                        <a href="#"><span class="ri-checkbox-blank-circle-line me-2 text-warning"></span><span class="mail-list-link" data-type="label">Freelance</span></a>
-                        <a href="#"><span class="ri-checkbox-blank-circle-line me-2 text-primary"></span><span class="mail-list-link" data-type="label">Social</span></a>
-                        <a href="#"><span class="ri-checkbox-blank-circle-line me-2 text-danger"></span><span class="mail-list-link" data-type="label">Friends</span><span class="badge badge-soft-success ms-auto">2</span></a>
-                        <a href="#"><span class="ri-checkbox-blank-circle-line me-2 text-success"></span><span class="mail-list-link" data-type="label">Family</span></a>
+                        <a href="#" class="active" id="all" class="message-count-all">
+                            <span class="ri-checkbox-blank-circle-line me-2 text-info"></span>
+                            <span class="mail-list-link" data-type="label">All</span> 
+                            <?php $all_count = \App\Models\Communicate::where('read_status', '1')->count() ?>
+                            @if($all_count != 0)
+                                <span class="badge badge-soft-success ms-auto">{{$all_count}} </span>
+                            @endif
+                        </a>
+                        <a href="#" id="1" class="message-count-01">
+                            <span class="ri-checkbox-blank-circle-line me-2 text-warning"></span>
+                            <span class="mail-list-link" data-type="label">Brand & Comms</span>
+                            <?php $all_count = \App\Models\Communicate::where('project', '1')->where('read_status', '1')->count() ?>
+                            @if($all_count != 0)
+                                <span class="badge badge-soft-success ms-auto">{{$all_count}} </span>
+                            @endif
+                        </a>
+                        <a href="#" id="2" class="message-count-02">
+                            <span class="ri-checkbox-blank-circle-line me-2 text-primary"></span>
+                            <span class="mail-list-link" data-type="label">Web & Mobile</span>
+                            <?php $all_count = \App\Models\Communicate::where('project', '2')->where('read_status', '1')->count() ?>
+                            @if($all_count != 0)
+                                <span class="badge badge-soft-success ms-auto">{{$all_count}} </span>
+                            @endif
+                        </a>
+                        <a href="#" id="3" class="message-count-03">
+                            <span class="ri-checkbox-blank-circle-line me-2 text-danger"></span>
+                            <span class="mail-list-link" data-type="label">space & experiment</span>
+                            <?php $all_count = \App\Models\Communicate::where('project', '3')->where('read_status', '1')->count() ?>
+                            @if($all_count != 0)
+                                <span class="badge badge-soft-success ms-auto">{{$all_count}} </span>
+                            @endif
+                        </a>
+                        <a href="#" id="4" class="message-count-04">
+                            <span class="ri-checkbox-blank-circle-line me-2 text-success"></span>
+                            <span class="mail-list-link" data-type="label">Other</span>
+                            <?php $all_count = \App\Models\Communicate::where('project', '4')->where('read_status', '1')->count() ?>
+                            @if($all_count != 0)
+                                <span class="badge badge-soft-success ms-auto">{{$all_count}} </span>
+                            @endif
+                        </a>
                     </div>
                 </div>
             </div>
@@ -68,7 +103,7 @@
                                 <i class="ri-more-2-fill align-bottom"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="#" id="mark-all-read">Mark all as Read</a>
+                                <a class="dropdown-item" href="{{url('admin/update_readStatus')}}" id="mark-all-read">Mark all as Read</a>
                             </div>
                         </div>
                     </div>
@@ -150,36 +185,6 @@
 
                 <div class="accordion accordion-flush">
                     <div class="accordion-item border-dashed left">
-                        <div id="email-collapseOne" class="accordion-collapse collapse">
-                            <div class="accordion-body text-body px-0">
-                                <div>
-                                    <p>Hi,</p>
-                                    <p>Praesent dui ex, dapibus eget mauris ut, finibus vestibulum enim. Quisque arcu leo, facilisis in fringilla id, luctus in tortor.
-                                    </p>
-                                    <p>Sed elementum turpis eu lorem interdum, sed porttitor eros commodo. Nam eu venenatis tortor, id lacinia diam. Sed aliquam in dui et porta. Sed bibendum orci non tincidunt ultrices.</p>
-                                    <p>Sincerly,</p>
-
-                                    <div class="d-flex gap-3">
-                                        <div class="border rounded avatar-xl h-auto">
-                                            <img src="{{ URL::asset('build/images/small/img-2.jpg') }}" alt="" class="img-fluid rouned-top">
-                                            <div class="py-2 text-center">
-                                                <a href="" class="d-block fw-semibold">Download</a>
-                                            </div>
-                                        </div>
-                                        <div class="border rounded avatar-xl h-auto">
-                                            <img src="{{ URL::asset('build/images/small/img-6.jpg') }}" alt="" class="img-fluid rouned-top">
-                                            <div class="py-2 text-center">
-                                                <a href="" class="d-block fw-semibold">Download</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end accordion-item -->
-
-                    <div class="accordion-item border-dashed left">
                         <div class="accordion-header">
                             <a role="button" class="btn w-100 text-start px-0 bg-transparent shadow-none"
                                 data-bs-toggle="collapse" href="#email-collapseThree"
@@ -189,19 +194,21 @@
                                         <img src="{{ URL::asset('build/images/users/avatar-3.jpg') }}" alt="" class="img-fluid rounded-circle">
                                     </div> -->
                                     <div class="flex-grow-1 overflow-hidden">
-                                        <h5 class="fs-14 text-truncate email-user-name mb-0">Jack Davis</h5>
-                                        <div class="text-truncate fs-12">to: me</div>
+                                        <h5 class="fs-14 text-truncate email-user-name mb-1">Jack Davis</h5>
+                                        <div class="text-truncate email-user-company fs-12 ">Company</div>
+                                        <div class="text-truncate email-user-email-address fs-12 "></div>
+                                        <div class="text-truncate email-user-contact fs-12 ">1234567890</div>
                                     </div>
                                     <div class="flex-shrink-0 align-self-start">
-                                        <div class="text-muted fs-12">10 Jan 2022, 10:08 AM</div>
+                                        <div class="text-muted  email-user-time fs-12">10 Jan 2022, 10:08 AM</div>
                                     </div>
                                 </div>
                             </a>
                         </div>
 
-                        <div id="email-collapseThree" class="accordion-collapse collapse show">
-                            <div class="accordion-body text-body px-0">
-                                <div>
+                        <div class="accordion-collapse collapse show">
+                            <div class="accordion-body text-body px-0 ">
+                                <div class="email-user-message " style="text-align: justify;">
                                     <p>Hi,</p>
                                     <p>Everyone realizes why a new common language would be desirable: one could refuse to pay expensive translators. To achieve this, it would be necessary to have uniform grammar pronunciation.</p>
                                     <p>Thank you</p>

@@ -1,109 +1,228 @@
-
-<?php $__env->startSection('title'); ?> Portfolio <?php $__env->stopSection(); ?>
-<?php $__env->startSection('css'); ?>
-<!--datatable css-->
-<link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-<!--datatable responsive css-->
-<link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
-<?php $__env->stopSection(); ?>
+<?php $__env->startSection('title'); ?>  Portfolio <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 <?php $__env->startComponent('components.breadcrumb'); ?>
 <?php $__env->slot('li_1'); ?> ERGOSUMDEUS <?php $__env->endSlot(); ?>
-<?php $__env->slot('title'); ?>Portfolio <?php $__env->endSlot(); ?>
+<?php $__env->slot('title'); ?> Portfolio <?php $__env->endSlot(); ?>
 <?php echo $__env->renderComponent(); ?>
+ 
+    <?php if(session()->has('success')): ?>
+    <div class="alert alert-success">
+        <?php echo e(Session()->get('success')); ?>
 
-<div class="row">
-    <div class="col-lg-12">
-        <?php if(session()->has('success')): ?>
-        <div class="alert alert-success">
-            <?php echo e(session()->get('success')); ?>
-
-        </div>
-        <?php endif; ?>
-        <?php if($errors->any()): ?>
-        <div class="alert alert-danger">
-            <ul>
-                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <li><?php echo e($error); ?></li>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </ul>
-        </div>
-        <?php endif; ?>
-        <div class="card">
-            <div class="card-header d-flex align-items-center">
-                <h5 class="card-title mb-0 flex-grow-1">Portfolio</h5>
-                <div>
-                    <a href="<?php echo e(url('admin\add_portfolio')); ?>" class="btn btn-primary "><i class="ri-add-line  align-bottom me-1"></i> Add</a>
-                </div>
-            </div>
-            <div class="card-body">
-                <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th data-ordering="false">ID</th>
-                            <th data-ordering="false" width="40%">Title</th>
-                            <th>Year</th>
-                            <th>Create Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php 
-                        if (count($portfolio) == 0) { ?>
-                        <tr>
-                            <td colspan="9" style="text-align: center;"> Oopps! No Data Found!</td>
-                        </tr>
-                        <?php 
-                        }else{ ?>
-                        <?php $__currentLoopData = $portfolio; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $topic): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <tr>
-                            <td><?php echo e($topic['id']); ?></td>
-                            <td><?php echo e($topic['title']); ?></td>
-                            <td><?php echo e($topic['year']); ?></td>
-                            <td><?php echo \Carbon\Carbon::parse($topic['created_at'])->format('d F,Y');?></td>
-                            <td><span class="badge badge-soft-<?php echo e($topic['status'] == 'portfolio' ? 'success' : 'secondary'); ?>"><?php echo e($topic['status'] == 'portfolio' ? 'Portfolio' : 'Archive'); ?></span></td>
-                            <!-- <td><span class="badge badge-soft-success">New</span></td> -->
-                            <td>
-                                <div class="dropdown d-inline-block">
-                                    <button class="btn btn-soft-primary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="ri-more-fill align-middle"></i>
-                                    </button> 
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li><a href="<?php echo e(url('admin/view_portfolio/'.$topic['id'])); ?>" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
-                                        <li><a href="<?php echo e(url('admin/edit_portfolio/'.$topic['id'])); ?>" class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
-                                        <li>
-                                            <a href="<?php echo e(url('admin/delete_portfolio/'.$topic['id'])); ?>" class="dropdown-item remove-item-btn">
-                                                <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
-    <!--end col-->
-</div>
+    <?php endif; ?>
+    <?php if($errors->any()): ?>
+    <div class="alert alert-danger">
+        <ul>
+            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <li><?php echo e($error); ?></li>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </ul>
+    </div>
+    <?php endif; ?>
+    <div class="row g-4 mb-3">
+        <div class="col-sm-auto">
+            <div>
+                <a href="<?php echo e(url('admin/add_portfolio')); ?>" class="btn btn-primary"><i class="ri-add-line align-bottom me-1"></i> Add
+                    New</a>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="d-flex justify-content-sm-end gap-2">
+                <form class="d-flex" action="<?php echo e(url('admin/collaborate_portfolio')); ?>">
+                <div class="search-box ms-2 me-2">
+                    <input class="form-control me-2" type="search" name="search_project"  value="<?php echo e($search_project); ?>"  placeholder="Search..." aria-label="Search">
+                    <i class="ri-search-line search-icon"></i>
+                </div>
+                <button class="btn btn-outline-primary" type="submit">Search</button>
 
+                <!-- <select class="form-control w-md" data-choices data-choices-search-false>
+                    <option value="1" selected>All</option>
+                    <option value="2">Today</option>
+                    <option value="3">Yesterday</option>
+                    <option value="4">Last 7 Days</option>
+                    <option value="5">Last 30 Days</option>
+                    <option value="6">This Month</option>
+                    <option value="7">Last Year</option>
+                </select> -->
+                </form>
+            </div>
+            </div>
+    </div>
+
+    <div class="row">
+        <?php $__currentLoopData = $portfolio; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $topic): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <div class="col-xxl-3 col-sm-6 project-card">
+            <div class="card card-height-100">
+                <div class="card-body">
+                    <div class="d-flex flex-column h-100">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-muted mb-4">Updated <?php echo e(Carbon\Carbon::parse($topic['updated_at'])->diffForHumans()); ?></p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <div class="d-flex gap-1 align-items-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-link text-muted p-1 mt-n2 py-0 text-decoration-none fs-15"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            <i data-feather="more-horizontal" class="icon-sm"></i>
+                                        </button>
+
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a class="dropdown-item" href="apps-projects-overview"><i
+                                                    class="ri-eye-fill align-bottom me-2 text-muted"></i>
+                                                View</a>
+                                            <a class="dropdown-item" href="<?php echo e(url('admin/edit_portfolio/'.$topic['id'])); ?>"><i
+                                                    class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                Edit</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-project-id="<?php echo e($topic['id']); ?>" data-bs-target="#removeProjectModal"><i
+                                                    class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
+                                                Remove</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-2">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm">
+                                    <span class="avatar-title bg-soft-warning rounded p-2">
+                                        <img src="<?php echo e(URL::asset('build/images/brands/slack.png')); ?>" alt="" class="img-fluid p-1">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="mb-1 fs-15"><a href="apps-projects-overview"
+                                        class="text-dark"><?php echo e($topic['title']); ?></a></h5>
+                                <p class="text-muted text-truncate-two-lines mb-3">
+                                    <?php echo Str::limit(strip_tags($topic['content']), 50); ?>
+
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mt-auto">
+                            <div class="d-flex mb-2">
+                                <div class="flex-grow-1">
+                                    <div>Services</div>
+                                </div>
+                                <div class="flex-shrink-0">
+                                    <div><i class="ri-list-check align-bottom me-1 text-muted"></i>
+                                        <?php echo e(count(explode(',', $topic['services']))); ?>/<?php echo e(\App\Models\ServiceLinks::where('deleted_status', '1')->count()); ?></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- end card body -->
+                <div class="card-footer bg-transparent border-top-dashed py-2">
+                    <div class="d-flex align-items-center">
+                        <!-- <div class="flex-grow-1">
+                            <div class="avatar-group">
+                                <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip"
+                                    data-bs-trigger="hover" data-bs-placement="top" title="Darline Williams">
+                                    <div class="avatar-xxs">
+                                        <img src="<?php echo e(URL::asset('build/images/users/avatar-2.jpg')); ?>" alt="" class="rounded-circle img-fluid">
+                                    </div>
+                                </a>
+                                <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip"
+                                    data-bs-trigger="hover" data-bs-placement="top" title="Add Members">
+                                    <div class="avatar-xxs">
+                                        <div
+                                            class="avatar-title fs-16 rounded-circle bg-light border-dashed border text-primary">
+                                            +
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div> -->
+                        <div class="flex-shrink-0">
+                            <div class="text-muted">
+                                <i class="ri-calendar-event-fill me-1 align-bottom"></i> <?php echo e($topic['year']); ?>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- end card footer -->
+            </div>
+            <!-- end card -->
+        </div>
+        <!-- end col -->
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+    </div>
+    <!-- end row -->
+
+    <div class="row g-0 text-center text-sm-start align-items-center mb-4">
+        <!-- <div class="col-sm-6">
+            <div>
+                <p class="mb-sm-0 text-muted">Showing <span class="fw-semibold">1</span> to <span
+                        class="fw-semibold">10</span> of <span class="fw-semibold text-decoration-underline">12</span>
+                    entries</p>
+            </div>
+        </div> -->
+        <!-- end col -->
+        
+        <div class="d-flex justify-content-end mt-4 col-sm-12">
+            <?php echo $portfolio->appends(['search_project' => $search_project])->links(); ?>
+
+        </div>
+    </div><!-- end row -->
+
+    <!-- END layout-wrapper -->
+    <!-- removeProjectModal -->
+    <div id="removeProjectModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        id="close-modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-2 text-center">
+                        <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop"
+                            colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
+                        <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
+                            <h4>Are you Sure ?</h4>
+                            <p class="text-muted mx-4 mb-0">Are you Sure You want to Remove this Project ?</p>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                         <form id="removeProjectForm" method="GET" action="">
+                        <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn w-sm btn-danger" id="remove-project">Yes, Delete It!</button>
+                    </div>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
+    <script src="<?php echo e(URL::asset('build/libs/choices.js/public/assets/scripts/choices.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/project-list.init.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#removeProjectModal').on('show.bs.modal', function(event) {
+            var link = $(event.relatedTarget);
+            var projectId = link.data('project-id');
+            var modal = $(this);
+            modal.find('#project_id').val(projectId);
+            modal.find('#removeProjectForm').attr('action', '/admin/delete_portfolio/' + projectId);
+        });
 
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script> 
-<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
-
-<script src="<?php echo e(URL::asset('build/js/pages/datatables.init.js')); ?>"></script>
-<script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
+        $('#removeProjectForm').submit(function() {
+            // Additional logic if needed before form submission
+        });
+    });
+    </script>
 
 <?php $__env->stopSection(); ?>
 

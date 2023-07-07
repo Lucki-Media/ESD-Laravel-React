@@ -11,9 +11,39 @@ use Validator;
 
 class CommunicateController extends Controller
 {
-    public function messageData()
+    public function messageData($id)
     {
         $data = Communicate::all()->toArray();
+
+        switch ($id) {
+            case 'all':
+                $data = Communicate::all()->toArray();
+                break;
+            case '1':
+                $data = Communicate::where('project', '1')->get()->toArray();
+                break;
+            case '2':
+                $data = Communicate::where('project', '2')->get()->toArray();
+                break;
+            case '3':
+                $data = Communicate::where('project', '3')->get()->toArray();
+                break;
+            case '4':
+                $data = Communicate::where('project', '4')->get()->toArray();
+                break;
+            default:
+                $data = Communicate::all()->toArray();
+                break;
+        }
+
+        return response()->json($data);
+    }
+
+    public function messageDetails($id)
+    {
+        $data = Communicate::where('id', $id)->first();
+        $data->read_status = '0';
+        $data->save();
         return response()->json($data);
     }
 
@@ -21,6 +51,12 @@ class CommunicateController extends Controller
     {
         $data = Communicate::all();
         return view('Communicate.index')->with('data', $data);
+    }
+
+    public function update_readStatus()
+    {
+        $data = Communicate::query()->update(['read_status' => '0']);
+        return redirect(route('admin.communicate_message'));
     }
 
     public function view_data($id)
@@ -50,6 +86,7 @@ class CommunicateController extends Controller
 
     public function sendRequest(Request $request)
     {
+        // project  == 1 -> BRAND & COMMS , 2 -> WEB & MOBILE , 3 -> SPACE & EXPERIENCE , 4 -> OTHER
         $validatedData = Validator::make($request->all(), [
             'full_name' => 'required',
             'email' => 'required|email',
