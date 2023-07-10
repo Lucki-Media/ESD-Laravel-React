@@ -44,7 +44,14 @@
                     <div class="mb-3">
                         <label class="form-label" for="project-thumbnail-img">Thumbnail Image</label>
                         <input class="form-control" id="project-thumbnail-img" type="file" name="logo_image"
-                            accept="image/png, image/gif, image/jpeg">
+                            accept="image/png, image/gif, image/jpeg"  onchange="previewImage(event)">
+                        <div style="margin-top: 15px;">
+                            <div class="col-md-4 col-lg-2 mb-3">
+                                <div class="card">
+                                    <img id="preview"  class="card-img-top"  src="<?php echo e(URL::asset('thumbnail/'.$portfolio['logo_image'])); ?>"  />
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="mb-3">
@@ -62,8 +69,8 @@
                                 <label for="choices-priority-input" class="form-label">Priority</label>
                                 <select class="form-select" data-choices data-choices-search-false
                                     id="choices-priority-input" name="priority">
-                                    <option value="1" selected>Portfolio</option>
-                                    <option value="2">Archived</option>
+                                    <option value="1" <?php if($portfolio['priority'] == '1'): ?> selected <?php endif; ?>>Portfolio</option>
+                                    <option value="2" <?php if($portfolio['priority'] == '2'): ?> selected <?php endif; ?>>Archived</option>
                                 </select>   
                             </div>
                         </div>
@@ -72,8 +79,8 @@
                                 <label for="choices-status-input" class="form-label">Status</label>
                                 <select class="form-select" data-choices data-choices-search-false
                                     id="choices-status-input" name="show_details">
-                                    <option value="1" selected>Public</option>
-                                    <option value="2">Private</option>
+                                    <option value="1"  <?php if($portfolio['show_details'] == '1'): ?> selected <?php endif; ?>>Public</option>
+                                    <option value="2"  <?php if($portfolio['show_details'] == '1'): ?> selected <?php endif; ?>>Private</option>
                                 </select>
                             </div>
                         </div>
@@ -81,7 +88,7 @@
                             <div>
                                 <label for="datepicker-deadline-input" class="form-label">Year</label>
                                 <input type="text" class="form-control" name="year" placeholder="YYYY"
-                                value="<?php echo e(old('year')); ?>" id="date-format " required>
+                                value="<?php echo e($portfolio['year']); ?>" id="date-format " required>
                             </div>
                         </div>
                     </div>
@@ -90,7 +97,7 @@
             </div>
             <!-- end card -->
 
-            <div class="card">
+            <!-- <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">Attach Images</h5>
                 </div>
@@ -100,7 +107,7 @@
 
                         <div class="dropzone">
                             <div class="fallback">
-                                <input name="image[]" type="file" accept="image/*" multiple="multiple">
+                                <input name="image[]" type="file" accept="image/*" multiple="multiple" >
                             </div>
                             <div class="dz-message needsclick">
                                 <div class="mb-3">
@@ -112,13 +119,13 @@
                         </div>
 
                         <ul class="list-unstyled mb-0" id="dropzone-preview">
+                            <?php $__currentLoopData = $images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <li class="mt-2" id="dropzone-preview-list">
-                                <!-- This is used as the file preview template -->
                                 <div class="border rounded">
                                     <div class="d-flex p-2">
                                         <div class="flex-shrink-0 me-3">
                                             <div class="avatar-sm bg-light rounded">
-                                                <img src="#" alt="Project-Image" data-dz-thumbnail
+                                                <img src="<?php echo e(URL::asset('thumbnail/'.$value)); ?>" alt="Project-Image" data-dz-thumbnail
                                                     class="img-fluid rounded d-block" />
                                             </div>
                                         </div>
@@ -135,15 +142,15 @@
                                     </div>
                                 </div>
                             </li>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </ul>
-                        <!-- end dropzon-preview -->
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- end card -->
             <div class="text-end mb-4">
                 <a href="<?php echo e(url('admin/collaborate_portfolio')); ?>" class="btn btn-danger w-sm">Cancel</a>
-                <button type="submit" class="btn btn-primary w-sm">Create</button>
+                <button type="submit" class="btn btn-primary w-sm">Update</button>
             </div>
         </div>
         <!-- end col -->
@@ -183,10 +190,12 @@
                         <!-- <label for="choices-text-input" class="form-label">Services</label> -->
                         <select class="form-control" id="choices-multiple-remove-button" data-choices
                             data-choices-removeItem name="services[]" multiple>
-                            <?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($value['id']); ?>">
-                                <?php echo e($value['service']); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php $serviceTag = explode(',', $portfolio['services'])?>
+                                <?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($value['id']); ?>"
+                                    <?php echo e((in_array($value['id'], $serviceTag))  ? 'selected' : ""); ?>>
+                                    <?php echo e($value['service']); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                 </div>
@@ -203,10 +212,11 @@
                         <!-- <label for="choices-multiple-remove-button" class="form-label">Partners</label> -->
                         <select class="form-control" id="choices-multiple-remove-button" data-choices
                             data-choices-removeItem name="partners[]" multiple>
-                            <?php $__currentLoopData = $parners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($value['id']); ?>">
-                                <?php echo e($value['partner']); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php $partnerTag = explode(',', $portfolio['partners'])?>
+                                <?php $__currentLoopData = $parners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($value['id']); ?>" <?php echo e((in_array($value['id'], $partnerTag))  ? 'selected' : ""); ?>>
+                                    <?php echo e($value['partner']); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
 
@@ -254,146 +264,6 @@
     <!-- end row -->
 </form>
 
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="inviteMembersModal" tabindex="-1" aria-labelledby="inviteMembersModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header p-3 ps-4 bg-soft-success">
-                    <h5 class="modal-title" id="inviteMembersModalLabel">Members</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <div class="search-box mb-3">
-                        <input type="text" class="form-control bg-light border-light" placeholder="Search here...">
-                        <i class="ri-search-line search-icon"></i>
-                    </div>
-
-                    <div class="mb-4 d-flex align-items-center">
-                        <div class="me-2">
-                            <h5 class="mb-0 fs-13">Members :</h5>
-                        </div>
-                        <div class="avatar-group justify-content-center">
-                            <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip"
-                                data-bs-trigger="hover" data-bs-placement="top" title="Brent Gonzalez">
-                                <div class="avatar-xs">
-                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-3.jpg')); ?>" alt="" class="rounded-circle img-fluid">
-                                </div>
-                            </a>
-                            <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip"
-                                data-bs-trigger="hover" data-bs-placement="top" title="Sylvia Wright">
-                                <div class="avatar-xs">
-                                    <div class="avatar-title rounded-circle bg-secondary">
-                                        S
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip"
-                                data-bs-trigger="hover" data-bs-placement="top" title="Ellen Smith">
-                                <div class="avatar-xs">
-                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-4.jpg')); ?>" alt="" class="rounded-circle img-fluid">
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="mx-n4 px-4" data-simplebar style="max-height: 225px;">
-                        <div class="vstack gap-3">
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-xs flex-shrink-0 me-3">
-                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-2.jpg')); ?>" alt="" class="img-fluid rounded-circle">
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">Nancy Martino</a>
-                                    </h5>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <button type="button" class="btn btn-light btn-sm">Add</button>
-                                </div>
-                            </div>
-                            <!-- end member item -->
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-xs flex-shrink-0 me-3">
-                                    <div class="avatar-title bg-soft-danger text-danger rounded-circle">
-                                        HB
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">Henry Baird</a></h5>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <button type="button" class="btn btn-light btn-sm">Add</button>
-                                </div>
-                            </div>
-                            <!-- end member item -->
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-xs flex-shrink-0 me-3">
-                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-3.jpg')); ?>" alt="" class="img-fluid rounded-circle">
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">Frank Hook</a></h5>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <button type="button" class="btn btn-light btn-sm">Add</button>
-                                </div>
-                            </div>
-                            <!-- end member item -->
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-xs flex-shrink-0 me-3">
-                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-4.jpg')); ?>" alt="" class="img-fluid rounded-circle">
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">Jennifer Carter</a>
-                                    </h5>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <button type="button" class="btn btn-light btn-sm">Add</button>
-                                </div>
-                            </div>
-                            <!-- end member item -->
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-xs flex-shrink-0 me-3">
-                                    <div class="avatar-title bg-soft-success text-success rounded-circle">
-                                        AC
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">Alexis Clarke</a>
-                                    </h5>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <button type="button" class="btn btn-light btn-sm">Add</button>
-                                </div>
-                            </div>
-                            <!-- end member item -->
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-xs flex-shrink-0 me-3">
-                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-7.jpg')); ?>" alt="" class="img-fluid rounded-circle">
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">Joseph Parker</a>
-                                    </h5>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <button type="button" class="btn btn-light btn-sm">Add</button>
-                                </div>
-                            </div>
-                            <!-- end member item -->
-                        </div>
-                        <!-- end list -->
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light w-xs" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-success w-xs">Invite</button>
-                </div>
-            </div>
-            <!-- end modal-content -->
-        </div>
-        <!-- modal-dialog -->
-    </div>
-    <!-- end modal -->
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
     <script src="<?php echo e(URL::asset('build/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js')); ?>"></script>
@@ -418,6 +288,17 @@
             });
         });
         </script>
+<script>
+function previewImage(event) {
+  var reader = new FileReader();
+  reader.onload = function() {
+    var preview = document.getElementById('preview');
+    preview.src = reader.result;
+  }
+  reader.readAsDataURL(event.target.files[0]);
+}
+</script>
+
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_7.4\htdocs\ESD-Laravel\resources\views/Collaborate/editPortfolio.blade.php ENDPATH**/ ?>

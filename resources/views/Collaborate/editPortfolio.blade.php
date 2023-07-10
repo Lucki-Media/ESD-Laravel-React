@@ -44,7 +44,14 @@
                     <div class="mb-3">
                         <label class="form-label" for="project-thumbnail-img">Thumbnail Image</label>
                         <input class="form-control" id="project-thumbnail-img" type="file" name="logo_image"
-                            accept="image/png, image/gif, image/jpeg">
+                            accept="image/png, image/gif, image/jpeg"  onchange="previewImage(event)">
+                        <div style="margin-top: 15px;">
+                            <div class="col-md-4 col-lg-2 mb-3">
+                                <div class="card">
+                                    <img id="preview"  class="card-img-top"  src="{{ URL::asset('thumbnail/'.$portfolio['logo_image']) }}"  />
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="mb-3">
@@ -61,8 +68,8 @@
                                 <label for="choices-priority-input" class="form-label">Priority</label>
                                 <select class="form-select" data-choices data-choices-search-false
                                     id="choices-priority-input" name="priority">
-                                    <option value="1" selected>Portfolio</option>
-                                    <option value="2">Archived</option>
+                                    <option value="1" @if($portfolio['priority'] == '1') selected @endif>Portfolio</option>
+                                    <option value="2" @if($portfolio['priority'] == '2') selected @endif>Archived</option>
                                 </select>   
                             </div>
                         </div>
@@ -71,8 +78,8 @@
                                 <label for="choices-status-input" class="form-label">Status</label>
                                 <select class="form-select" data-choices data-choices-search-false
                                     id="choices-status-input" name="show_details">
-                                    <option value="1" selected>Public</option>
-                                    <option value="2">Private</option>
+                                    <option value="1"  @if($portfolio['show_details'] == '1') selected @endif>Public</option>
+                                    <option value="2"  @if($portfolio['show_details'] == '1') selected @endif>Private</option>
                                 </select>
                             </div>
                         </div>
@@ -80,7 +87,7 @@
                             <div>
                                 <label for="datepicker-deadline-input" class="form-label">Year</label>
                                 <input type="text" class="form-control" name="year" placeholder="YYYY"
-                                value="{{old('year')}}" id="date-format " required>
+                                value="{{$portfolio['year']}}" id="date-format " required>
                             </div>
                         </div>
                     </div>
@@ -89,7 +96,7 @@
             </div>
             <!-- end card -->
 
-            <div class="card">
+            <!-- <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">Attach Images</h5>
                 </div>
@@ -99,7 +106,7 @@
 
                         <div class="dropzone">
                             <div class="fallback">
-                                <input name="image[]" type="file" accept="image/*" multiple="multiple">
+                                <input name="image[]" type="file" accept="image/*" multiple="multiple" >
                             </div>
                             <div class="dz-message needsclick">
                                 <div class="mb-3">
@@ -111,13 +118,13 @@
                         </div>
 
                         <ul class="list-unstyled mb-0" id="dropzone-preview">
+                            @foreach ($images as $value)
                             <li class="mt-2" id="dropzone-preview-list">
-                                <!-- This is used as the file preview template -->
                                 <div class="border rounded">
                                     <div class="d-flex p-2">
                                         <div class="flex-shrink-0 me-3">
                                             <div class="avatar-sm bg-light rounded">
-                                                <img src="#" alt="Project-Image" data-dz-thumbnail
+                                                <img src="{{ URL::asset('thumbnail/'.$value) }}" alt="Project-Image" data-dz-thumbnail
                                                     class="img-fluid rounded d-block" />
                                             </div>
                                         </div>
@@ -134,15 +141,15 @@
                                     </div>
                                 </div>
                             </li>
+                            @endforeach
                         </ul>
-                        <!-- end dropzon-preview -->
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- end card -->
             <div class="text-end mb-4">
                 <a href="{{url('admin/collaborate_portfolio')}}" class="btn btn-danger w-sm">Cancel</a>
-                <button type="submit" class="btn btn-primary w-sm">Create</button>
+                <button type="submit" class="btn btn-primary w-sm">Update</button>
             </div>
         </div>
         <!-- end col -->
@@ -182,10 +189,12 @@
                         <!-- <label for="choices-text-input" class="form-label">Services</label> -->
                         <select class="form-control" id="choices-multiple-remove-button" data-choices
                             data-choices-removeItem name="services[]" multiple>
-                            @foreach ($services as $value)
-                            <option value="{{$value['id']}}">
-                                {{$value['service']}}</option>
-                            @endforeach
+                            <?php $serviceTag = explode(',', $portfolio['services'])?>
+                                @foreach ($services as $value)
+                                <option value="{{$value['id']}}"
+                                    {{(in_array($value['id'], $serviceTag))  ? 'selected' : ""}}>
+                                    {{$value['service']}}</option>
+                                @endforeach
                         </select>
                     </div>
                 </div>
@@ -202,10 +211,11 @@
                         <!-- <label for="choices-multiple-remove-button" class="form-label">Partners</label> -->
                         <select class="form-control" id="choices-multiple-remove-button" data-choices
                             data-choices-removeItem name="partners[]" multiple>
-                            @foreach ($parners as $value)
-                            <option value="{{$value['id']}}">
-                                {{$value['partner']}}</option>
-                            @endforeach
+                            <?php $partnerTag = explode(',', $portfolio['partners'])?>
+                                @foreach ($parners as $value)
+                                <option value="{{$value['id']}}" {{(in_array($value['id'], $partnerTag))  ? 'selected' : ""}}>
+                                    {{$value['partner']}}</option>
+                                @endforeach
                         </select>
                     </div>
 
@@ -277,4 +287,15 @@
             });
         });
         </script>
+<script>
+function previewImage(event) {
+  var reader = new FileReader();
+  reader.onload = function() {
+    var preview = document.getElementById('preview');
+    preview.src = reader.result;
+  }
+  reader.readAsDataURL(event.target.files[0]);
+}
+</script>
+
 @endsection

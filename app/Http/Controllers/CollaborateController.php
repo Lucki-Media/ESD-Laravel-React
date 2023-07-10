@@ -132,7 +132,7 @@ class CollaborateController extends Controller
     }
 
     public function update_portfolio(Request $request, $id)
-    {
+    { 
         $request->validate([
             'title' => 'required',
             // 'partners' => 'required',
@@ -156,23 +156,34 @@ class CollaborateController extends Controller
         $portfolio->save();
         // echo "<pre>";print_r($portfolio); exit;
 
-        if ($request->file('image')) {
-            $image = $request->file('image');
-            $portfolio_images = [];
-            foreach ($image as $value) {
-                $portfolioImage = uniqid() . '.' . $value->getClientOriginalExtension();
-                $destinationPath = public_path('thumbnail/');
-                $img = Image::make($value->getRealPath());
-                $img->resize(1200, 1200, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->save($destinationPath . $portfolioImage);
-                $portfolio_images[] = $portfolioImage;
-            }
-
-            foreach ($portfolio_images as $value) {
-                PivotImages::insert(['portfolio_id' => $id, 'image' => $value, 'created_at' => Carbon::now()]);
-            }
+        if ($request->file('logo_image')) {
+            $image = $request->file('logo_image');
+            $logoImage = uniqid() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('thumbnail/');
+            $img = Image::make($image->getRealPath());
+            $img->resize(1200, 1200, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath . $logoImage);
+            Portfolio::where('id', $id)->update(['logo_image' => $logoImage]);
         }
+
+        // if ($request->file('image')) {
+        //     $image = $request->file('image');
+        //     $portfolio_images = [];
+        //     foreach ($image as $value) {
+        //         $portfolioImage = uniqid() . '.' . $value->getClientOriginalExtension();
+        //         $destinationPath = public_path('thumbnail/');
+        //         $img = Image::make($value->getRealPath());
+        //         $img->resize(1200, 1200, function ($constraint) {
+        //             $constraint->aspectRatio();
+        //         })->save($destinationPath . $portfolioImage);
+        //         $portfolio_images[] = $portfolioImage;
+        //     }
+
+        //     foreach ($portfolio_images as $value) {
+        //         PivotImages::insert(['portfolio_id' => $id, 'image' => $value, 'created_at' => Carbon::now()]);
+        //     }
+        // }
 
         return redirect(route('admin.collaborate_portfolio'))->with('success', "Portfolio has been updated Successfully.");
 

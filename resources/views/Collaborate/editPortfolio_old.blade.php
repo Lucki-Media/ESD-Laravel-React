@@ -98,7 +98,7 @@
                                 @foreach ($images as $value)
                                     <div class="col-md-4 col-lg-2 mb-3">
                                         <div class="card h-100 selected">
-                                            <img  class="card-img-top"  src="{{ URL::asset('thumbnail/'.$value) }}" />
+                                            <img  class="card-img-top"  src="{{ URL::asset('thumbnail/'.$value) }}"  />
                                             <div class="card-body p-1">
                                                 <a href="{{url('admin/delete_image/'.$portfolio['id'].'/'.$value)}}" class="btn btn-outline-danger d-flex justify-content-center">Delete</a>
                                             </div>
