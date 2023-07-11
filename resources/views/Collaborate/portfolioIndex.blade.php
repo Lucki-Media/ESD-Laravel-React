@@ -69,7 +69,7 @@
                                         </button>
 
                                         <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="dropdown-item" href="apps-projects-overview"><i
+                                            <a class="dropdown-item" href="{{url('admin/view_portfolio/'.$topic['id'])}}"><i
                                                     class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                 View</a>
                                             <a class="dropdown-item" href="{{url('admin/edit_portfolio/'.$topic['id'])}}"><i
@@ -87,8 +87,14 @@
                         <div class="d-flex mb-2">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar-sm">
-                                    <span class="avatar-title bg-soft-warning rounded p-2">
-                                        <img src="{{ URL::asset('build/images/brands/slack.png') }}" alt="" class="img-fluid p-1">
+                                    <span class="avatar-title bg-soft-warning rounded">
+                                        <?php
+                                        if($topic['logo_image'] != null){
+                                            $src = URL::asset('thumbnail/'.$topic['logo_image']);
+                                        }else{
+                                            $src = URL::asset('images\noimage.png');
+                                        } ?>
+                                        <img src="<?php echo $src;?>" alt="" class="img-fluid">
                                     </span>
                                 </div>
                             </div>
@@ -117,25 +123,26 @@
                 <!-- end card body -->
                 <div class="card-footer bg-transparent border-top-dashed py-2">
                     <div class="d-flex align-items-center">
-                        <!-- <div class="flex-grow-1">
+                        <div class="flex-grow-1">
                             <div class="avatar-group">
-                                <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip"
-                                    data-bs-trigger="hover" data-bs-placement="top" title="Darline Williams">
+                                <?php $partnerTag = explode(',', $topic['partners'])?>
+                                @foreach ($partnerTag as $value)
+                                <?php
+                                $partner_image = \App\Models\ConvergeLinks::where('id',$value)->value('logo_image');
+                                if($partner_image != null){
+                                    $image_path = URL::asset('thumbnail/'.$partner_image);
+                                }else{
+                                    $image_path = URL::asset('images\user.png');
+                                } ?>
+                                <div class="avatar-group-item" data-bs-toggle="tooltip"
+                                    data-bs-trigger="hover" data-bs-placement="top" title="{{ \App\Models\ConvergeLinks::where('id',$value)->value('partner')}}">
                                     <div class="avatar-xxs">
-                                        <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}" alt="" class="rounded-circle img-fluid">
+                                        <img src="<?php echo $image_path;?>" alt="" class="rounded-circle img-fluid">
                                     </div>
-                                </a>
-                                <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip"
-                                    data-bs-trigger="hover" data-bs-placement="top" title="Add Members">
-                                    <div class="avatar-xxs">
-                                        <div
-                                            class="avatar-title fs-16 rounded-circle bg-light border-dashed border text-primary">
-                                            +
-                                        </div>
-                                    </div>
-                                </a>
+                                </div>
+                                @endforeach
                             </div>
-                        </div> -->
+                        </div>
                         <div class="flex-shrink-0">
                             <div class="text-muted">
                                 <i class="ri-calendar-event-fill me-1 align-bottom"></i> {{$topic['year']}}

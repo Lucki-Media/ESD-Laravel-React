@@ -31,16 +31,24 @@
                     <form class="row g-3 needs-validation" method="POST"  action="<?php echo route('admin.save_service'); ?>" novalidate>
                         <?php echo csrf_field(); ?>
                         <div class="mb-3">
+                            <label for="validationCustom01" class="form-label">Category</label>
+                             <select class="form-select" required aria-label="select example" name="service">
+                                <option value="">Select Category</option>
+                                <?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($service['id']); ?>" <?php echo e($service['id'] == old('service') ? 'selected' : ""); ?>><?php echo e($service['service']); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select any Category.
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
                             <label for="validationCustom01" class="form-label">Service</label>
-                            <input type='text' name="service" class="form-control" id="validationCustom01" placeholder="Enter Service Here..." value="<?php echo e(old('service')); ?>" required>
+                            <input type='text' name="title" class="form-control" id="validationCustom01" placeholder="Enter Service Here..." value="<?php echo e(old('title')); ?>" required>
                             <div class="invalid-feedback">
                                 Please enter data in the Service field.
                             </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="choices-text-unique-values" class="form-label">Sub Services </label>
-                            <input class="form-control" id="choices-text-unique-values" data-choices data-choices-text-unique-true type="text" data-choices-removeItem name="sub_service"/>
                         </div>
 
                         <div class="col-12">

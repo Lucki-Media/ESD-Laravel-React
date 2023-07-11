@@ -184,7 +184,7 @@
                             data-choices-removeItem name="services[]" multiple>
                             @foreach ($services as $value)
                             <option value="{{$value['id']}}">
-                                {{$value['service']}}</option>
+                                {{$value['title']}}</option>
                             @endforeach
                         </select>
                     </div>

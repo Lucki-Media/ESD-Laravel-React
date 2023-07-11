@@ -32,16 +32,24 @@
                     <form class="row g-3 needs-validation" method="POST"  action="{!!route('admin.save_service')!!}" novalidate>
                         @csrf
                         <div class="mb-3">
+                            <label for="validationCustom01" class="form-label">Category</label>
+                             <select class="form-select" required aria-label="select example" name="service">
+                                <option value="">Select Category</option>
+                                @foreach($services as $service)
+                                    <option value="{{$service['id']}}" {{$service['id'] == old('service') ? 'selected' : ""}}>{{$service['service']}}</option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select any Category.
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
                             <label for="validationCustom01" class="form-label">Service</label>
-                            <input type='text' name="service" class="form-control" id="validationCustom01" placeholder="Enter Service Here..." value="{{old('service')}}" required>
+                            <input type='text' name="title" class="form-control" id="validationCustom01" placeholder="Enter Service Here..." value="{{old('title')}}" required>
                             <div class="invalid-feedback">
                                 Please enter data in the Service field.
                             </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="choices-text-unique-values" class="form-label">Sub Services </label>
-                            <input class="form-control" id="choices-text-unique-values" data-choices data-choices-text-unique-true type="text" data-choices-removeItem name="sub_service"/>
                         </div>
 
                         <div class="col-12">

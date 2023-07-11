@@ -47,8 +47,14 @@
                             accept="image/png, image/gif, image/jpeg"  onchange="previewImage(event)">
                         <div style="margin-top: 15px;">
                             <div class="col-md-4 col-lg-2 mb-3">
+                                <?php
+                                if($portfolio['logo_image'] != null){
+                                    $src = URL::asset('thumbnail/'.$portfolio['logo_image']);
+                                }else{
+                                    $src = URL::asset('images\noimage.png');
+                                } ?>
                                 <div class="card">
-                                    <img id="preview"  class="card-img-top"  src="{{ URL::asset('thumbnail/'.$portfolio['logo_image']) }}"  />
+                                    <img id="preview"  class="card-img" width="100px"  src="<?php echo $src;?>"  />
                                 </div>
                             </div>
                         </div>
@@ -193,7 +199,7 @@
                                 @foreach ($services as $value)
                                 <option value="{{$value['id']}}"
                                     {{(in_array($value['id'], $serviceTag))  ? 'selected' : ""}}>
-                                    {{$value['service']}}</option>
+                                    {{$value['title']}}</option>
                                 @endforeach
                         </select>
                     </div>

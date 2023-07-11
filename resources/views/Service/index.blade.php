@@ -42,7 +42,7 @@
                         <tr>
                             <th data-ordering="false">ID</th>
                             <th data-ordering="false" width="30%">Service</th>
-                            <th data-ordering="false" width="30%">Sub Service</th>
+                            <th data-ordering="false" width="30%">Category</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -57,13 +57,8 @@
                         @foreach ($data as $value)
                         <tr>
                             <td>{{$value['id']}}</td>
+                            <td>{{$value['title']}}</td>
                             <td>{{$value['service']}}</td>
-                            <!-- <td>{{$value['service']}}</td> -->
-                            <td>
-                                @foreach (explode(',',$value['sub_service']) as $tag)
-                                    <h5><span class="badge text-bg-primary">{{$tag}}</span></h5>
-                                @endforeach
-                            </td>
                             <td>
                                 <div class="d-flex gap-2">
                                     <div class="edit">

@@ -21,8 +21,9 @@ class CogitateController extends Controller
     //  SERVICE PART START
     public function serviceIndex()
     {
-        $data = Service::select('*', DB::raw('(SELECT GROUP_CONCAT(service_links.title) FROM service_links WHERE service_links.service_id = services.id) as sub_service'))
-            ->where('services.deleted_status', '1')
+        $data = ServiceLinks::select('service_links.*', 'services.service')
+            ->join('services', 'service_links.service_id', '=', 'services.id')
+            ->where('service_links.deleted_status', '1')
             ->get()->toArray();
         // return $data;
         return view('Service.index')->with('data', $data);
@@ -30,78 +31,71 @@ class CogitateController extends Controller
 
     public function add_service()
     {
-        return view('Service.add');
+        $data = Service::where('deleted_status','1')->get()->toArray();
+        return view('Service.add')->with('services', $data);
     }
 
     public function save_service(Request $request)
     {
         // echo "<pre>";print_r($request->all()); exit;
         $request->validate([
-            'service' => 'required|unique:services,service,NULL,id,deleted_status,1',
-            'sub_service' => 'required',
+            'service' => 'required',
+            'title' => 'required|unique:service_links,title,NULL,id,deleted_status,1',
+
         ], [
-            'sub_service.required' => 'Add Atleast 1 Sub Services.',
-            'service.required' => 'Service field is required.',
-            'service.unique' => 'Service is already taken.',
+            'service.required' => 'Category field is required.',
+            'title.required' => 'Service field is required.',
+            'title.unique' => 'Category is already taken.',
         ]);
 
-        $service_id = Service::insertGetId(['service' => $request->service, 'created_at' => Carbon::now()]);
-
-        $sub_services = explode(',', $request->sub_service);
-        foreach ($sub_services as $value) {
-            $data = new ServiceLinks;
-            $data->service_id = $service_id;
-            $data->title = $value;
-            $data->deleted_status = '1';
-            $data->created_at = Carbon::now();
-            $data->save();
-        }
+        $data = new ServiceLinks;
+        $data->service_id = $request->service;
+        $data->title = $request->title;
+        $data->deleted_status = '1';
+        $data->created_at = Carbon::now();
+        $data->save();
         return redirect(route('admin.serviceIndex'))->with('success', "Service has been added Successfully.");
     }
 
     public function edit_service($id)
     {
-        $data = Service::where('id', $id)->first();
-        $sub_details = ServiceLinks::where('service_id', $id)->where('deleted_status', '1')->pluck('title')->toArray();
+        $services = Service::all();
+        $data = ServiceLinks::select('service_links.*', 'services.service')
+            ->join('services', 'service_links.service_id', '=', 'services.id')
+            ->where('service_links.id', $id)
+            ->where('service_links.deleted_status', '1')
+            ->first();
         return view('Service.edit')->with([
+            'services' => $services,
             'data' => $data,
-            'sub_details' => implode(',', $sub_details),
         ]);
     }
 
     public function update_service(Request $request, $id)
     {
         $request->validate([
-            'service' => 'required|unique:services,service,' . $id . ',id,deleted_status,1',
-            'sub_service' => 'required',
-        ], [
-            'sub_service.required' => 'Add Atleast 1 Sub Services.',
-            'service.required' => 'Service field is required.',
-            'service.unique' => 'Service is already taken.',
-        ]);
-        // echo "<pre>";print_r($request->all()); exit;
-        $service = Service::where('id', $id)->first();
-        $service->service = $request->service;
-        $service->save();
+            'service' => 'required',
+            'title' => 'required|unique:service_links,title,' . $id . ',id,deleted_status,1',
 
-        $sub_details = ServiceLinks::where('service_id', $id)->delete();
-        $sub_services = explode(',', $request->sub_service);
-        foreach ($sub_services as $value) {
-            $data = new ServiceLinks;
-            $data->service_id = $id;
-            $data->title = $value;
-            // $data->link = $request->link;
-            $data->created_at = Carbon::now();
-            $data->save();
-        }
+        ], [
+            'service.required' => 'Category field is required.',
+            'title.required' => 'Service field is required.',
+            'title.unique' => 'Category is already taken.',
+        ]);
+
+        $data = ServiceLinks::where('id', $id)->first();
+        $data->service_id = $request->service;
+        $data->title = $request->title;
+        $data->deleted_status = '1';
+        $data->created_at = Carbon::now();
+        $data->save();
 
         return redirect(route('admin.serviceIndex'))->with('success', "Service has been updated Successfully.");
     }
 
     public function delete_service($id)
     {
-        Service::where('id', $id)->update(['deleted_status' => '0']);
-        ServiceLinks::where('service_id', $id)->update(['deleted_status' => '0']);
+        ServiceLinks::where('id', $id)->update(['deleted_status' => '0']);
 
         return redirect(route('admin.serviceIndex'))->with('success', "Service has been deleted Successfully.");
     }

@@ -6,6 +6,7 @@ use App\Models\Content;
 use App\Models\ConvergeLinks;
 use App\Models\Headings;
 use App\Models\Service;
+use App\Models\ServiceLinks;
 use Image;
 use URL;
 use DB;
@@ -31,7 +32,7 @@ class CollaborateController extends Controller
             $portfolio = Portfolio::where('deleted_status', '1')
             ->where('title', 'LIKE', '%' . $request->search_project . '%')
             ->orderBy('id', 'DESC')
-            ->paginate(2);
+            ->paginate(12);
         }
         return view('Collaborate.portfolioIndex')->with([
             'portfolio' => $portfolio,
@@ -42,7 +43,7 @@ class CollaborateController extends Controller
     public function add_portfolio()
     {
         $parners = ConvergeLinks::where('deleted_status', '1')->get()->toArray();
-        $services = Service::where('deleted_status', '1')->get()->toArray();
+        $services = ServiceLinks::where('deleted_status', '1')->get()->toArray();
         return view('Collaborate.addPortfolio')->with([
             'parners' => $parners,
             'services' => $services,
@@ -122,7 +123,7 @@ class CollaborateController extends Controller
         $portfolio = Portfolio::where('id', $id)->first();
         $images = PivotImages::where('portfolio_id', $id)->pluck('image')->toArray();
         $parners = ConvergeLinks::where('deleted_status', '1')->get()->toArray();
-        $services = Service::where('deleted_status', '1')->get()->toArray();
+        $services = ServiceLinks::where('deleted_status', '1')->get()->toArray();
         return view('Collaborate.editPortfolio')->with([
             'portfolio' => $portfolio,
             'images' => $images,
@@ -189,6 +190,30 @@ class CollaborateController extends Controller
 
     }
 
+    public function image_upload(Request $request, $id)
+    {
+        if ($request->file('image')) {
+            $image = $request->file('image');
+            $portfolio_images = [];
+            foreach ($image as $value) {
+                $portfolioImage = uniqid() . '.' . $value->getClientOriginalExtension();
+                $destinationPath = public_path('thumbnail/');
+                $img = Image::make($value->getRealPath());
+                $img->resize(1200, 1200, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($destinationPath . $portfolioImage);
+                $portfolio_images[] = $portfolioImage;
+            }
+
+            foreach ($portfolio_images as $value) {
+                PivotImages::insert(['portfolio_id' => $id, 'image' => $value, 'created_at' => Carbon::now()]);
+            }
+        }
+
+        return redirect(url('admin/view_portfolio') . '/' . $id)->with('success', "Image/s has been uploaded Successfully.");
+
+    }
+
     public function deleteImage($id, $image)
     {
         // echo '<pre>';print_r($image);exit;
@@ -197,7 +222,7 @@ class CollaborateController extends Controller
             unlink($imagePath);
         }
         PivotImages::where(['image' => $image])->delete();
-        return redirect(url('admin/edit_portfolio') . '/' . $id)->with('success', "Image has been deleted Successfully.");
+        return redirect(url('admin/view_portfolio') . '/' . $id)->with('success', "Image has been deleted Successfully.");
     }
 
     public function delete_portfolio($id)

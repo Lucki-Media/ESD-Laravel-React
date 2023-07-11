@@ -47,8 +47,14 @@
                             accept="image/png, image/gif, image/jpeg"  onchange="previewImage(event)">
                         <div style="margin-top: 15px;">
                             <div class="col-md-4 col-lg-2 mb-3">
+                                <?php
+                                if($portfolio['logo_image'] != null){
+                                    $src = URL::asset('thumbnail/'.$portfolio['logo_image']);
+                                }else{
+                                    $src = URL::asset('images\noimage.png');
+                                } ?>
                                 <div class="card">
-                                    <img id="preview"  class="card-img-top"  src="<?php echo e(URL::asset('thumbnail/'.$portfolio['logo_image'])); ?>"  />
+                                    <img id="preview"  class="card-img" width="100px"  src="<?php echo $src;?>"  />
                                 </div>
                             </div>
                         </div>
@@ -194,7 +200,7 @@
                                 <?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($value['id']); ?>"
                                     <?php echo e((in_array($value['id'], $serviceTag))  ? 'selected' : ""); ?>>
-                                    <?php echo e($value['service']); ?></option>
+                                    <?php echo e($value['title']); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>

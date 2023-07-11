@@ -43,7 +43,7 @@
                         <tr>
                             <th data-ordering="false">ID</th>
                             <th data-ordering="false" width="30%">Service</th>
-                            <th data-ordering="false" width="30%">Sub Service</th>
+                            <th data-ordering="false" width="30%">Category</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -58,13 +58,8 @@
                         <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <td><?php echo e($value['id']); ?></td>
+                            <td><?php echo e($value['title']); ?></td>
                             <td><?php echo e($value['service']); ?></td>
-                            <!-- <td><?php echo e($value['service']); ?></td> -->
-                            <td>
-                                <?php $__currentLoopData = explode(',',$value['sub_service']); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tag): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <h5><span class="badge text-bg-primary"><?php echo e($tag); ?></span></h5>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </td>
                             <td>
                                 <div class="d-flex gap-2">
                                     <div class="edit">
