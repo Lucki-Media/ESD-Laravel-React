@@ -77,7 +77,7 @@
                                 <?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($value['id']); ?>"
                                     <?php echo e((in_array($value['id'], $serviceTag))  ? 'selected' : ""); ?>>
-                                    <?php echo e($value['service']); ?></option>
+                                    <?php echo e($value['title']); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>

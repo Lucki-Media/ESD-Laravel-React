@@ -78,7 +78,7 @@
                                 @foreach ($services as $value)
                                 <option value="{{$value['id']}}"
                                     {{(in_array($value['id'], $serviceTag))  ? 'selected' : ""}}>
-                                    {{$value['service']}}</option>
+                                    {{$value['title']}}</option>
                                 @endforeach
                             </select>
                         </div>

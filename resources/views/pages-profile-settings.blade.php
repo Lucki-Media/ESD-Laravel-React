@@ -3,16 +3,30 @@
     @lang('translation.settings')
 @endsection
 @section('content')
+    <div class="position-relative mx-n4 mt-n4">
+        <div class="profile-wid-bg profile-setting-img">
+            <img src="{{ URL::asset('build/images/profile-bg.jpg') }}" class="profile-wid-img" alt="">
+            <div class="overlay-content">
+                <div class="text-end p-3">
+                    <div class="p-0 ms-auto rounded-circle profile-photo-edit">
+                        <input id="profile-foreground-img-file-input" type="file" class="profile-foreground-img-file-input">
+                        <label for="profile-foreground-img-file-input" class="profile-photo-edit btn btn-light">
+                            <i class="ri-image-edit-line align-bottom me-1"></i> Change Cover
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-xxl-3">
-            <div class="card card-bg-fill">
+            <div class="card mt-n5">
                 <div class="card-body p-4">
                     <div class="text-center">
                         <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
                             <img src="@if (Auth::user()->avatar != '') {{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('build/images/users/avatar-1.jpg') }} @endif"
-                                class="  rounded-circle avatar-xl img-thumbnail user-profile-image"
-                                alt="user-profile-image">
+                                class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">
                             <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
                                 <input id="profile-img-file-input" type="file" class="profile-img-file-input">
                                 <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
@@ -35,12 +49,12 @@
                             <h5 class="card-title mb-0">Complete Your Profile</h5>
                         </div>
                         <div class="flex-shrink-0">
-                            <a href="javascript:void(0);" class="badge bg-light text-primary fs-12"><i
+                            <a href="javascript:void(0);" class="badge bg-light text-secondary fs-12"><i
                                     class="ri-edit-box-line align-bottom me-1"></i> Edit</a>
                         </div>
                     </div>
                     <div class="progress animated-progress custom-progress progress-label">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: 30%" aria-valuenow="30"
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 30%" aria-valuenow="30"
                             aria-valuemin="0" aria-valuemax="100">
                             <div class="label">30%</div>
                         </div>
@@ -54,13 +68,13 @@
                             <h5 class="card-title mb-0">Portfolio</h5>
                         </div>
                         <div class="flex-shrink-0">
-                            <a href="javascript:void(0);" class="badge bg-light text-primary fs-12"><i
+                            <a href="javascript:void(0);" class="badge bg-light text-secondary fs-12"><i
                                     class="ri-add-fill align-bottom me-1"></i> Add</a>
                         </div>
                     </div>
                     <div class="mb-3 d-flex">
                         <div class="avatar-xs d-block flex-shrink-0 me-3">
-                            <span class="avatar-title rounded-circle fs-16 bg-dark text-light">
+                            <span class="avatar-title rounded-circle fs-16 bg-soft-dark text-dark">
                                 <i class="ri-github-fill"></i>
                             </span>
                         </div>
@@ -69,7 +83,7 @@
                     </div>
                     <div class="mb-3 d-flex">
                         <div class="avatar-xs d-block flex-shrink-0 me-3">
-                            <span class="avatar-title rounded-circle fs-16 bg-primary">
+                            <span class="avatar-title rounded-circle fs-16 bg-soft-primary text-primary">
                                 <i class="ri-global-fill"></i>
                             </span>
                         </div>
@@ -78,7 +92,7 @@
                     </div>
                     <div class="mb-3 d-flex">
                         <div class="avatar-xs d-block flex-shrink-0 me-3">
-                            <span class="avatar-title rounded-circle fs-16 bg-success">
+                            <span class="avatar-title rounded-circle fs-16 bg-soft-success text-success">
                                 <i class="ri-dribbble-fill"></i>
                             </span>
                         </div>
@@ -87,7 +101,7 @@
                     </div>
                     <div class="d-flex">
                         <div class="avatar-xs d-block flex-shrink-0 me-3">
-                            <span class="avatar-title rounded-circle fs-16 bg-danger">
+                            <span class="avatar-title rounded-circle fs-16 bg-soft-danger text-danger">
                                 <i class="ri-pinterest-fill"></i>
                             </span>
                         </div>
@@ -100,7 +114,7 @@
         </div>
         <!--end col-->
         <div class="col-xxl-9">
-            <div class="card">
+            <div class="card mt-xxl-n5">
                 <div class="card-header">
                     <ul class="nav nav-tabs-custom rounded card-header-tabs border-bottom-0" role="tablist">
                         <li class="nav-item">
@@ -184,7 +198,7 @@
                                         <div class="mb-3">
                                             <label for="skillsInput" class="form-label">Skills</label>
                                             <select class="form-control" name="skillsInput" data-choices
-                                                data-choices-text-unique-true multiple id="skillsInput">
+                                                data-choices-removeItem multiple id="skillsInput">
                                                 <option value="illustrator">Illustrator</option>
                                                 <option value="photoshop">Photoshop</option>
                                                 <option value="css">CSS</option>
@@ -249,7 +263,7 @@
                                     <div class="col-lg-12">
                                         <div class="hstack gap-2 justify-content-end">
                                             <button type="submit" class="btn btn-primary">Updates</button>
-                                            <button type="button" class="btn btn-soft-danger">Cancel</button>
+                                            <button type="button" class="btn btn-soft-secondary">Cancel</button>
                                         </div>
                                     </div>
                                     <!--end col-->
@@ -308,7 +322,7 @@
                             </form>
                             <div class="mt-4 mb-3 border-bottom pb-2">
                                 <div class="float-end">
-                                    <a href="javascript:void(0);" class="link-primary">All Logout</a>
+                                    <a href="javascript:void(0);" class="link-secondary">All Logout</a>
                                 </div>
                                 <h5 class="card-title">Login History</h5>
                             </div>
@@ -324,7 +338,7 @@
                                         2:47PM</p>
                                 </div>
                                 <div>
-                                    <a href="javascript:void(0);">Logout</a>
+                                    <a href="javascript:void(0);" class="link-secondary">Logout</a>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center mb-3">
@@ -339,7 +353,7 @@
                                         at 10:43AM</p>
                                 </div>
                                 <div>
-                                    <a href="javascript:void(0);">Logout</a>
+                                    <a href="javascript:void(0);" class="link-secondary">Logout</a>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center mb-3">
@@ -354,7 +368,7 @@
                                         3:24PM</p>
                                 </div>
                                 <div>
-                                    <a href="javascript:void(0);">Logout</a>
+                                    <a href="javascript:void(0);" class="link-secondary">Logout</a>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center">
@@ -369,7 +383,7 @@
                                         8:10AM</p>
                                 </div>
                                 <div>
-                                    <a href="javascript:void(0);">Logout</a>
+                                    <a href="javascript:void(0);" class="link-secondary">Logout</a>
                                 </div>
                             </div>
                         </div>
@@ -482,7 +496,7 @@
                                             </div>
                                             <!--end col-->
                                             <div class="hstack gap-2 justify-content-end">
-                                                <a class="btn btn-primary" href="javascript:deleteEl(1)">Delete</a>
+                                                <a class="btn btn-success" href="javascript:deleteEl(1)">Delete</a>
                                             </div>
                                         </div>
                                         <!--end row-->
@@ -639,7 +653,7 @@
                                         placeholder="Enter your password" value="make@321654987" style="max-width: 265px;">
                                 </div>
                                 <div class="hstack gap-2 mt-3">
-                                    <a href="javascript:void(0);" class="btn btn-soft-danger">Close &
+                                    <a href="javascript:void(0);" class="btn btn-soft-primary">Close &
                                         Delete This Account</a>
                                     <a href="javascript:void(0);" class="btn btn-light">Cancel</a>
                                 </div>

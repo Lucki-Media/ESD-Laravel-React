@@ -16,46 +16,46 @@
                 <div>
                     <!-- <h5 class="fs-12 text-uppercase text-muted mt-4">Labels</h5> -->
 
-                    <div class="mail-list mt-1">
+                    <div class="mail-list mt-1" id="communicate_count_label_div">
                         <a href="#" class="active" id="all" class="message-count-all">
                             <span class="ri-checkbox-blank-circle-line me-2 text-info"></span>
                             <span class="mail-list-link" data-type="label">All</span> 
-                            <?php $all_count = \App\Models\Communicate::where('read_status', '1')->count() ?>
+                            <!-- <?php $all_count = \App\Models\Communicate::where('read_status', '1')->count() ?>
                             @if($all_count != 0)
                                 <span class="badge badge-soft-success ms-auto">{{$all_count}} </span>
-                            @endif
+                            @endif -->
                         </a>
                         <a href="#" id="1" class="message-count-01">
                             <span class="ri-checkbox-blank-circle-line me-2 text-warning"></span>
                             <span class="mail-list-link" data-type="label">Brand & Comms</span>
-                            <?php $all_count = \App\Models\Communicate::where('project', '1')->where('read_status', '1')->count() ?>
+                            <!-- <?php $all_count = \App\Models\Communicate::where('project', '1')->where('read_status', '1')->count() ?>
                             @if($all_count != 0)
                                 <span class="badge badge-soft-success ms-auto">{{$all_count}} </span>
-                            @endif
+                            @endif -->
                         </a>
                         <a href="#" id="2" class="message-count-02">
                             <span class="ri-checkbox-blank-circle-line me-2 text-primary"></span>
                             <span class="mail-list-link" data-type="label">Web & Mobile</span>
-                            <?php $all_count = \App\Models\Communicate::where('project', '2')->where('read_status', '1')->count() ?>
+                            <!-- <?php $all_count = \App\Models\Communicate::where('project', '2')->where('read_status', '1')->count() ?>
                             @if($all_count != 0)
                                 <span class="badge badge-soft-success ms-auto">{{$all_count}} </span>
-                            @endif
+                            @endif -->
                         </a>
                         <a href="#" id="3" class="message-count-03">
                             <span class="ri-checkbox-blank-circle-line me-2 text-danger"></span>
                             <span class="mail-list-link" data-type="label">space & experiment</span>
-                            <?php $all_count = \App\Models\Communicate::where('project', '3')->where('read_status', '1')->count() ?>
+                            <!-- <?php $all_count = \App\Models\Communicate::where('project', '3')->where('read_status', '1')->count() ?>
                             @if($all_count != 0)
                                 <span class="badge badge-soft-success ms-auto">{{$all_count}} </span>
-                            @endif
+                            @endif -->
                         </a>
                         <a href="#" id="4" class="message-count-04">
                             <span class="ri-checkbox-blank-circle-line me-2 text-success"></span>
                             <span class="mail-list-link" data-type="label">Other</span>
-                            <?php $all_count = \App\Models\Communicate::where('project', '4')->where('read_status', '1')->count() ?>
+                            <!-- <?php $all_count = \App\Models\Communicate::where('project', '4')->where('read_status', '1')->count() ?>
                             @if($all_count != 0)
                                 <span class="badge badge-soft-success ms-auto">{{$all_count}} </span>
-                            @endif
+                            @endif -->
                         </a>
                     </div>
                 </div>

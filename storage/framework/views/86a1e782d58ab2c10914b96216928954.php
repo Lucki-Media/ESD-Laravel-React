@@ -291,7 +291,7 @@
                 <div class="dropdown topbar-head-dropdown ms-1 header-item" id="notificationDropdown">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
                         <i class='bx bx-bell fs-22'></i>
-                        <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">3<span class="visually-hidden">unread messages</span></span>
+                        <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger"><?php echo e(\App\Models\Communicate::where('read_status', '1')->count()); ?><span class="visually-hidden">unread messages</span></span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
 
@@ -301,13 +301,13 @@
                                     <div class="col">
                                         <h6 class="m-0 fs-16 fw-semibold text-white"> Notifications </h6>
                                     </div>
-                                    <div class="col-auto dropdown-tabs">
+                                    <!-- <div class="col-auto dropdown-tabs">
                                         <span class="badge badge-soft-light fs-13"> 4 New</span>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
 
-                            <div class="px-2 pt-2">
+                            <!-- <div class="px-2 pt-2">
                                 <ul class="nav nav-tabs dropdown-tabs nav-tabs-custom" data-dropdown-tabs="true" id="notificationItemsTab" role="tablist">
                                     <li class="nav-item waves-effect waves-light">
                                         <a class="nav-link active" data-bs-toggle="tab" href="#all-noti-tab" role="tab" aria-selected="true">
@@ -325,63 +325,16 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> -->
 
                         </div>
 
                         <div class="tab-content position-relative" id="notificationItemsTabContent">
                             <div class="tab-pane fade show active py-2 ps-2" id="all-noti-tab" role="tabpanel">
                                 <div data-simplebar style="max-height: 300px;" class="pe-2">
-                                    <div class="text-reset notification-item d-block dropdown-item position-relative">
-                                        <div class="d-flex">
-                                            <div class="avatar-xs me-3">
-                                                <span class="avatar-title bg-soft-info text-info rounded-circle fs-16">
-                                                    <i class="bx bx-badge-check"></i>
-                                                </span>
-                                            </div>
-                                            <div class="flex-1">
-                                                <a href="#!" class="stretched-link">
-                                                    <h6 class="mt-0 mb-2 lh-base">Your <b>Elite</b> author Graphic
-                                                        Optimization <span class="text-secondary">reward</span> is
-                                                        ready!
-                                                    </h6>
-                                                </a>
-                                                <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                    <span><i class="mdi mdi-clock-outline"></i> Just 30 sec ago</span>
-                                                </p>
-                                            </div>
-                                            <div class="px-2 fs-15">
-                                                <div class="form-check notification-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="all-notification-check01">
-                                                    <label class="form-check-label" for="all-notification-check01"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <div class="text-reset notification-item d-block dropdown-item position-relative">
-                                        <div class="d-flex">
-                                            <img src="<?php echo e(URL::asset('build/images/users/avatar-2.jpg')); ?>" class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                            <div class="flex-1">
-                                                <a href="#!" class="stretched-link">
-                                                    <h6 class="mt-0 mb-1 fs-13 fw-semibold">Angela Bernier</h6>
-                                                </a>
-                                                <div class="fs-13 text-muted">
-                                                    <p class="mb-1">Answered to your comment on the cash flow forecast's
-                                                        graph 🔔.</p>
-                                                </div>
-                                                <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                    <span><i class="mdi mdi-clock-outline"></i> 48 min ago</span>
-                                                </p>
-                                            </div>
-                                            <div class="px-2 fs-15">
-                                                <div class="form-check notification-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="all-notification-check02">
-                                                    <label class="form-check-label" for="all-notification-check02"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <?php $notifications = \App\Models\Communicate::where('read_status', '1')->get()->toArray();
+                                    foreach ($notifications as $key => $value) { ?>
 
                                     <div class="text-reset notification-item d-block dropdown-item position-relative">
                                         <div class="d-flex">
@@ -392,156 +345,30 @@
                                             </div>
                                             <div class="flex-1">
                                                 <a href="#!" class="stretched-link">
-                                                    <h6 class="mt-0 mb-2 fs-13 lh-base">You have received <b class="text-success">20</b> new messages in the conversation
+                                                    <h6 class="mt-0 mb-2 fs-13 lh-base">You have received a message <b class="text-success"><?php echo e($value['full_name']); ?></b>
                                                     </h6>
                                                 </a>
                                                 <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                    <span><i class="mdi mdi-clock-outline"></i> 2 hrs ago</span>
+                                                    <span><i class="mdi mdi-clock-outline"></i> <?php echo e(Carbon\Carbon::parse($value['created_at'])->diffForHumans()); ?></span>
                                                 </p>
                                             </div>
-                                            <div class="px-2 fs-15">
+                                            <!-- <div class="px-2 fs-15">
                                                 <div class="form-check notification-check">
                                                     <input class="form-check-input" type="checkbox" value="" id="all-notification-check03">
                                                     <label class="form-check-label" for="all-notification-check03"></label>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
-
-                                    <div class="text-reset notification-item d-block dropdown-item position-relative">
-                                        <div class="d-flex">
-                                            <img src="<?php echo e(URL::asset('build/images/users/avatar-8.jpg')); ?>" class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                            <div class="flex-1">
-                                                <a href="#!" class="stretched-link">
-                                                    <h6 class="mt-0 mb-1 fs-13 fw-semibold">Maureen Gibson</h6>
-                                                </a>
-                                                <div class="fs-13 text-muted">
-                                                    <p class="mb-1">We talked about a project on linkedin.</p>
-                                                </div>
-                                                <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                    <span><i class="mdi mdi-clock-outline"></i> 4 hrs ago</span>
-                                                </p>
-                                            </div>
-                                            <div class="px-2 fs-15">
-                                                <div class="form-check notification-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="all-notification-check04">
-                                                    <label class="form-check-label" for="all-notification-check04"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                   <?php  }  ?>
 
                                     <div class="my-3 text-center view-all">
-                                        <button type="button" class="btn btn-soft-success waves-effect waves-light">View
-                                            All Notifications <i class="ri-arrow-right-line align-middle"></i></button>
+                                        <a href="<?php echo e(url('admin/communicate_message')); ?>" class="btn btn-soft-success waves-effect waves-light">View
+                                            All <i class="ri-arrow-right-line align-middle"></i></a>
                                     </div>
                                 </div>
 
                             </div>
-
-                            <div class="tab-pane fade py-2 ps-2" id="messages-tab" role="tabpanel" aria-labelledby="messages-tab">
-                                <div data-simplebar style="max-height: 300px;" class="pe-2">
-                                    <div class="text-reset notification-item d-block dropdown-item">
-                                        <div class="d-flex">
-                                            <img src="<?php echo e(URL::asset('build/images/users/avatar-3.jpg')); ?>" class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                            <div class="flex-1">
-                                                <a href="#!" class="stretched-link">
-                                                    <h6 class="mt-0 mb-1 fs-13 fw-semibold">James Lemire</h6>
-                                                </a>
-                                                <div class="fs-13 text-muted">
-                                                    <p class="mb-1">We talked about a project on linkedin.</p>
-                                                </div>
-                                                <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                    <span><i class="mdi mdi-clock-outline"></i> 30 min ago</span>
-                                                </p>
-                                            </div>
-                                            <div class="px-2 fs-15">
-                                                <div class="form-check notification-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="messages-notification-check01">
-                                                    <label class="form-check-label" for="messages-notification-check01"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-reset notification-item d-block dropdown-item">
-                                        <div class="d-flex">
-                                            <img src="<?php echo e(URL::asset('build/images/users/avatar-2.jpg')); ?>" class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                            <div class="flex-1">
-                                                <a href="#!" class="stretched-link">
-                                                    <h6 class="mt-0 mb-1 fs-13 fw-semibold">Angela Bernier</h6>
-                                                </a>
-                                                <div class="fs-13 text-muted">
-                                                    <p class="mb-1">Answered to your comment on the cash flow forecast's
-                                                        graph 🔔.</p>
-                                                </div>
-                                                <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                    <span><i class="mdi mdi-clock-outline"></i> 2 hrs ago</span>
-                                                </p>
-                                            </div>
-                                            <div class="px-2 fs-15">
-                                                <div class="form-check notification-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="messages-notification-check02">
-                                                    <label class="form-check-label" for="messages-notification-check02"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-reset notification-item d-block dropdown-item">
-                                        <div class="d-flex">
-                                            <img src="<?php echo e(URL::asset('build/images/users/avatar-6.jpg')); ?>" class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                            <div class="flex-1">
-                                                <a href="#!" class="stretched-link">
-                                                    <h6 class="mt-0 mb-1 fs-13 fw-semibold">Kenneth Brown</h6>
-                                                </a>
-                                                <div class="fs-13 text-muted">
-                                                    <p class="mb-1">Mentionned you in his comment on 📃 invoice #12501.
-                                                    </p>
-                                                </div>
-                                                <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                    <span><i class="mdi mdi-clock-outline"></i> 10 hrs ago</span>
-                                                </p>
-                                            </div>
-                                            <div class="px-2 fs-15">
-                                                <div class="form-check notification-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="messages-notification-check03">
-                                                    <label class="form-check-label" for="messages-notification-check03"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-reset notification-item d-block dropdown-item">
-                                        <div class="d-flex">
-                                            <img src="<?php echo e(URL::asset('build/images/users/avatar-8.jpg')); ?>" class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                            <div class="flex-1">
-                                                <a href="#!" class="stretched-link">
-                                                    <h6 class="mt-0 mb-1 fs-13 fw-semibold">Maureen Gibson</h6>
-                                                </a>
-                                                <div class="fs-13 text-muted">
-                                                    <p class="mb-1">We talked about a project on linkedin.</p>
-                                                </div>
-                                                <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                    <span><i class="mdi mdi-clock-outline"></i> 3 days ago</span>
-                                                </p>
-                                            </div>
-                                            <div class="px-2 fs-15">
-                                                <div class="form-check notification-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="messages-notification-check04">
-                                                    <label class="form-check-label" for="messages-notification-check04"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="my-3 text-center view-all">
-                                        <button type="button" class="btn btn-soft-success waves-effect waves-light">View
-                                            All Messages <i class="ri-arrow-right-line align-middle"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade p-4" id="alerts-tab" role="tabpanel" aria-labelledby="alerts-tab"></div>
 
                             <div class="notification-actions" id="notification-actions">
                                 <div class="d-flex text-muted justify-content-center">

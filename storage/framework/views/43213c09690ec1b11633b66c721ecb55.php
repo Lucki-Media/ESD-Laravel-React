@@ -164,7 +164,7 @@
                                         <?php $serviceTag = explode(',', $portfolio['services'])?>
                                         <?php if(count($serviceTag) != 0): ?>
                                             <?php $__currentLoopData = $serviceTag; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tag): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <div class="badge fw-medium badge-soft-primary"><?php echo e(\App\Models\Service::where('id',$tag)->value('service')); ?></div>
+                                                <div class="badge fw-medium badge-soft-primary"><?php echo e(\App\Models\ServiceLinks::where('id',$tag)->value('title')); ?></div>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         <?php endif; ?>
                                     </div>

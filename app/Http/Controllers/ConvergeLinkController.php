@@ -6,22 +6,46 @@ use App\Http\Controllers\Controller;
 use App\Models\ConvergeLinks;
 use App\Models\Portfolio;
 use App\Models\Service;
+use App\Models\ServiceLinks;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
+use URL;
 class ConvergeLinkController extends Controller
 {
-    public function index()
+    public function partnerData()
     {
-        $link_data = ConvergeLinks::where('deleted_status', '1')->get()->toArray();
+        $partner_data = ConvergeLinks::where('deleted_status', '1')->orderBy('id', 'DESC')->get()->toArray();
+        $data=[];
+        foreach ($partner_data as $key => $value) {
+            $data[] = [
+                'id' => $value['id'],
+                'coverImg' => URL::asset('images/background.jpg'),
+                'memberImg' => $value['logo_image'] == null ? '' : URL::asset('thumbnail/'. $value['logo_image']),
+                'nickname' => strtoupper(substr($value['partner'], 0, 2)),
+                'memberName' => $value['partner'],
+                'position' => $value['location'],
+                'projects' => count(explode(',',$value['projects'])),
+                'tasks' => count(explode(',', $value['services'])),
+                'edit_link' => url('admin/edit_link/' . $value['id']),
+                'delete_link' => url('admin/delete_link/' . $value['id']),
+                'view_link' => url('admin/view_partner/' . $value['id']),
+            ];
+        }
+        // return $data;
+        return response()->json($data);
+    }
+    
+    public function index(Request $request)
+    {
+        $link_data = ConvergeLinks::where('deleted_status', '1')->orderBy('id', 'DESC')->paginate(12);
         return view('Partners.index')->with([
-            'link_data' => $link_data
+            'link_data' => $link_data,
         ]);
     }
     public function add()
     {
         // return view('Partners.add');
-        $services = Service::where('deleted_status', '1')->get()->toArray();
+        $services = ServiceLinks::where('deleted_status', '1')->get()->toArray();
         $projects = Portfolio::where('deleted_status', '1')->get()->toArray();
         return view('Partners.add')->with([
             'services' => $services,
@@ -62,11 +86,24 @@ class ConvergeLinkController extends Controller
         return redirect(route('admin.partners-index'))->with('success', "Partner has been added Successfully.");
     }
 
+    public function view_partner($id)
+    {
+        return $id;
+        $data = ConvergeLinks::where('id', $id)->first();
+        $services = ServiceLinks::where('deleted_status', '1')->get()->toArray();
+        $projects = Portfolio::where('deleted_status', '1')->get()->toArray();
+        return view('Partners.edit')->with([
+            'data' => $data,
+            'services' => $services,
+            'projects' => $projects
+        ]);
+    }
+
     public function edit($id)
     {
         // return $id;
         $data = ConvergeLinks::where('id', $id)->first();
-        $services = Service::where('deleted_status', '1')->get()->toArray();
+        $services = ServiceLinks::where('deleted_status', '1')->get()->toArray();
         $projects = Portfolio::where('deleted_status', '1')->get()->toArray();
         return view('Partners.edit')->with([
             'data' => $data,

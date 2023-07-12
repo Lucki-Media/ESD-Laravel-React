@@ -164,7 +164,7 @@
                                         <?php $serviceTag = explode(',', $portfolio['services'])?>
                                         @if(count($serviceTag) != 0)
                                             @foreach ($serviceTag as $tag)
-                                                <div class="badge fw-medium badge-soft-primary">{{ \App\Models\Service::where('id',$tag)->value('service')}}</div>
+                                                <div class="badge fw-medium badge-soft-primary">{{ \App\Models\ServiceLinks::where('id',$tag)->value('title')}}</div>
                                             @endforeach
                                         @endif
                                     </div>
