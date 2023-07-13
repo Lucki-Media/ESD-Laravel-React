@@ -10,6 +10,7 @@ use App\Models\ServiceLinks;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use URL;
+use Image;
 class ConvergeLinkController extends Controller
 {
     public function partnerData()
@@ -19,7 +20,7 @@ class ConvergeLinkController extends Controller
         foreach ($partner_data as $key => $value) {
             $data[] = [
                 'id' => $value['id'],
-                'coverImg' => URL::asset('images/background.jpg'),
+                'coverImg' => $value['cover_image'] == null ? URL::asset('images/background.jpg') : URL::asset('thumbnail/' . $value['cover_image']),
                 'memberImg' => $value['logo_image'] == null ? '' : URL::asset('thumbnail/'. $value['logo_image']),
                 'nickname' => strtoupper(substr($value['partner'], 0, 2)),
                 'memberName' => $value['partner'],
@@ -59,43 +60,68 @@ class ConvergeLinkController extends Controller
             'partner' => 'required|unique:partners,partner,NULL,id,deleted_status,1',
             'link' => 'required|url',
             'location' => 'required',
-            // 'year' => 'required',
             'services' => 'required',
             'projects' => 'required',
         ], [
-            'partner.required' => 'Partner field is required.',
-            'partner.unique' => 'Partner is already taken.',
-            'link.required' => 'Link field is required.',
-            'link.url' => 'Link field must be a valid URL.',
-            // 'year.required' => 'Year field is required.',
+            'partner.required' => 'Partner Name field is required.',
+            'partner.unique' => 'Partner Name is already taken.',
+            'link.required' => 'Website Link field is required.',
+            'link.url' => 'Website Link field must be a valid URL.',
+            'location.required' => 'City field is required.',
             'services.required' => 'Choose Atleast one service.',
             'projects.required' => 'Choose Atleast one project.',
         ]);
         // return implode(',', $request->services);
 
-        $data = new ConvergeLinks;
-        $data->partner = $request->partner;
-        $data->link = $request->link;
-        $data->location = $request->location;
-        // $data->year = $request->year;
-        $data->services = implode(',', $request->services);
-        $data->projects = implode(',', $request->projects);
-        $data->created_at = Carbon::now();
-        $data->deleted_status = '1';
-        $data->save();
+        $partner_id = ConvergeLinks::insertGetId([
+        'partner'               => $request->partner,
+        'link'                  => $request->link,
+        'contact'               => $request->contact,
+        'email'                 => $request->email,
+        'services'              => implode(',', $request->services),
+        'projects'              => implode(',', $request->projects),
+        'location'              => $request->location,
+        'country'               => $request->country,
+        'zip'                   => $request->zip,
+        'git'                   => $request->git,
+        'twitter'               => $request->twitter,
+        'facebook'              => $request->facebook,
+        'instagram'             => $request->instagram,
+        'created_at'            => Carbon::now(),
+        'deleted_status'        => '1',
+        ]);
+
+        if ($request->file('logo_image')) {
+            $image = $request->file('logo_image');
+            $logoImage = uniqid() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('thumbnail/');
+            $img = Image::make($image->getRealPath());
+            $img->resize(1200, 1200, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath . $logoImage);
+            ConvergeLinks::where('id', $partner_id)->update(['logo_image' => $logoImage]);
+        }
+
+        if ($request->file('cover_image')) {
+            $image = $request->file('cover_image');
+            $coverImage = uniqid() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('thumbnail/');
+            $img = Image::make($image->getRealPath());
+            $img->resize(1200, 1200, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath . $coverImage);
+            ConvergeLinks::where('id', $partner_id)->update(['cover_image' => $coverImage]);
+        }
+
         return redirect(route('admin.partners-index'))->with('success', "Partner has been added Successfully.");
     }
 
     public function view_partner($id)
     {
-        return $id;
+        // return $id;
         $data = ConvergeLinks::where('id', $id)->first();
-        $services = ServiceLinks::where('deleted_status', '1')->get()->toArray();
-        $projects = Portfolio::where('deleted_status', '1')->get()->toArray();
-        return view('Partners.edit')->with([
+        return view('Partners.view')->with([
             'data' => $data,
-            'services' => $services,
-            'projects' => $projects
         ]);
     }
 
@@ -119,15 +145,14 @@ class ConvergeLinkController extends Controller
             'partner' => 'required|unique:partners,partner,' . $id . ',id,deleted_status,1',
             'link' => 'required|url',
             'location' => 'required',
-            // 'year' => 'required',
             'services' => 'required',
             'projects' => 'required',
         ], [
-            'partner.required' => 'Partner field is required.',
-            'partner.unique' => 'Partner is already taken.',
-            'link.required' => 'Link field is required.',
-            'link.url' => 'Link field must be a valid URL.',
-            // 'year.required' => 'Year field is required.',
+            'partner.required' => 'Partner Name field is required.',
+            'partner.unique' => 'Partner Name is already taken.',
+            'link.required' => 'Website Link field is required.',
+            'link.url' => 'Website Link field must be a valid URL.',
+            'location.required' => 'City field is required.',
             'services.required' => 'Choose Atleast one service.',
             'projects.required' => 'Choose Atleast one project.',
         ]);
@@ -135,13 +160,41 @@ class ConvergeLinkController extends Controller
         $data = ConvergeLinks::where('id', $id)->first();
         $data->partner = $request->partner;
         $data->link = $request->link;
-        $data->location = $request->location;
-        // $data->year = $request->year;
+        $data->contact = $request->contact;
+        $data->email = $request->email;
         $data->services = implode(',', $request->services);
         $data->projects = implode(',', $request->projects);
-        $data->created_at = Carbon::now();
-        $data->deleted_status = '1';
+        $data->location = $request->location;
+        $data->country = $request->country;
+        $data->zip = $request->zip;
+        $data->git = $request->git;
+        $data->twitter = $request->twitter;
+        $data->facebook = $request->facebook;
+        $data->instagram = $request->instagram;
         $data->save();
+
+        if ($request->file('logo_image')) {
+            $image = $request->file('logo_image');
+            $logoImage = uniqid() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('thumbnail/');
+            $img = Image::make($image->getRealPath());
+            $img->resize(1200, 1200, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath . $logoImage);
+            ConvergeLinks::where('id', $id)->update(['logo_image' => $logoImage]);
+        }
+
+        if ($request->file('cover_image')) {
+            $image = $request->file('cover_image');
+            $coverImage = uniqid() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('thumbnail/');
+            $img = Image::make($image->getRealPath());
+            $img->resize(1200, 1200, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath . $coverImage);
+            ConvergeLinks::where('id', $id)->update(['cover_image' => $coverImage]);
+        }
+
 
         return redirect(route('admin.partners-index'))->with('success', "Partner has been updated Successfully.");
     }

@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Content;
+use App\Models\ConvergeLinks;
 use App\Models\Headings;
+use App\Models\PivotImages;
+use App\Models\Portfolio;
 use App\Models\Service;
 use App\Models\ServiceLinks;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
+use URL;
 
 class CogitateController extends Controller
 {
@@ -199,7 +203,7 @@ class CogitateController extends Controller
             } else {
                 if ($value['module'] == 'portfolio') {
                     $array['type'] = $value['module'];
-                    $portfolio = Portfolio::where(['status' => 'portfolio', 'deleted_status' => '1'])->get()->toArray();
+                    $portfolio = Portfolio::where(['priority' => '1', 'deleted_status' => '1'])->get()->toArray();
                     foreach ($portfolio as $project) {
                         $imageData = PivotImages::where('portfolio_id', $project['id'])->pluck('image')->toArray();
                         $images = [];
@@ -210,7 +214,7 @@ class CogitateController extends Controller
                         }
 
                         foreach (explode(',', $project['services']) as $service_id) {
-                            $service[] = Service::where('id', $service_id)->value('service');
+                            $service[] = ServiceLinks::where('id', $service_id)->value('title');
                         }
 
                         foreach (explode(',', $project['partners']) as $partner_id) {
@@ -229,13 +233,9 @@ class CogitateController extends Controller
                 }
                 if ($value['module'] == 'service') {
                     $array['type'] = $value['module'];
-                    $services = Service::select('service', DB::raw('(SELECT GROUP_CONCAT(service_links.title) FROM service_links WHERE service_links.service_id = services.id) as sub_services'))
-                        ->where('services.deleted_status', '1')
+                    $services = ServiceLinks::select('service_links.title')
+                        ->where('deleted_status', '1')
                         ->get()->toArray();
-
-                    foreach ($services as &$row) {
-                        $row['sub_services'] = explode(',', $row['sub_services']);
-                    }
                     $array['description'] = $services;
                 }
                 if ($value['module'] == 'partner') {
@@ -246,7 +246,7 @@ class CogitateController extends Controller
                         $projects = [];
 
                         foreach (explode(',', $partner_arr['services']) as $service_id) {
-                            $service[] = Service::where('id', $service_id)->value('service');
+                            $service[] = ServiceLinks::where('id', $service_id)->value('title');
                         }
                         foreach (explode(',', $partner_arr['projects']) as $project_id) {
                             $projects[] = Portfolio::where('id', $project_id)->value('title');

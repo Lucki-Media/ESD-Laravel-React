@@ -10,6 +10,7 @@ use App\Models\Headings;
 use App\Models\PivotImages;
 use App\Models\Portfolio;
 use App\Models\Service;
+use App\Models\ServiceLinks;
 use DB;
 use Illuminate\Http\Request;
 use URL;
@@ -32,6 +33,8 @@ class ConvergeController extends Controller
         $data = Content::where(['page' => 'converge', 'deleted_status' => '1'])->get()->toArray();
         $details = [];
 
+        // return $data;
+
         foreach ($data as $key => $value) {
             $array = [];
             $array['id'] = $value['id'];
@@ -42,7 +45,7 @@ class ConvergeController extends Controller
             }else{
                 if ($value['module'] == 'portfolio'){
                     $array['type'] = $value['module'];
-                    $portfolio = Portfolio::where(['status' => 'portfolio', 'deleted_status' => '1'])->get()->toArray();
+                    $portfolio = Portfolio::where(['priority' => '1', 'deleted_status' => '1'])->get()->toArray();
                     foreach ($portfolio as $project) {
                         $imageData = PivotImages::where('portfolio_id', $project['id'])->pluck('image')->toArray();
                         $images = [];
@@ -53,7 +56,7 @@ class ConvergeController extends Controller
                         }
 
                         foreach (explode(',', $project['services']) as $service_id) {
-                            $service[] = Service::where('id',$service_id)->value('service');
+                            $service[] = ServiceLinks::where('id',$service_id)->value('title');
                         }
 
                         foreach (explode(',', $project['partners']) as $partner_id) {
@@ -72,13 +75,10 @@ class ConvergeController extends Controller
                 }
                 if ($value['module'] == 'service') {
                     $array['type'] = $value['module'];
-                    $services = Service::select('service', DB::raw('(SELECT GROUP_CONCAT(service_links.title) FROM service_links WHERE service_links.service_id = services.id) as sub_services'))
-                        ->where('services.deleted_status', '1')
+                    $services = ServiceLinks::select('service_links.title')
+                        ->where('deleted_status', '1')
                         ->get()->toArray();
 
-                    foreach ($services as &$row) {
-                        $row['sub_services'] = explode(',', $row['sub_services']);
-                    }
                     $array['description'] = $services;
                 }
                 if ($value['module'] == 'partner'){
@@ -89,7 +89,7 @@ class ConvergeController extends Controller
                         $projects = [];
 
                         foreach (explode(',', $partner_arr['services']) as $service_id) {
-                            $service[] = Service::where('id', $service_id)->value('service');
+                            $service[] = ServiceLinks::where('id', $service_id)->value('title');
                         }
                         foreach (explode(',', $partner_arr['projects']) as $project_id) {
                             $projects[] = Portfolio::where('id', $project_id)->value('title');

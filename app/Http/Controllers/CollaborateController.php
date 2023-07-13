@@ -249,7 +249,7 @@ class CollaborateController extends Controller
         $portfolio = [];
         $archive = [];
         foreach ($data as $value) {
-            if ($value['status'] == 'portfolio') {
+            if ($value['priority'] == '1') {
                 $features = PivotFeatures::where('portfolio_id', $value['id'])->pluck('feature')->toArray();
                 $imageData = PivotImages::where('portfolio_id', $value['id'])->pluck('image')->toArray();
                 $images = [];
@@ -259,14 +259,14 @@ class CollaborateController extends Controller
                 $array = [
                     'title' => $value['title'],
                     'content' => $value['content'],
-                    'status' => $value['status'],
+                    'status' => "Portfolio",
                     'images' => $images,
                     'features' => $features,
                 ];
                 $portfolio[] = $array;
             }
 
-            if ($value['status'] == 'archive') {
+            if ($value['priority'] == '2') {
                 $features = PivotFeatures::where('portfolio_id', $value['id'])->pluck('feature')->toArray();
                 $imageData = PivotImages::where('portfolio_id', $value['id'])->pluck('image')->toArray();
                 $images = [];
@@ -276,7 +276,7 @@ class CollaborateController extends Controller
                 $array = [
                     'title' => $value['title'],
                     'content' => $value['content'],
-                    'status' => $value['status'],
+                    'status' => "Archive",
                     'images' => $images,
                     'features' => $features,
                 ];
@@ -308,7 +308,7 @@ class CollaborateController extends Controller
             } else {
                 if ($value['module'] == 'portfolio') {
                     $array['type'] = $value['module'];
-                    $portfolio = Portfolio::where(['status' => 'portfolio', 'deleted_status' => '1'])->get()->toArray();
+                    $portfolio = Portfolio::where(['priority' => '1', 'deleted_status' => '1'])->get()->toArray();
                     foreach ($portfolio as $project) {
                         $imageData = PivotImages::where('portfolio_id', $project['id'])->pluck('image')->toArray();
                         $images = [];
@@ -319,7 +319,7 @@ class CollaborateController extends Controller
                         }
 
                         foreach (explode(',', $project['services']) as $service_id) {
-                            $service[] = Service::where('id', $service_id)->value('service');
+                            $service[] = ServiceLinks::where('id', $service_id)->value('title');
                         }
 
                         foreach (explode(',', $project['partners']) as $partner_id) {
@@ -338,13 +338,9 @@ class CollaborateController extends Controller
                 }
                 if ($value['module'] == 'service') {
                     $array['type'] = $value['module'];
-                    $services = Service::select('service', DB::raw('(SELECT GROUP_CONCAT(service_links.title) FROM service_links WHERE service_links.service_id = services.id) as sub_services'))
-                        ->where('services.deleted_status', '1')
+                    $services = ServiceLinks::select('service_links.title')
+                        ->where('deleted_status', '1')
                         ->get()->toArray();
-
-                    foreach ($services as &$row) {
-                        $row['sub_services'] = explode(',', $row['sub_services']);
-                    }
                     $array['description'] = $services;
                 }
                 if ($value['module'] == 'partner') {
@@ -355,7 +351,7 @@ class CollaborateController extends Controller
                         $projects = [];
 
                         foreach (explode(',', $partner_arr['services']) as $service_id) {
-                            $service[] = Service::where('id', $service_id)->value('service');
+                            $service[] = ServiceLinks::where('id', $service_id)->value('title');
                         }
                         foreach (explode(',', $partner_arr['projects']) as $project_id) {
                             $projects[] = Portfolio::where('id', $project_id)->value('title');
@@ -385,7 +381,7 @@ class CollaborateController extends Controller
     {
         $heading = Headings::where('type', 'cache')->value('heading');
         $array = [];
-        $portfolio = Portfolio::where(['status' => 'archive', 'deleted_status' => '1'])->get()->toArray();
+        $portfolio = Portfolio::where(['priority' => '2', 'deleted_status' => '1'])->get()->toArray();
         foreach ($portfolio as $project) {
             $imageData = PivotImages::where('portfolio_id', $project['id'])->pluck('image')->toArray();
             $images = [];
@@ -396,7 +392,7 @@ class CollaborateController extends Controller
             }
 
             foreach (explode(',', $project['services']) as $service_id) {
-                $service[] = Service::where('id', $service_id)->value('service');
+                $service[] = ServiceLinks::where('id', $service_id)->value('title');
             }
 
             foreach (explode(',', $project['partners']) as $partner_id) {

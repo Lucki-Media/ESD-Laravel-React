@@ -5,13 +5,26 @@
 @slot('li_1') ERGOSUMDEUS @endslot
 @slot('title')Partners @endslot
 @endcomponent
+
+@if ($errors->any())
+<div class="alert alert-danger mb-5">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+            @endforeach
+    </ul>
+</div>
+@endif
+        
+<form class="" method="POST" action="{!!route('admin.save_converge_link')!!}" enctype="multipart/form-data" novalidate>
+@csrf
     <div class="position-relative mx-n4 mt-n4">
         <div class="profile-wid-bg profile-setting-img">
             <img src="{{ URL::asset('images/background.jpg') }}" class="profile-wid-img" alt="">
             <div class="overlay-content">
                 <div class="text-end p-3">
                     <div class="p-0 ms-auto rounded-circle profile-photo-edit">
-                        <input id="profile-foreground-img-file-input" type="file" class="profile-foreground-img-file-input">
+                        <input id="profile-foreground-img-file-input" type="file" accept="image/*" class="profile-foreground-img-file-input" name="cover_image">
                         <label for="profile-foreground-img-file-input" class="profile-photo-edit btn btn-light">
                             <i class="ri-image-edit-line align-bottom me-1"></i> Change Cover
                         </label>
@@ -30,7 +43,7 @@
                             <img src="{{ URL::asset('images/user.png') }}"
                                 class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">
                             <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
-                                <input id="profile-img-file-input" type="file" class="profile-img-file-input">
+                                <input id="profile-img-file-input" type="file" accept="image/*" class="profile-img-file-input" name="logo_image">
                                 <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
                                     <span class="avatar-title rounded-circle bg-light text-body">
                                         <i class="ri-camera-fill"></i>
@@ -61,8 +74,9 @@
                                 <i class="ri-github-fill"></i>
                             </span>
                         </div>
-                        <input type="email" class="form-control" id="gitUsername" placeholder="Username"
-                            value="@daveadame">
+                        <input type="text" class="form-control" id="gitUsername" name="git" placeholder="Git Username"
+                            value="{{old('git')}}">
+
                     </div>
                     <div class="mb-3 d-flex">
                         <div class="avatar-xs d-block flex-shrink-0 me-3">
@@ -70,8 +84,8 @@
                                 <i class="ri-twitter-fill"></i>
                             </span>
                         </div>
-                        <input type="text" class="form-control" id="websiteInput" placeholder="www.example.com"
-                            value="www.velzon.com">
+                        <input type="text" class="form-control" id="websiteInput" name="twitter" placeholder="Twitter Username"
+                            value="{{old('twitter')}}">
                     </div>
                     <div class="mb-3 d-flex">
                         <div class="avatar-xs d-block flex-shrink-0 me-3">
@@ -79,8 +93,8 @@
                                 <i class="ri-facebook-circle-fill"></i>
                             </span>
                         </div>
-                        <input type="text" class="form-control" id="dribbleName" placeholder="Username"
-                            value="@dave_adame">
+                        <input type="text" class="form-control" id="dribbleName" name="facebook" placeholder="Facebook Username"
+                            value="{{old('facebook')}}">
                     </div>
                     <div class="d-flex">
                         <div class="avatar-xs d-block flex-shrink-0 me-3">
@@ -88,8 +102,7 @@
                                 <i class="ri-instagram-fill"></i>
                             </span>
                         </div>
-                        <input type="text" class="form-control" id="pinterestName" placeholder="Username"
-                            value="Advance Dave">
+                        <input type="text" class="form-control" id="pinterestName" name="instagram" placeholder="Instagram Username" value="{{old('instagram')}}">
                     </div>
                 </div>
             </div>
@@ -106,8 +119,8 @@
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label for="firstnameInput" class="form-label">Name</label>
-                                            <input type="text" class="form-control" id="firstnameInput"
-                                                placeholder="Enter your firstname" value="Dave">
+                                            <input type="text" class="form-control" id="firstnameInput" required
+                                                placeholder="Enter name" name="partner" value="{{old('partner')}}">
                                         </div>
                                     </div>
                                     <!--end col-->
@@ -115,8 +128,8 @@
                                         <div class="mb-3">
                                             <label for="phonenumberInput" class="form-label">Phone
                                                 Number</label>
-                                            <input type="text" class="form-control" id="phonenumberInput"
-                                                placeholder="Enter your phone number" value="+(1) 987 6543">
+                                            <input type="text" class="form-control" id="phonenumberInput" name="contact"
+                                                placeholder="Enter phone number" value="{{old('contact')}}">
                                         </div>
                                     </div>
                                     <!--end col-->
@@ -124,23 +137,33 @@
                                         <div class="mb-3">
                                             <label for="emailInput" class="form-label">Email
                                                 Address</label>
-                                            <input type="email" class="form-control" id="emailInput"
-                                                placeholder="Enter your email" value="daveadame@velzon.com">
+                                            <input type="email" class="form-control" id="emailInput" name="email"
+                                                placeholder="Enter email" value="{{old('email')}}">
                                         </div>
                                     </div>
                                     <!--end col-->
                                     <div class="col-lg-12">
                                         <div class="mb-3">
-                                            <label for="skillsInput" class="form-label">Skills</label>
-                                            <select class="form-control" name="skillsInput" data-choices
-                                                data-choices-removeItem multiple id="skillsInput">
-                                                <option value="illustrator">Illustrator</option>
-                                                <option value="photoshop">Photoshop</option>
-                                                <option value="css">CSS</option>
-                                                <option value="html">HTML</option>
-                                                <option value="javascript" selected>Javascript</option>
-                                                <option value="python">Python</option>
-                                                <option value="php">PHP</option>
+                                            <label for="skillsInput" class="form-label">Services</label>
+                                            <select class="form-control" id="choices-multiple-remove-button" data-choices
+                                                data-choices-removeItem name="services[]" multiple>
+                                                @foreach ($services as $value)
+                                                <option value="{{$value['id']}}">
+                                                    {{$value['title']}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!--end col-->
+                                    <div class="col-lg-12">
+                                        <div class="mb-3">
+                                            <label for="skillsInput" class="form-label">Projects</label>
+                                            <select class="form-control" id="choices-multiple-remove-button" data-choices
+                                                data-choices-removeItem name="projects[]" multiple>
+                                                @foreach ($projects as $project)
+                                                <option value="{{$project['id']}}">
+                                                    {{$project['title']}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -148,24 +171,23 @@
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label for="websiteInput1" class="form-label">Website</label>
-                                            <input type="text" class="form-control" id="websiteInput1"
-                                                placeholder="www.example.com" value="www.velzon.com" />
+                                            <input type="text" class="form-control" id="websiteInput1" name="link"
+                                                placeholder="Enter Website Link" value="{{old('link')}}" />
                                         </div>
                                     </div>
                                     <!--end col-->
                                     <div class="col-lg-4">
                                         <div class="mb-3">
                                             <label for="cityInput" class="form-label">City</label>
-                                            <input type="text" class="form-control" id="cityInput" placeholder="City"
-                                                value="California" />
+                                            <input type="text" class="form-control" id="cityInput" name="location" placeholder="Enter City" value="{{old('location')}}" />
                                         </div>
                                     </div>
                                     <!--end col-->
                                     <div class="col-lg-4">
                                         <div class="mb-3">
                                             <label for="countryInput" class="form-label">Country</label>
-                                            <input type="text" class="form-control" id="countryInput"
-                                                placeholder="Country" value="United States" />
+                                            <input type="text" class="form-control" id="countryInput" name="country" 
+                                                placeholder="Enter Country" value="{{old('country')}}" />
                                         </div>
                                     </div>
                                     <!--end col-->
@@ -173,15 +195,15 @@
                                         <div class="mb-3">
                                             <label for="zipcodeInput" class="form-label">Zip
                                                 Code</label>
-                                            <input type="text" class="form-control" minlength="5" maxlength="6"
-                                                id="zipcodeInput" placeholder="Enter zipcode" value="90011">
+                                            <input type="text" class="form-control" minlength="5" maxlength="6" name="zip" 
+                                                id="zipcodeInput" placeholder="Enter zipcode" value="{{old('zip')}}">
                                         </div>
                                     </div>
                                     <!--end col-->
                                     <div class="col-lg-12">
                                         <div class="hstack gap-2 justify-content-end">
                                             <button type="submit" class="btn btn-primary">Create</button>
-                                            <button type="button" class="btn btn-soft-secondary">Cancel</button>
+                                            <a href="{{url('admin/partners')}}" class="btn btn-soft-secondary">Cancel</a>
                                         </div>
                                     </div>
                                     <!--end col-->
@@ -197,6 +219,8 @@
         <!--end col-->
     </div>
     <!--end row-->
+</form>
+
 @endsection
 @section('script')
     <script src="{{ URL::asset('build/js/pages/profile-setting.init.js') }}"></script>
