@@ -205,8 +205,10 @@
                                                 @endif
                                             </div>
                                             <div class="swiper-wrapper">
+                                                @if(count(explode(',', $data['projects'])) > 0)
                                                 @foreach (explode(',', $data['projects']) as $projectId)
                                                 <?php $project = \App\Models\Portfolio::where('id',$projectId)->first();?>
+                                                @if($project)
                                                 <div class="swiper-slide">
                                                     <div class="card profile-project-card shadow-none profile-project-info mb-0">
                                                         <div class="card-body p-4">
@@ -233,6 +235,7 @@
                                                                         </div>
                                                                         <div class="avatar-group">
                                                                             <?php $partnerTag = explode(',', $project['partners'])?>
+                                                                            @if(count($partnerTag) > 0)
                                                                             @foreach ($partnerTag as $partner)
                                                                             <?php
                                                                             $partner_image = \App\Models\ConvergeLinks::where('id',$partner)->value('logo_image');
@@ -248,6 +251,7 @@
                                                                                 </div>
                                                                             </div>
                                                                             @endforeach
+                                                                            @endif
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -256,7 +260,9 @@
                                                         <!-- end card body -->
                                                     </div>
                                                 </div>
+                                                @endif
                                                 @endforeach
+                                                @endif
                                             </div>
 
                                         </div>

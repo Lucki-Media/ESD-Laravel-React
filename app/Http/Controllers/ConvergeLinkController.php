@@ -60,16 +60,16 @@ class ConvergeLinkController extends Controller
             'partner' => 'required|unique:partners,partner,NULL,id,deleted_status,1',
             'link' => 'required|url',
             'location' => 'required',
-            'services' => 'required',
-            'projects' => 'required',
+            // 'services' => 'required',
+            // 'projects' => 'required',
         ], [
             'partner.required' => 'Partner Name field is required.',
             'partner.unique' => 'Partner Name is already taken.',
             'link.required' => 'Website Link field is required.',
             'link.url' => 'Website Link field must be a valid URL.',
             'location.required' => 'City field is required.',
-            'services.required' => 'Choose Atleast one service.',
-            'projects.required' => 'Choose Atleast one project.',
+            // 'services.required' => 'Choose Atleast one service.',
+            // 'projects.required' => 'Choose Atleast one project.',
         ]);
         // return implode(',', $request->services);
 
@@ -78,8 +78,8 @@ class ConvergeLinkController extends Controller
         'link'                  => $request->link,
         'contact'               => $request->contact,
         'email'                 => $request->email,
-        'services'              => implode(',', $request->services),
-        'projects'              => implode(',', $request->projects),
+        'services'              => $request->services ? implode(',', $request->services) : "",
+        'projects'              =>  $request->projects ? implode(',', $request->projects) : "",
         'location'              => $request->location,
         'country'               => $request->country,
         'zip'                   => $request->zip,
@@ -145,16 +145,16 @@ class ConvergeLinkController extends Controller
             'partner' => 'required|unique:partners,partner,' . $id . ',id,deleted_status,1',
             'link' => 'required|url',
             'location' => 'required',
-            'services' => 'required',
-            'projects' => 'required',
+            // 'services' => 'required',
+            // 'projects' => 'required',
         ], [
             'partner.required' => 'Partner Name field is required.',
             'partner.unique' => 'Partner Name is already taken.',
             'link.required' => 'Website Link field is required.',
             'link.url' => 'Website Link field must be a valid URL.',
-            'location.required' => 'City field is required.',
-            'services.required' => 'Choose Atleast one service.',
-            'projects.required' => 'Choose Atleast one project.',
+            'location.required' => 'City field is required.',   
+            // 'services.required' => 'Choose Atleast one service.',
+            // 'projects.required' => 'Choose Atleast one project.',
         ]);
 
         $data = ConvergeLinks::where('id', $id)->first();
@@ -162,8 +162,8 @@ class ConvergeLinkController extends Controller
         $data->link = $request->link;
         $data->contact = $request->contact;
         $data->email = $request->email;
-        $data->services = implode(',', $request->services);
-        $data->projects = implode(',', $request->projects);
+        $data->services = $request->services ? implode(',', $request->services) : "";
+        $data->projects = $request->projects ? implode(',', $request->projects) : "";
         $data->location = $request->location;
         $data->country = $request->country;
         $data->zip = $request->zip;
