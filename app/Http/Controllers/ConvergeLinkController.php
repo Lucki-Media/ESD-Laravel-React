@@ -79,7 +79,7 @@ class ConvergeLinkController extends Controller
         'contact'               => $request->contact,
         'email'                 => $request->email,
         'services'              => $request->services ? implode(',', $request->services) : "",
-        'projects'              =>  $request->projects ? implode(',', $request->projects) : "",
+        'projects'              => $request->projects ? implode(',', $request->projects) : "",
         'location'              => $request->location,
         'country'               => $request->country,
         'zip'                   => $request->zip,

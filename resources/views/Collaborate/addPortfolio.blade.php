@@ -58,9 +58,9 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="mb-3 mb-lg-0">
-                                <label for="choices-priority-input" class="form-label">Priority</label>
-                                <select class="form-select" data-choices data-choices-search-false
-                                    id="choices-priority-input" name="priority">
+                                <label for="inputPriority" class="form-label">Priority</label>
+                                <select class="form-select" data-choices-search-false
+                                    id="inputPriority" name="priority">
                                     <option value="1" selected>Portfolio</option>
                                     <option value="2">Archived</option>
                                 </select>   
@@ -68,11 +68,10 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="mb-3 mb-lg-0">
-                                <label for="choices-status-input" class="form-label">Status</label>
-                                <select class="form-select" data-choices data-choices-search-false
-                                    id="choices-status-input" name="show_details">
-                                    <option value="1" selected>Public</option>
-                                    <option value="2">Private</option>
+                                <label for="inputStatus" class="form-label">Status</label>
+                                <select class="form-select" data-choices-search-false  id="inputStatus" name="show_details">
+                                    <option value="1" selected >Public</option>
+                                    <!-- <option value="2">Private</option> -->
                                 </select>
                             </div>
                         </div>
@@ -274,6 +273,36 @@
                 content = $(this).find('div:first').html();
                 $('#snow_picker_content').val(content); // Update the hidden input field
                 // console.log(content);
+            });
+
+            $('#inputPriority').on('change', function() {
+                // Get the selected value from the first select element
+                const selectedValue = $(this).val();
+                // Clear the existing options
+                $('#inputStatus').empty();
+ 
+                // Add options based on the selected value
+                if (selectedValue === '1') {
+                    // Append the 'Public' option
+                    $('#inputStatus').append($('<option>', {
+                        value: '1',
+                        text: 'Public'
+                    }));
+                    // console.log($('#inputStatus').html());
+                } else if (selectedValue === '2') {
+                    // Append the 'Public' option
+                    $('#inputStatus').append($('<option>', {
+                        value: '1',
+                        text: 'Public'
+                    }));
+
+                    // Append the 'Private' option
+                    $('#inputStatus').append($('<option>', {
+                        value: '2',
+                        text: 'Private'
+                    }));
+                    // console.log($('#inputStatus').html());
+                }
             });
         });
         </script>

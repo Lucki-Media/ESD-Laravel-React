@@ -63,7 +63,7 @@ class CogitateController extends Controller
 
     public function edit_service($id)
     {
-        $services = Service::all();
+        $services = Service::where('deleted_status', '1')->get()->toArray();
         $data = ServiceLinks::select('service_links.*', 'services.service')
             ->join('services', 'service_links.service_id', '=', 'services.id')
             ->where('service_links.id', $id)
@@ -117,7 +117,7 @@ class CogitateController extends Controller
 
     public function add_serviceLink()
     {
-        $data = Service::all();
+        $data = Service::where('deleted_status', '1')->get()->toArray();
         return view('Cogitate.ServiceLink.add')->with('services', $data);
     }
 
@@ -145,7 +145,7 @@ class CogitateController extends Controller
 
     public function edit_serviceLink($id)
     {
-        $services = Service::all();
+        $services = Service::where('deleted_status', '1')->get()->toArray();
         $data = ServiceLinks::select('service_links.*', 'services.service')
             ->join('services', 'service_links.service_id', '=', 'services.id')
             ->where('service_links.id', $id)

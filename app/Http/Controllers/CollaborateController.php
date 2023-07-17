@@ -24,15 +24,24 @@ class CollaborateController extends Controller
         return view('Collaborate.headingIndex');
     }
 
+    public function portfolio_projects()
+    {
+        $portfolio = Portfolio::where(['priority' => '1', 'deleted_status' => '1'])->orderBy('order_number', 'ASC')->paginate(10);
+
+        return view('Collaborate.portfolio')->with([
+            'portfolio' => $portfolio,
+        ]);
+    }
+
     public function collaborate_portfolio(Request $request)
     {
         if ($request->search_project == "") {
             $portfolio = Portfolio::where('deleted_status', '1')->orderBy('id', 'DESC')->paginate(12);
-        }else{
+        } else {
             $portfolio = Portfolio::where('deleted_status', '1')
-            ->where('title', 'LIKE', '%' . $request->search_project . '%')
-            ->orderBy('id', 'DESC')
-            ->paginate(12);
+                ->where('title', 'LIKE', '%' . $request->search_project . '%')
+                ->orderBy('id', 'DESC')
+                ->paginate(12);
         }
         return view('Collaborate.portfolioIndex')->with([
             'portfolio' => $portfolio,
@@ -51,7 +60,7 @@ class CollaborateController extends Controller
     }
 
     public function save_portfolio(Request $request)
-    { 
+    {
         $request->validate([
             'title' => 'required',
             // 'partners' => 'required',
@@ -68,8 +77,8 @@ class CollaborateController extends Controller
         $portfolio_id = Portfolio::insertGetId([
             'title' => $request->title,
             'content' => $request->content,
-            'partners' => implode(',', $request->partners),
-            'services' => implode(',', $request->services),
+            'partners' => $request->partners ? implode(',', $request->partners) : "",
+            'services' => $request->services ? implode(',', $request->services) : "",
             'year' => $request->year,
             'priority' => $request->priority,
             'show_details' => $request->show_details,
@@ -133,7 +142,7 @@ class CollaborateController extends Controller
     }
 
     public function update_portfolio(Request $request, $id)
-    { 
+    {
         $request->validate([
             'title' => 'required',
             // 'partners' => 'required',
@@ -244,7 +253,7 @@ class CollaborateController extends Controller
     public function collaborateData()
     {
         $heading = Headings::where('type', 'collaborate')->value('heading');
-        $data = Portfolio::all();
+        $data = Portfolio::where('deleted_status', '1')->get()->toArray();
         // return $data;
         $portfolio = [];
         $archive = [];
@@ -413,7 +422,7 @@ class CollaborateController extends Controller
             'message' => 'Archive Data Get Successfully..',
             'data' => [
                 'heading' => $heading == null ? "" : $heading,
-                'details' => $array,    
+                'details' => $array,
             ],
         ], 200);
     }

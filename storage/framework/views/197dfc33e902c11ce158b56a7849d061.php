@@ -99,7 +99,7 @@
                                 </div>
                             </div>
                             <div class="flex-grow-1">
-                                <h5 class="mb-1 fs-15"><a href="apps-projects-overview"
+                                <h5 class="mb-1 fs-15"><a href="<?php echo e(url('admin/view_portfolio/'.$topic['id'])); ?>"
                                         class="text-dark"><?php echo e($topic['title']); ?></a></h5>
                                 <p class="text-muted text-truncate-two-lines mb-3">
                                     <?php echo Str::limit(strip_tags($topic['content']), 50); ?>

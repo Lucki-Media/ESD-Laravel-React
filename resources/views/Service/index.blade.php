@@ -41,8 +41,8 @@
                     <thead>
                         <tr>
                             <th data-ordering="false">ID</th>
-                            <th data-ordering="false" width="30%">Service</th>
                             <th data-ordering="false" width="30%">Category</th>
+                            <th data-ordering="false" width="30%">Service</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -57,8 +57,8 @@
                         @foreach ($data as $value)
                         <tr>
                             <td>{{$value['id']}}</td>
-                            <td>{{$value['title']}}</td>
                             <td>{{$value['service']}}</td>
+                            <td>{{$value['title']}}</td>
                             <td>
                                 <div class="d-flex gap-2">
                                     <div class="edit">
