@@ -262,6 +262,17 @@
                 <!-- end card body -->
             </div>
             <!-- end card -->
+                <div class="card" id="order_id_div">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Order Number</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <input type="number" name="order_number" class="form-control" id="project-order-input"
+                                placeholder="Enter Order Number" value="{{ $portfolio['order_number'] }}">
+                        </div>
+                    </div>
+                </div>
         </div>
         <!-- end col -->
     </div>
@@ -291,8 +302,11 @@
                 // console.log(content);
             });
 
-            var priority = {!! json_encode($portfolio['show_details']) !!};
-            console.log(priority);
+
+
+            var priority = {!! json_encode($portfolio['priority']) !!};
+            // console.log(priority);
+            priority == '1' ? $("#order_id_div").show() : $("#order_id_div").hide();
             $('#inputPriority').on('change', function() {
                 // Get the selected value from the first select element
                 const selectedValue = $(this).val();
@@ -301,6 +315,7 @@
  
                 // Add options based on the selected value
                 if (selectedValue === '1') {
+                    $("#order_id_div").show();
                     // Append the 'Public' option
                     $('#inputStatus').append($('<option>', {
                         value: '1',
@@ -308,6 +323,7 @@
                     }));
                     // console.log($('#inputStatus').html());
                 } else if (selectedValue === '2') {
+                    $("#order_id_div").hide();
                     // Append the 'Public' option
                     $('#inputStatus').append($('<option>', {
                         value: '1',

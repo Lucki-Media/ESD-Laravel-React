@@ -35,7 +35,7 @@ class CogitateController extends Controller
 
     public function add_service()
     {
-        $data = Service::where('deleted_status','1')->get()->toArray();
+        $data = Service::where('deleted_status', '1')->get()->toArray();
         return view('Service.add')->with('services', $data);
     }
 
@@ -203,7 +203,7 @@ class CogitateController extends Controller
             } else {
                 if ($value['module'] == 'portfolio') {
                     $array['type'] = $value['module'];
-                    $portfolio = Portfolio::where(['priority' => '1', 'deleted_status' => '1'])->get()->toArray();
+                    $portfolio = Portfolio::where(['priority' => '1', 'deleted_status' => '1'])->orderBy('order_number', 'ASC')->get()->toArray();
                     foreach ($portfolio as $project) {
                         $imageData = PivotImages::where('portfolio_id', $project['id'])->pluck('image')->toArray();
                         $images = [];
@@ -268,7 +268,7 @@ class CogitateController extends Controller
             'message' => 'Cogitate Data Get Successfully..',
             'data' => [
                 'heading' => $heading == null ? "" : $heading,
-                'details' => $details,
+                'details' => $details ? $details : [],
             ],
         ], 200);
     }

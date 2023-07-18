@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title') Portfolio @endsection
+@section('title') Archive @endsection
 @section('css')
 <!--datatable css-->
 <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
@@ -10,7 +10,7 @@
 @section('content')
 @component('components.breadcrumb')
 @slot('li_1') ERGOSUMDEUS @endslot
-@slot('title')Portfolio @endslot
+@slot('title')Archive @endslot
 @endcomponent
 
 <div class="row">
@@ -31,7 +31,7 @@
         @endif
         <div class="card">
             <div class="card-header d-flex align-items-center">
-                <h5 class="card-title mb-0 flex-grow-1">Portfolio</h5>
+                <h5 class="card-title mb-0 flex-grow-1">Archive</h5>
                 <div>
                     <a href="{{url('admin\add_portfolio')}}" class="btn btn-primary "><i class="ri-add-line  align-bottom me-1"></i> Add</a>
                 </div>
@@ -40,11 +40,11 @@
                 <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                     <thead>
                         <tr>
-                            <th >Order Number</th>
-                            <th>Year</th>
-                            <th data-ordering="false" width="40%">Title</th>
+                            <!-- <th data-ordering="false">No.</th> -->
+                            <th data-ordering="false">Year</th>
+                            <th width="40%">Title</th>
                             <th>Create Date</th>
-                            <!-- <th>Status</th> -->
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -58,11 +58,11 @@
                         }else{ ?>
                         @foreach ($portfolio as $topic)
                         <tr>
-                            <td>{{$topic['order_number']}}</td>
+                            <!-- <td>{{$topic['id']}}</td> -->
                             <td>{{$topic['year']}}</td>
                             <td>{{$topic['title']}}</td>
                             <td><?php echo \Carbon\Carbon::parse($topic['created_at'])->format('d F,Y');?></td>
-                            <!-- <td><span class="badge badge-soft-{{$topic['status'] == 'portfolio' ? 'success' : 'secondary'}}">{{$topic['status'] == 'portfolio' ? 'Portfolio' : 'Archive'}}</span></td> -->
+                            <td><span class="badge fs-12 badge-soft-{{$topic['show_details'] == '1' ? 'success' : 'info'}}">{{$topic['show_details'] == '1' ? 'Public' : 'Private'}}</span></td>
                             <td>
                                 <div class="dropdown d-inline-block">
                                     <button class="btn btn-soft-primary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">

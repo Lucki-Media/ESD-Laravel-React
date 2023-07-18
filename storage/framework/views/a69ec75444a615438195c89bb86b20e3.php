@@ -74,7 +74,7 @@ $currentPage = url()->current();
                                 <a href="<?php echo e(url('admin/portfolio_projects')); ?>" class="nav-link">Portfolo</a>
                              </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link">Archived</a>
+                                <a href="<?php echo e(url('admin/archive_projects')); ?>" class="nav-link">Archived</a>
                              </li>
                         </ul>
                     </div>

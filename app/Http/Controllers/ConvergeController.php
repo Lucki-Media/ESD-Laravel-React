@@ -39,13 +39,13 @@ class ConvergeController extends Controller
             $array = [];
             $array['id'] = $value['id'];
             $array['title'] = $value['title'] == null ? "" : $value['title'];
-            if ($value['type'] == 'content'){
+            if ($value['type'] == 'content') {
                 $array['type'] = $value['type'];
                 $array['description'] = $value['description'];
-            }else{
-                if ($value['module'] == 'portfolio'){
+            } else {
+                if ($value['module'] == 'portfolio') {
                     $array['type'] = $value['module'];
-                    $portfolio = Portfolio::where(['priority' => '1', 'deleted_status' => '1'])->get()->toArray();
+                    $portfolio = Portfolio::where(['priority' => '1', 'deleted_status' => '1'])->orderBy('order_number', 'ASC')->get()->toArray();
                     foreach ($portfolio as $project) {
                         $imageData = PivotImages::where('portfolio_id', $project['id'])->pluck('image')->toArray();
                         $images = [];
@@ -56,7 +56,7 @@ class ConvergeController extends Controller
                         }
 
                         foreach (explode(',', $project['services']) as $service_id) {
-                            $service[] = ServiceLinks::where('id',$service_id)->value('title');
+                            $service[] = ServiceLinks::where('id', $service_id)->value('title');
                         }
 
                         foreach (explode(',', $project['partners']) as $partner_id) {
@@ -81,7 +81,7 @@ class ConvergeController extends Controller
 
                     $array['description'] = $services;
                 }
-                if ($value['module'] == 'partner'){
+                if ($value['module'] == 'partner') {
                     $array['type'] = $value['module'];
                     $partner_data = ConvergeLinks::where('deleted_status', '1')->get()->toArray();
                     foreach ($partner_data as $partner_arr) {
@@ -113,7 +113,7 @@ class ConvergeController extends Controller
             'message' => 'Converge Data Get Successfully..',
             'data' => [
                 'heading' => $heading == null ? "" : $heading,
-                'details' => $details,
+                'details' => $details ? $details : [],
             ],
         ], 200);
     }

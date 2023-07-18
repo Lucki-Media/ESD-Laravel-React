@@ -33,6 +33,15 @@ class CollaborateController extends Controller
         ]);
     }
 
+    public function archive_projects()
+    {
+        $portfolio = Portfolio::where(['priority' => '2', 'deleted_status' => '1'])->orderBy('year', 'DESC')->paginate(10);
+        // return $portfolio;
+        return view('Collaborate.archive')->with([
+            'portfolio' => $portfolio,
+        ]);
+    }
+
     public function collaborate_portfolio(Request $request)
     {
         if ($request->search_project == "") {
@@ -61,18 +70,21 @@ class CollaborateController extends Controller
 
     public function save_portfolio(Request $request)
     {
+        // echo "<pre>";print_r($request->all()); exit;
         $request->validate([
             'title' => 'required',
-            // 'partners' => 'required',
+            'priority' => '',
             // 'services' => 'required',
             'year' => 'required|digits:4|integer|min:1900|max:' . date('Y'),
+            'order_number' => 'sometimes|nullable|required_if:priority,1|integer|unique:portfolio,order_number,NULL,id,priority,1,deleted_status,1',
         ], [
             'title.required' => 'Title field is required.',
             // 'partners.required' => 'Add Atleast 1 Partner.',
             // 'services.required' => 'Add Atleast 1 Service.',
             'year.required' => 'Year field is required.',
+            'order_number.integer' => 'The order number must be a Number.',
+            'order_number.required_if' => 'The order number field is required When You selected Priority field is Portfolio.',
         ]);
-        // echo "<pre>";print_r($request->all()); exit;
 
         $portfolio_id = Portfolio::insertGetId([
             'title' => $request->title,
@@ -81,6 +93,7 @@ class CollaborateController extends Controller
             'services' => $request->services ? implode(',', $request->services) : "",
             'year' => $request->year,
             'priority' => $request->priority,
+            'order_number' => $request->priority == '1' ? $request->order_number : "",
             'show_details' => $request->show_details,
             'created_at' => Carbon::now(),
         ]);
@@ -145,14 +158,17 @@ class CollaborateController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            // 'partners' => 'required',
+            'priority' => '',
             // 'services' => 'required',
             'year' => 'required|digits:4|integer|min:1900|max:' . date('Y'),
+            'order_number' => 'sometimes|nullable|required_if:priority,1|integer|unique:portfolio,order_number,' . $id . ',id,priority,1,deleted_status,1',
         ], [
             'title.required' => 'Title field is required.',
             // 'partners.required' => 'Add Atleast 1 Partner.',
             // 'services.required' => 'Add Atleast 1 Service.',
             'year.required' => 'Year field is required.',
+            'order_number.integer' => 'The order number must be a Number.',
+            'order_number.required_if' => 'The order number field is required When You selected Priority field is Portfolio.',
         ]);
 
         $portfolio = Portfolio::find($id);
@@ -162,6 +178,7 @@ class CollaborateController extends Controller
         $portfolio->services = $request->services ? implode(',', $request->services) : "";
         $portfolio->year = $request->year;
         $portfolio->priority = $request->priority;
+        $portfolio->order_number = $request->priority == '1' ? $request->order_number : "";
         $portfolio->show_details = $request->show_details;
         $portfolio->save();
         // echo "<pre>";print_r($portfolio); exit;
@@ -306,6 +323,7 @@ class CollaborateController extends Controller
     {
         $heading = Headings::where('type', 'collaborate')->value('heading');
         $data = Content::where(['page' => 'collaborate', 'deleted_status' => '1'])->get()->toArray();
+        $details = [];
         // return $data;
         foreach ($data as $key => $value) {
             $array = [];
@@ -317,7 +335,7 @@ class CollaborateController extends Controller
             } else {
                 if ($value['module'] == 'portfolio') {
                     $array['type'] = $value['module'];
-                    $portfolio = Portfolio::where(['priority' => '1', 'deleted_status' => '1'])->get()->toArray();
+                    $portfolio = Portfolio::where(['priority' => '1', 'deleted_status' => '1'])->orderBy('order_number', 'ASC')->get()->toArray();
                     foreach ($portfolio as $project) {
                         $imageData = PivotImages::where('portfolio_id', $project['id'])->pluck('image')->toArray();
                         $images = [];
@@ -382,7 +400,7 @@ class CollaborateController extends Controller
             'message' => 'Portfolio Data Get Successfully..',
             'data' => [
                 'heading' => $heading == null ? "" : $heading,
-                'details' => $details,
+                'details' => $details ? $details : [],
             ],
         ], 200);
     }
@@ -390,7 +408,7 @@ class CollaborateController extends Controller
     {
         $heading = Headings::where('type', 'cache')->value('heading');
         $array = [];
-        $portfolio = Portfolio::where(['priority' => '2', 'deleted_status' => '1'])->get()->toArray();
+        $portfolio = Portfolio::where(['priority' => '2', 'deleted_status' => '1'])->orderBy('year', 'ASC')->get()->toArray();
         foreach ($portfolio as $project) {
             $imageData = PivotImages::where('portfolio_id', $project['id'])->pluck('image')->toArray();
             $images = [];

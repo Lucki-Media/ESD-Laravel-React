@@ -1,5 +1,5 @@
 
-<?php $__env->startSection('title'); ?> Portfolio <?php $__env->stopSection(); ?>
+<?php $__env->startSection('title'); ?> Archive <?php $__env->stopSection(); ?>
 <?php $__env->startSection('css'); ?>
 <!--datatable css-->
 <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
@@ -10,7 +10,7 @@
 <?php $__env->startSection('content'); ?>
 <?php $__env->startComponent('components.breadcrumb'); ?>
 <?php $__env->slot('li_1'); ?> ERGOSUMDEUS <?php $__env->endSlot(); ?>
-<?php $__env->slot('title'); ?>Portfolio <?php $__env->endSlot(); ?>
+<?php $__env->slot('title'); ?>Archive <?php $__env->endSlot(); ?>
 <?php echo $__env->renderComponent(); ?>
 
 <div class="row">
@@ -32,7 +32,7 @@
         <?php endif; ?>
         <div class="card">
             <div class="card-header d-flex align-items-center">
-                <h5 class="card-title mb-0 flex-grow-1">Portfolio</h5>
+                <h5 class="card-title mb-0 flex-grow-1">Archive</h5>
                 <div>
                     <a href="<?php echo e(url('admin\add_portfolio')); ?>" class="btn btn-primary "><i class="ri-add-line  align-bottom me-1"></i> Add</a>
                 </div>
@@ -41,11 +41,11 @@
                 <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                     <thead>
                         <tr>
-                            <th >Order Number</th>
-                            <th>Year</th>
-                            <th data-ordering="false" width="40%">Title</th>
+                            <!-- <th data-ordering="false">No.</th> -->
+                            <th data-ordering="false">Year</th>
+                            <th width="40%">Title</th>
                             <th>Create Date</th>
-                            <!-- <th>Status</th> -->
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -59,11 +59,11 @@
                         }else{ ?>
                         <?php $__currentLoopData = $portfolio; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $topic): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td><?php echo e($topic['order_number']); ?></td>
+                            <!-- <td><?php echo e($topic['id']); ?></td> -->
                             <td><?php echo e($topic['year']); ?></td>
                             <td><?php echo e($topic['title']); ?></td>
                             <td><?php echo \Carbon\Carbon::parse($topic['created_at'])->format('d F,Y');?></td>
-                            <!-- <td><span class="badge badge-soft-<?php echo e($topic['status'] == 'portfolio' ? 'success' : 'secondary'); ?>"><?php echo e($topic['status'] == 'portfolio' ? 'Portfolio' : 'Archive'); ?></span></td> -->
+                            <td><span class="badge fs-12 badge-soft-<?php echo e($topic['show_details'] == '1' ? 'success' : 'info'); ?>"><?php echo e($topic['show_details'] == '1' ? 'Public' : 'Private'); ?></span></td>
                             <td>
                                 <div class="dropdown d-inline-block">
                                     <button class="btn btn-soft-primary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -106,4 +106,4 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_7.4\htdocs\ESD-Laravel\resources\views/Collaborate/portfolio.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_7.4\htdocs\ESD-Laravel\resources\views/Collaborate/archive.blade.php ENDPATH**/ ?>

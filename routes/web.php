@@ -54,6 +54,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth:admin
     Route::get('/delete_image/{id}/{image}', 'App\Http\Controllers\CollaborateController@deleteImage')->name('delete_image');
     Route::get('/delete_portfolio/{id}', 'App\Http\Controllers\CollaborateController@delete_portfolio')->name('delete_portfolio');
     Route::get('/portfolio_projects', 'App\Http\Controllers\CollaborateController@portfolio_projects')->name('portfolio_projects');
+    Route::get('/archive_projects', 'App\Http\Controllers\CollaborateController@archive_projects')->name('archive_projects');
 
     //COGITATE HEADING
     Route::get('/cogitate_heading', 'App\Http\Controllers\CogitateController@cogitate_heading')->name('cogitate_heading');
@@ -111,357 +112,534 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth:admin
     //OTHER 
 
     Route::get('/apps-calendar', function () {
-        return view('apps-calendar'); });
+        return view('apps-calendar');
+    });
     Route::get('/apps-chat', function () {
-        return view('apps-chat'); });
+        return view('apps-chat');
+    });
     Route::get('/apps-mailbox', function () {
-        return view('apps-mailbox'); });
+        return view('apps-mailbox');
+    });
     Route::get('/apps-email-basic', function () {
-        return view('apps-email-basic'); });
+        return view('apps-email-basic');
+    });
     Route::get('/apps-email-ecommerce', function () {
-        return view('apps-email-ecommerce'); });
+        return view('apps-email-ecommerce');
+    });
     Route::get('/apps-ecommerce-products', function () {
-        return view('apps-ecommerce-products'); });
+        return view('apps-ecommerce-products');
+    });
     Route::get('/apps-ecommerce-product-details', function () {
-        return view('apps-ecommerce-product-details'); });
+        return view('apps-ecommerce-product-details');
+    });
     Route::get('/apps-ecommerce-add-product', function () {
-        return view('apps-ecommerce-add-product'); });
+        return view('apps-ecommerce-add-product');
+    });
     Route::get('/apps-ecommerce-orders', function () {
-        return view('apps-ecommerce-orders'); });
+        return view('apps-ecommerce-orders');
+    });
     Route::get('/apps-ecommerce-order-details', function () {
-        return view('apps-ecommerce-order-details'); });
+        return view('apps-ecommerce-order-details');
+    });
     Route::get('/apps-ecommerce-customers', function () {
-        return view('apps-ecommerce-customers'); });
+        return view('apps-ecommerce-customers');
+    });
     Route::get('/apps-ecommerce-cart', function () {
-        return view('apps-ecommerce-cart'); });
+        return view('apps-ecommerce-cart');
+    });
     Route::get('/apps-ecommerce-checkout', function () {
-        return view('apps-ecommerce-checkout'); });
+        return view('apps-ecommerce-checkout');
+    });
     Route::get('/apps-ecommerce-sellers', function () {
-        return view('apps-ecommerce-sellers'); });
+        return view('apps-ecommerce-sellers');
+    });
     Route::get('/apps-ecommerce-seller-details', function () {
-        return view('apps-ecommerce-seller-details'); });
+        return view('apps-ecommerce-seller-details');
+    });
     Route::get('/apps-projects-list', function () {
-        return view('apps-projects-list'); });
+        return view('apps-projects-list');
+    });
     Route::get('/apps-projects-overview', function () {
-        return view('apps-projects-overview'); });
+        return view('apps-projects-overview');
+    });
     Route::get('/apps-projects-create', function () {
-        return view('apps-projects-create'); });
+        return view('apps-projects-create');
+    });
     Route::get('/apps-tasks-kanban', function () {
-        return view('apps-tasks-kanban'); });
+        return view('apps-tasks-kanban');
+    });
     Route::get('/apps-tasks-list-view', function () {
-        return view('apps-tasks-list-view'); });
+        return view('apps-tasks-list-view');
+    });
     Route::get('/apps-tasks-details', function () {
-        return view('apps-tasks-details'); });
+        return view('apps-tasks-details');
+    });
     Route::get('/apps-crm-contacts', function () {
-        return view('apps-crm-contacts'); });
+        return view('apps-crm-contacts');
+    });
     Route::get('/apps-crm-companies', function () {
-        return view('apps-crm-companies'); });
+        return view('apps-crm-companies');
+    });
     Route::get('/apps-crm-deals', function () {
-        return view('apps-crm-deals'); });
+        return view('apps-crm-deals');
+    });
     Route::get('/apps-crm-leads', function () {
-        return view('apps-crm-leads'); });
+        return view('apps-crm-leads');
+    });
     Route::get('/apps-crypto-transactions', function () {
-        return view('apps-crypto-transactions'); });
+        return view('apps-crypto-transactions');
+    });
     Route::get('/apps-crypto-buy-sell', function () {
-        return view('apps-crypto-buy-sell'); });
+        return view('apps-crypto-buy-sell');
+    });
     Route::get('/apps-crypto-wallet', function () {
-        return view('apps-crypto-wallet'); });
+        return view('apps-crypto-wallet');
+    });
     Route::get('/apps-crypto-orders', function () {
-        return view('apps-crypto-orders'); });
+        return view('apps-crypto-orders');
+    });
     Route::get('/apps-crypto-ico', function () {
-        return view('apps-crypto-ico'); });
+        return view('apps-crypto-ico');
+    });
     Route::get('/apps-crypto-kyc', function () {
-        return view('apps-crypto-kyc'); });
+        return view('apps-crypto-kyc');
+    });
     Route::get('/apps-invoices-list', function () {
-        return view('apps-invoices-list'); });
+        return view('apps-invoices-list');
+    });
     Route::get('/apps-invoices-details', function () {
-        return view('apps-invoices-details'); });
+        return view('apps-invoices-details');
+    });
     Route::get('/apps-invoices-create', function () {
-        return view('apps-invoices-create'); });
+        return view('apps-invoices-create');
+    });
     Route::get('/apps-tickets-list', function () {
-        return view('apps-tickets-list'); });
+        return view('apps-tickets-list');
+    });
     Route::get('/apps-tickets-details', function () {
-        return view('apps-tickets-details'); });
+        return view('apps-tickets-details');
+    });
     Route::get('/apps-nft-marketplace', function () {
-        return view('apps-nft-marketplace'); });
+        return view('apps-nft-marketplace');
+    });
     Route::get('/apps-nft-explore', function () {
-        return view('apps-nft-explore'); });
+        return view('apps-nft-explore');
+    });
     Route::get('/apps-nft-auction', function () {
-        return view('apps-nft-auction'); });
+        return view('apps-nft-auction');
+    });
     Route::get('/apps-nft-item-details', function () {
-        return view('apps-nft-item-details'); });
+        return view('apps-nft-item-details');
+    });
     Route::get('/apps-nft-collections', function () {
-        return view('apps-nft-collections'); });
+        return view('apps-nft-collections');
+    });
     Route::get('/apps-nft-creators', function () {
-        return view('apps-nft-creators'); });
+        return view('apps-nft-creators');
+    });
     Route::get('/apps-nft-ranking', function () {
-        return view('apps-nft-ranking'); });
+        return view('apps-nft-ranking');
+    });
     Route::get('/apps-nft-wallet', function () {
-        return view('apps-nft-wallet'); });
+        return view('apps-nft-wallet');
+    });
     Route::get('/apps-nft-create', function () {
-        return view('apps-nft-create'); });
+        return view('apps-nft-create');
+    });
     Route::get('/apps-file-manager', function () {
-        return view('apps-file-manager'); });
+        return view('apps-file-manager');
+    });
     Route::get('/apps-todo', function () {
-        return view('apps-todo'); });
+        return view('apps-todo');
+    });
     Route::get('/apps-job-statistics', function () {
-        return view('apps-job-statistics'); });
+        return view('apps-job-statistics');
+    });
     Route::get('/apps-job-lists', function () {
-        return view('apps-job-lists'); });
+        return view('apps-job-lists');
+    });
     Route::get('/apps-job-grid-lists', function () {
-        return view('apps-job-grid-lists'); });
+        return view('apps-job-grid-lists');
+    });
     Route::get('/apps-job-details', function () {
-        return view('apps-job-details'); });
+        return view('apps-job-details');
+    });
     Route::get('/apps-job-candidate-lists', function () {
-        return view('apps-job-candidate-lists'); });
+        return view('apps-job-candidate-lists');
+    });
     Route::get('/apps-job-candidate-grid', function () {
-        return view('apps-job-candidate-grid'); });
+        return view('apps-job-candidate-grid');
+    });
     Route::get('/apps-job-application', function () {
-        return view('apps-job-application'); });
+        return view('apps-job-application');
+    });
     Route::get('/apps-job-new', function () {
-        return view('apps-job-new'); });
+        return view('apps-job-new');
+    });
     Route::get('/apps-job-companies-lists', function () {
-        return view('apps-job-companies-lists'); });
+        return view('apps-job-companies-lists');
+    });
     Route::get('/apps-job-categories', function () {
-        return view('apps-job-categories'); });
+        return view('apps-job-categories');
+    });
     Route::get('/apps-api-key', function () {
-        return view('apps-api-key'); });
+        return view('apps-api-key');
+    });
     Route::get('/layouts-horizontal', function () {
-        return view('layouts-horizontal'); });
+        return view('layouts-horizontal');
+    });
     Route::get('/layouts-detached', function () {
-        return view('layouts-detached'); });
+        return view('layouts-detached');
+    });
     Route::get('/layouts-two-column', function () {
-        return view('layouts-two-column'); });
+        return view('layouts-two-column');
+    });
     Route::get('/layouts-vertical-hovered', function () {
-        return view('layouts-vertical-hovered'); });
+        return view('layouts-vertical-hovered');
+    });
     Route::get('/auth-signin-basic', function () {
-        return view('auth-signin-basic'); });
+        return view('auth-signin-basic');
+    });
     Route::get('/auth-signin-cover', function () {
-        return view('auth-signin-cover'); });
+        return view('auth-signin-cover');
+    });
     Route::get('/auth-signup-basic', function () {
-        return view('auth-signup-basic'); });
+        return view('auth-signup-basic');
+    });
     Route::get('/auth-signup-cover', function () {
-        return view('auth-signup-cover'); });
+        return view('auth-signup-cover');
+    });
     Route::get('/auth-pass-reset-basic', function () {
-        return view('auth-pass-reset-basic'); });
+        return view('auth-pass-reset-basic');
+    });
     Route::get('/auth-pass-reset-cover', function () {
-        return view('auth-pass-reset-cover'); });
+        return view('auth-pass-reset-cover');
+    });
     Route::get('/auth-pass-change-basic', function () {
-        return view('auth-pass-change-basic'); });
+        return view('auth-pass-change-basic');
+    });
     Route::get('/auth-pass-change-cover', function () {
-        return view('auth-pass-change-cover'); });
+        return view('auth-pass-change-cover');
+    });
     Route::get('/auth-lockscreen-basic', function () {
-        return view('auth-lockscreen-basic'); });
+        return view('auth-lockscreen-basic');
+    });
     Route::get('/auth-lockscreen-cover', function () {
-        return view('auth-lockscreen-cover'); });
+        return view('auth-lockscreen-cover');
+    });
     Route::get('/auth-logout-basic', function () {
-        return view('auth-logout-basic'); });
+        return view('auth-logout-basic');
+    });
     Route::get('/auth-logout-cover', function () {
-        return view('auth-logout-cover'); });
+        return view('auth-logout-cover');
+    });
     Route::get('/auth-success-msg-basic', function () {
-        return view('auth-success-msg-basic'); });
+        return view('auth-success-msg-basic');
+    });
     Route::get('/auth-success-msg-cover', function () {
-        return view('auth-success-msg-cover'); });
+        return view('auth-success-msg-cover');
+    });
     Route::get('/auth-twostep-basic', function () {
-        return view('auth-twostep-basic'); });
+        return view('auth-twostep-basic');
+    });
     Route::get('/auth-twostep-cover', function () {
-        return view('auth-twostep-cover'); });
+        return view('auth-twostep-cover');
+    });
     Route::get('/auth-404-basic', function () {
-        return view('auth-404-basic'); });
+        return view('auth-404-basic');
+    });
     Route::get('/auth-404-cover', function () {
-        return view('auth-404-cover'); });
+        return view('auth-404-cover');
+    });
     Route::get('/auth-404-alt', function () {
-        return view('auth-404-alt'); });
+        return view('auth-404-alt');
+    });
     Route::get('/auth-500', function () {
-        return view('auth-500'); });
+        return view('auth-500');
+    });
     Route::get('/auth-offline', function () {
-        return view('auth-offline'); });
+        return view('auth-offline');
+    });
     Route::get('/pages-starter', function () {
-        return view('pages-starter'); });
+        return view('pages-starter');
+    });
     Route::get('/pages-profile', function () {
-        return view('pages-profile'); });
+        return view('pages-profile');
+    });
     Route::get('/pages-profile-settings', function () {
-        return view('pages-profile-settings'); });
+        return view('pages-profile-settings');
+    });
     Route::get('/pages-team', function () {
-        return view('pages-team'); });
+        return view('pages-team');
+    });
     Route::get('/pages-timeline', function () {
-        return view('pages-timeline'); });
+        return view('pages-timeline');
+    });
     Route::get('/pages-faqs', function () {
-        return view('pages-faqs'); });
+        return view('pages-faqs');
+    });
     Route::get('/pages-pricing', function () {
-        return view('pages-pricing'); });
+        return view('pages-pricing');
+    });
     Route::get('/pages-gallery', function () {
-        return view('pages-gallery'); });
+        return view('pages-gallery');
+    });
     Route::get('/pages-maintenance', function () {
-        return view('pages-maintenance'); });
+        return view('pages-maintenance');
+    });
     Route::get('/pages-coming-soon', function () {
-        return view('pages-coming-soon'); });
+        return view('pages-coming-soon');
+    });
     Route::get('/pages-sitemap', function () {
-        return view('pages-sitemap'); });
+        return view('pages-sitemap');
+    });
     Route::get('/pages-search-results', function () {
-        return view('pages-search-results'); });
+        return view('pages-search-results');
+    });
     Route::get('/pages-privacy-policy', function () {
-        return view('pages-privacy-policy'); });
+        return view('pages-privacy-policy');
+    });
     Route::get('/pages-term-conditions', function () {
-        return view('pages-term-conditions'); });
+        return view('pages-term-conditions');
+    });
     Route::get('/landing', function () {
-        return view('landing'); });
+        return view('landing');
+    });
     Route::get('/nft-landing', function () {
-        return view('nft-landing'); });
+        return view('nft-landing');
+    });
     Route::get('/job-landing', function () {
-        return view('job-landing'); });
+        return view('job-landing');
+    });
     Route::get('/ui-alerts', function () {
-        return view('ui-alerts'); });
+        return view('ui-alerts');
+    });
     Route::get('/ui-badges', function () {
-        return view('ui-badges'); });
+        return view('ui-badges');
+    });
     Route::get('/ui-buttons', function () {
-        return view('ui-buttons'); });
+        return view('ui-buttons');
+    });
     Route::get('/ui-colors', function () {
-        return view('ui-colors'); });
+        return view('ui-colors');
+    });
     Route::get('/ui-cards', function () {
-        return view('ui-cards'); });
+        return view('ui-cards');
+    });
     Route::get('/ui-carousel', function () {
-        return view('ui-carousel'); });
+        return view('ui-carousel');
+    });
     Route::get('/ui-dropdowns', function () {
-        return view('ui-dropdowns'); });
+        return view('ui-dropdowns');
+    });
     Route::get('/ui-grid', function () {
-        return view('ui-grid'); });
+        return view('ui-grid');
+    });
     Route::get('/ui-images', function () {
-        return view('ui-images'); });
+        return view('ui-images');
+    });
     Route::get('/ui-tabs', function () {
-        return view('ui-tabs'); });
+        return view('ui-tabs');
+    });
     Route::get('/ui-accordions', function () {
-        return view('ui-accordions'); });
+        return view('ui-accordions');
+    });
     Route::get('/ui-modals', function () {
-        return view('ui-modals'); });
+        return view('ui-modals');
+    });
     Route::get('/ui-offcanvas', function () {
-        return view('ui-offcanvas'); });
+        return view('ui-offcanvas');
+    });
     Route::get('/ui-placeholders', function () {
-        return view('ui-placeholders'); });
+        return view('ui-placeholders');
+    });
     Route::get('/ui-progress', function () {
-        return view('ui-progress'); });
+        return view('ui-progress');
+    });
     Route::get('/ui-notifications', function () {
-        return view('ui-notifications'); });
+        return view('ui-notifications');
+    });
     Route::get('/ui-media', function () {
-        return view('ui-media'); });
+        return view('ui-media');
+    });
     Route::get('/ui-embed-video', function () {
-        return view('ui-embed-video'); });
+        return view('ui-embed-video');
+    });
     Route::get('/ui-typography', function () {
-        return view('ui-typography'); });
+        return view('ui-typography');
+    });
     Route::get('/ui-lists', function () {
-        return view('ui-lists'); });
+        return view('ui-lists');
+    });
     Route::get('/ui-general', function () {
-        return view('ui-general'); });
+        return view('ui-general');
+    });
     Route::get('/ui-ribbons', function () {
-        return view('ui-ribbons'); });
+        return view('ui-ribbons');
+    });
     Route::get('/ui-utilities', function () {
-        return view('ui-utilities'); });
+        return view('ui-utilities');
+    });
     Route::get('/advance-ui-sweetalerts', function () {
-        return view('advance-ui-sweetalerts'); });
+        return view('advance-ui-sweetalerts');
+    });
     Route::get('/advance-ui-nestable', function () {
-        return view('advance-ui-nestable'); });
+        return view('advance-ui-nestable');
+    });
     Route::get('/advance-ui-scrollbar', function () {
-        return view('advance-ui-scrollbar'); });
+        return view('advance-ui-scrollbar');
+    });
     Route::get('/advance-ui-animation', function () {
-        return view('advance-ui-animation'); });
+        return view('advance-ui-animation');
+    });
     Route::get('/advance-ui-tour', function () {
-        return view('advance-ui-tour'); });
+        return view('advance-ui-tour');
+    });
     Route::get('/advance-ui-swiper', function () {
-        return view('advance-ui-swiper'); });
+        return view('advance-ui-swiper');
+    });
     Route::get('/advance-ui-ratings', function () {
-        return view('advance-ui-ratings'); });
+        return view('advance-ui-ratings');
+    });
     Route::get('/advance-ui-highlight', function () {
-        return view('advance-ui-highlight'); });
+        return view('advance-ui-highlight');
+    });
     Route::get('/advance-ui-scrollspy', function () {
-        return view('advance-ui-scrollspy'); });
+        return view('advance-ui-scrollspy');
+    });
     Route::get('/widgets', function () {
-        return view('widgets'); });
+        return view('widgets');
+    });
     Route::get('/forms-elements', function () {
-        return view('forms-elements'); });
+        return view('forms-elements');
+    });
     Route::get('/forms-select', function () {
-        return view('forms-select'); });
+        return view('forms-select');
+    });
     Route::get('/forms-checkboxs-radios', function () {
-        return view('forms-checkboxs-radios'); });
+        return view('forms-checkboxs-radios');
+    });
     Route::get('/forms-pickers', function () {
-        return view('forms-pickers'); });
+        return view('forms-pickers');
+    });
     Route::get('/forms-masks', function () {
-        return view('forms-masks'); });
+        return view('forms-masks');
+    });
     Route::get('/forms-advanced', function () {
-        return view('forms-advanced'); });
+        return view('forms-advanced');
+    });
     Route::get('/forms-range-sliders', function () {
-        return view('forms-range-sliders'); });
+        return view('forms-range-sliders');
+    });
     Route::get('/forms-validation', function () {
-        return view('forms-validation'); });
+        return view('forms-validation');
+    });
     Route::get('/forms-wizard', function () {
-        return view('forms-wizard'); });
+        return view('forms-wizard');
+    });
     Route::get('/forms-editors', function () {
-        return view('forms-editors'); });
+        return view('forms-editors');
+    });
     Route::get('/forms-file-uploads', function () {
-        return view('forms-file-uploads'); });
+        return view('forms-file-uploads');
+    });
     Route::get('/forms-layouts', function () {
-        return view('forms-layouts'); });
+        return view('forms-layouts');
+    });
     Route::get('/forms-select2', function () {
-        return view('forms-select2'); });
+        return view('forms-select2');
+    });
     Route::get('/tables-basic', function () {
-        return view('tables-basic'); });
+        return view('tables-basic');
+    });
     Route::get('/tables-gridjs', function () {
-        return view('tables-gridjs'); });
+        return view('tables-gridjs');
+    });
     Route::get('/tables-listjs', function () {
-        return view('tables-listjs'); });
+        return view('tables-listjs');
+    });
     Route::get('/tables-datatables', function () {
-        return view('tables-datatables'); });
+        return view('tables-datatables');
+    });
     Route::get('/charts-apex-line', function () {
-        return view('charts-apex-line'); });
+        return view('charts-apex-line');
+    });
     Route::get('/charts-apex-area', function () {
-        return view('charts-apex-area'); });
+        return view('charts-apex-area');
+    });
     Route::get('/charts-apex-column', function () {
-        return view('charts-apex-column'); });
+        return view('charts-apex-column');
+    });
     Route::get('/charts-apex-bar', function () {
-        return view('charts-apex-bar'); });
+        return view('charts-apex-bar');
+    });
     Route::get('/charts-apex-mixed', function () {
-        return view('charts-apex-mixed'); });
+        return view('charts-apex-mixed');
+    });
     Route::get('/charts-apex-timeline', function () {
-        return view('charts-apex-timeline'); });
+        return view('charts-apex-timeline');
+    });
     Route::get('/charts-apex-candlestick', function () {
-        return view('charts-apex-candlestick'); });
+        return view('charts-apex-candlestick');
+    });
     Route::get('/charts-apex-boxplot', function () {
-        return view('charts-apex-boxplot'); });
+        return view('charts-apex-boxplot');
+    });
     Route::get('/charts-apex-bubble', function () {
-        return view('charts-apex-bubble'); });
+        return view('charts-apex-bubble');
+    });
     Route::get('/charts-apex-scatter', function () {
-        return view('charts-apex-scatter'); });
+        return view('charts-apex-scatter');
+    });
     Route::get('/charts-apex-heatmap', function () {
-        return view('charts-apex-heatmap'); });
+        return view('charts-apex-heatmap');
+    });
     Route::get('/charts-apex-treemap', function () {
-        return view('charts-apex-treemap'); });
+        return view('charts-apex-treemap');
+    });
     Route::get('/charts-apex-pie', function () {
-        return view('charts-apex-pie'); });
+        return view('charts-apex-pie');
+    });
     Route::get('/charts-apex-radialbar', function () {
-        return view('charts-apex-radialbar'); });
+        return view('charts-apex-radialbar');
+    });
     Route::get('/charts-apex-radar', function () {
-        return view('charts-apex-radar'); });
+        return view('charts-apex-radar');
+    });
     Route::get('/charts-apex-polar', function () {
-        return view('charts-apex-polar'); });
+        return view('charts-apex-polar');
+    });
     Route::get('/charts-chartjs', function () {
-        return view('charts-chartjs'); });
+        return view('charts-chartjs');
+    });
     Route::get('/charts-echarts', function () {
-        return view('charts-echarts'); });
+        return view('charts-echarts');
+    });
     Route::get('/icons-remix', function () {
-        return view('icons-remix'); });
+        return view('icons-remix');
+    });
     Route::get('/icons-boxicons', function () {
-        return view('icons-boxicons'); });
+        return view('icons-boxicons');
+    });
     Route::get('/icons-materialdesign', function () {
-        return view('icons-materialdesign'); });
+        return view('icons-materialdesign');
+    });
     Route::get('/icons-lineawesome', function () {
-        return view('icons-lineawesome'); });
+        return view('icons-lineawesome');
+    });
     Route::get('/icons-feather', function () {
-        return view('icons-feather'); });
+        return view('icons-feather');
+    });
     Route::get('/icons-crypto', function () {
-        return view('icons-crypto'); });
+        return view('icons-crypto');
+    });
     Route::get('/maps-google', function () {
-        return view('maps-google'); });
+        return view('maps-google');
+    });
     Route::get('/maps-vector', function () {
-        return view('maps-vector'); });
+        return view('maps-vector');
+    });
     Route::get('/maps-leaflet', function () {
-        return view('maps-leaflet'); });
+        return view('maps-leaflet');
+    });
 });
