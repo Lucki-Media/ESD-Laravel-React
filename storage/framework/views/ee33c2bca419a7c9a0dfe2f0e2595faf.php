@@ -42,8 +42,8 @@
                     <thead>
                         <tr>
                             <th data-ordering="false">ID</th>
-                            <th data-ordering="false" width="30%">Service</th>
                             <th data-ordering="false" width="30%">Category</th>
+                            <th data-ordering="false" width="30%">Service</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -58,8 +58,8 @@
                         <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <td><?php echo e($value['id']); ?></td>
-                            <td><?php echo e($value['title']); ?></td>
                             <td><?php echo e($value['service']); ?></td>
+                            <td><?php echo e($value['title']); ?></td>
                             <td>
                                 <div class="d-flex gap-2">
                                     <div class="edit">

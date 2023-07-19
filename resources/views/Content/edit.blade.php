@@ -1,3 +1,4 @@
+<?php //echo $data['type'] == 'form' ? "checked" : "no";exit; ?>
 @extends('layouts.master')
 @section('title') Edit Topic @endsection
 @section('css')
@@ -47,13 +48,21 @@
                                     Content
                                 </label>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="type" value="module" id="type2" required {{$data['type'] == 'module' ? "checked" : ""}}>
-                                <label class="form-check-label" for="type2">
+                            
+                            <div class="form-check  mb-2">
+                                <input class="form-check-input" type="radio" name="type" value="module" id="type2" required {{$data['type'] == 'module' ? "checked" : ""}} >
+                                <label class="form-check-label" for="type2" >
                                     Module
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="type" value="form" id="type3" required {{$data['type'] == 'form' ? "checked" : ""}}>
+                                <label class="form-check-label" for="type3">
+                                    Contact Form
                                 </label>
                                 <div class="invalid-feedback">Choose one of the type</div>
                             </div>
+                            
                         </div>
 
                         
@@ -142,7 +151,10 @@
             console.log('222');
             $('#show_content').hide();
             $('#show_module').show();
-        }
+        } else if (radio_value == 'form') {
+            $('#show_content').hide();
+            $('#show_module').hide();
+        } 
 
         $('input[type=radio][name=type]').change(function() {
             if (this.value == 'content') {
@@ -152,7 +164,10 @@
             else if (this.value == 'module') {
                 $('#show_content').hide();
                 $('#show_module').show();
-            }
+            } else if (this.value == 'form') {
+                $('#show_content').hide();
+                $('#show_module').hide();
+            } 
         });
     });
     </script>

@@ -91,8 +91,11 @@
                                         <?php if($topic['type'] == 'content'){ ?>
                                         <?php echo $topic['description']; ?>
 
-                                    <?php }else{?>
+                                        <?php }else if($topic['type'] == 'module'){ ?>
                                         <span class="badge text-bg-primary fs-6" ><?php echo e($topic['module']); ?></span>
+                                        
+                                    <?php }else if($topic['type'] == 'form'){ ?>
+                                        <span class="badge text-bg-info fs-6" >Contact Form</span>
                                         
                                     <?php }?>
                                     </td>

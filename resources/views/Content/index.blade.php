@@ -90,8 +90,11 @@
                                     <td class="description__class">
                                         <?php if($topic['type'] == 'content'){ ?>
                                         {!!$topic['description']!!}
-                                    <?php }else{?>
+                                        <?php }else if($topic['type'] == 'module'){ ?>
                                         <span class="badge text-bg-primary fs-6" >{{ $topic['module']}}</span>
+                                        
+                                    <?php }else if($topic['type'] == 'form'){ ?>
+                                        <span class="badge text-bg-info fs-6" >Contact Form</span>
                                         
                                     <?php }?>
                                     </td>

@@ -42,7 +42,7 @@ class ConvergeController extends Controller
             if ($value['type'] == 'content') {
                 $array['type'] = $value['type'];
                 $array['description'] = $value['description'];
-            } else {
+            } elseif ($value['type'] == 'module') {
                 if ($value['module'] == 'portfolio') {
                     $array['type'] = $value['module'];
                     $portfolio = Portfolio::where(['priority' => '1', 'deleted_status' => '1'])->orderBy('order_number', 'ASC')->get()->toArray();
@@ -103,6 +103,10 @@ class ConvergeController extends Controller
                         ];
                     }
                 }
+            }elseif ($value['type'] == 'form') {
+                $array['type'] = $value['type'];
+                $array['description'] = "";
+  
             }
             $details[] = $array;
         }

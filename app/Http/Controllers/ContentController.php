@@ -59,6 +59,7 @@ class ContentController extends Controller
     public function edit_content($page, $id)
     {
         $data = Content::where('id', $id)->first();
+        // return $data['type'];
         return view('Content.edit')->with([
             'page' => $page,
             'data' => $data,

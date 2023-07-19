@@ -45,10 +45,16 @@
                                     Content
                                 </label>
                             </div>
-                            <div class="form-check">
+                            <div class="form-check mb-2">
                                 <input class="form-check-input" type="radio" name="type" value="module" id="type2" required>
                                 <label class="form-check-label" for="type2">
                                     Module
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="type" value="form" id="type3" required>
+                                <label class="form-check-label" for="type3">
+                                    Contact Form
                                 </label>
                                 <div class="invalid-feedback">Choose one of the type</div>
                             </div>
@@ -137,7 +143,10 @@
             else if (this.value == 'module') {
                 $('#show_content').hide();
                 $('#show_module').show();
-            }
+            } else if (this.value == 'form') {
+                $('#show_content').hide();
+                $('#show_module').hide();
+            } 
         });
     });
     </script>
