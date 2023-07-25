@@ -96,9 +96,7 @@ class ConvergeLinkController extends Controller
             $logoImage = uniqid() . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('thumbnail/');
             $img = Image::make($image->getRealPath());
-            $img->resize(1200, 1200, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($destinationPath . $logoImage);
+            $img->fit(600, 600)->save($destinationPath . $logoImage);
             ConvergeLinks::where('id', $partner_id)->update(['logo_image' => $logoImage]);
         }
 
@@ -178,9 +176,7 @@ class ConvergeLinkController extends Controller
             $logoImage = uniqid() . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('thumbnail/');
             $img = Image::make($image->getRealPath());
-            $img->resize(1200, 1200, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($destinationPath . $logoImage);
+            $img->fit(600, 600)->save($destinationPath . $logoImage);
             ConvergeLinks::where('id', $id)->update(['logo_image' => $logoImage]);
         }
 

@@ -100,7 +100,7 @@
                                                 <div class="pt-1">
                                                     <h5 class="fs-14 mb-1" data-dz-name>&nbsp;</h5>
                                                     <p class="fs-13 text-muted mb-0" data-dz-size></p>
-                                                    <strong class="error text-danger" data-dz-errormessage></strong>
+                                                    <!-- <strong class="error text-danger" data-dz-errormessage></strong> -->
                                                 </div>
                                             </div>
                                             <div class="flex-shrink-0 ms-3">

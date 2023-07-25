@@ -7,6 +7,10 @@
     <link href="{{ URL::asset('build/libs/quill/quill.bubble.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('build/libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('build/libs/dropzone/dropzone.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ URL::asset('build/libs/filepond/filepond.min.css') }}" type="text/css" />
+    <link rel="stylesheet"
+        href="{{ URL::asset('build/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css') }}">
+
 @endsection
 @section('content')
     @component('components.breadcrumb')
@@ -97,57 +101,27 @@
                 </div>
                 <!-- end card -->
 
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Attach Images</h5>
-                    </div>
-                    <div class="card-body">
-                        <div>
-                            <p class="text-muted">Add Images here.</p>
-
-                            <div class="dropzone">
-                                <div class="fallback">
-                                    <input name="image[]" type="file" accept="image/*" multiple="multiple">
-                                </div>
-                                <div class="dz-message needsclick">
-                                    <div class="mb-3">
-                                        <i class="display-4 text-muted ri-upload-cloud-2-fill"></i>
+                <!-- <div class="row mt-2">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title mb-0">Attach Images</h4>
                                     </div>
 
-                                    <h5>Drop files here or click to upload.</h5>
+                                    <div class="card-body">
+                                        <p class="text-muted">Add Images here.</p>
+                                        <input type="file" class="filepond filepond-input-multiple" multiple name="image[]"
+                                        accept="image/png, image/gif, image/jpeg" data-allow-reorder="true" data-max-file-size="10MB" data-max-files="10">
+                                    </div>
                                 </div>
                             </div>
-
-                            <ul class="list-unstyled mb-0" id="dropzone-preview">
-                                <li class="mt-2" id="dropzone-preview-list">
-                                    <!-- This is used as the file preview template -->
-                                    <div class="border rounded">
-                                        <div class="d-flex p-2">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar-sm bg-light rounded">
-                                                    <img src="#" alt="Project-Image" data-dz-thumbnail
-                                                        class="img-fluid rounded d-block" />
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <div class="pt-1">
-                                                    <h5 class="fs-14 mb-1" data-dz-name>&nbsp;</h5>
-                                                    <p class="fs-13 text-muted mb-0" data-dz-size></p>
-                                                    <strong class="error text-danger" data-dz-errormessage></strong>
-                                                </div>
-                                            </div>
-                                            <div class="flex-shrink-0 ms-3">
-                                                <button data-dz-remove class="btn btn-sm btn-danger">Delete</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                            <!-- end dropzon-preview -->
                         </div>
+                        
                     </div>
-                </div>
-                <!-- end card -->
+                </div> -->
+
                 <div class="text-end mb-4">
                     <a href="{{ url('admin/collaborate_portfolio') }}" class="btn btn-danger w-sm">Cancel</a>
                     <button type="submit" class="btn btn-primary w-sm">Create</button>
@@ -281,6 +255,18 @@
     <script src="{{ URL::asset('build/js/pages/form-editor.init.js') }}"></script>
     <script src="{{ URL::asset('build/js/pages/form-validation.init.js') }}"></script>
     <script src="{{ URL::asset('build/js/pages/project-create.init.js') }}"></script>
+    <script src="{{ URL::asset('build/libs/filepond/filepond.min.js') }}"></script>
+    <script src="{{ URL::asset('build/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js') }}">
+    </script>
+    <script
+        src="{{ URL::asset('build/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js') }}">
+    </script>
+    <script
+        src="{{ URL::asset('build/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js') }}">
+    </script>
+    <script src="{{ URL::asset('build/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js') }}"></script>
+
+    <script src="{{ URL::asset('build/js/pages/form-file-upload.init.js') }}"></script>
     <script src="{{ URL::asset('build/js/app.js') }}"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
