@@ -301,9 +301,6 @@
                                     <div class="col">
                                         <h6 class="m-0 fs-16 fw-semibold text-white"> Notifications </h6>
                                     </div>
-                                    <!-- <div class="col-auto dropdown-tabs">
-                                        <span class="badge badge-soft-light fs-13"> 4 New</span>
-                                    </div> -->
                                 </div>
                             </div>
 

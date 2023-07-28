@@ -129,10 +129,12 @@ class CollaborateController extends Controller
     public function view_portfolio($id)
     {
         $portfolio = Portfolio::where('id', $id)->first();
-        $images = PivotImages::where('portfolio_id', $id)->pluck('image')->toArray();
+        $images = PivotImages::where('portfolio_id', $id)->where('type', '2')->get()->toArray();
+        $videos = PivotImages::where('portfolio_id', $id)->where('type', '1')->get()->toArray();
         return view('Collaborate.view')->with([
             'portfolio' => $portfolio,
             'images' => $images,
+            'videos' => $videos,
         ]);
     }
 
@@ -212,35 +214,50 @@ class CollaborateController extends Controller
 
     public function image_upload(Request $request, $id)
     {
-        if ($request->file('image')) {
-            $image = $request->file('image');
-            $portfolio_images = [];
-            foreach ($image as $value) {
-                $portfolioImage = uniqid() . '.' . $value->getClientOriginalExtension();
-                $destinationPath = public_path('thumbnail/');
-                $img = Image::make($value->getRealPath());
-                $img->fit(600, 600)->save($destinationPath . $portfolioImage);
-                $portfolio_images[] = $portfolioImage;
+        if ($request->type) {
+            if ($request->type== "2" && $request->file('image')) {
+                $image = $request->file('image');
+                $portfolio_images = [];
+                foreach ($image as $value) {
+                    $portfolioImage = uniqid() . '.' . $value->getClientOriginalExtension();
+                    $destinationPath = public_path('thumbnail/');
+                    $img = Image::make($value->getRealPath());
+                    $img->fit(600, 600)->save($destinationPath . $portfolioImage);
+                    $portfolio_images[] = $portfolioImage;
+                }
+
+                foreach ($portfolio_images as $value) {
+                    PivotImages::insert(['portfolio_id' => $id, 'image' => $value, 'type' => "2", 'created_at' => Carbon::now()]);
+                }
+            }elseif ($request->type== "1"){
+                $request->validate([
+                    'video_link' => 'required|url',
+                ], [
+                    'video_link.required' => 'Website video Link field is required.',
+                    'video_link.url' => 'video Link field must be a valid URL.',
+                ]);
+                PivotImages::insert(['portfolio_id' => $id, 'video_link' => $request->video_link, 'type' => "1", 'created_at' => Carbon::now()]);
+
             }
 
-            foreach ($portfolio_images as $value) {
-                PivotImages::insert(['portfolio_id' => $id, 'image' => $value, 'created_at' => Carbon::now()]);
-            }
+            return redirect(url('admin/view_portfolio') . '/' . $id)->with('success', "Data has been uploaded Successfully.");
+        }else{
+            return redirect(url('admin/view_portfolio') . '/' . $id)->with('error', "Enter Valid Data to Upload.");
         }
-
-        return redirect(url('admin/view_portfolio') . '/' . $id)->with('success', "Image/s has been uploaded Successfully.");
-
     }
 
-    public function deleteImage($id, $image)
+    public function deleteImage($id)
     {
         // echo '<pre>';print_r($image);exit;
-        $imagePath = public_path('thumbnail/' . $image);
-        if (file_exists($imagePath)) {
-            unlink($imagePath);
+        $data = PivotImages::where(['id' => $id])->first();
+        if( $data['image'] != null)
+        {   $imagePath = public_path('thumbnail/' . $data['image']);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
         }
-        PivotImages::where(['image' => $image])->delete();
-        return redirect(url('admin/view_portfolio') . '/' . $id)->with('success', "Image has been deleted Successfully.");
+        PivotImages::where(['id' => $id])->delete();
+        return redirect(url('admin/view_portfolio') . '/' . $data['portfolio_id'] )->with('success', "Data has been deleted Successfully.");
     }
 
     public function delete_portfolio($id)

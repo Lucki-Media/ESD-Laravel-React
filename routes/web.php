@@ -51,7 +51,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth:admin
     Route::get('/edit_portfolio/{id}', 'App\Http\Controllers\CollaborateController@edit_portfolio')->name('edit_portfolio');
     Route::post('/update_portfolio/{id}', 'App\Http\Controllers\CollaborateController@update_portfolio')->name('update_portfolio');
     Route::post('/image_upload/{id}', 'App\Http\Controllers\CollaborateController@image_upload')->name('image_upload');
-    Route::get('/delete_image/{id}/{image}', 'App\Http\Controllers\CollaborateController@deleteImage')->name('delete_image');
+    Route::get('/delete_image/{id}', 'App\Http\Controllers\CollaborateController@deleteImage')->name('delete_image');
     Route::get('/delete_portfolio/{id}', 'App\Http\Controllers\CollaborateController@delete_portfolio')->name('delete_portfolio');
     Route::get('/portfolio_projects', 'App\Http\Controllers\CollaborateController@portfolio_projects')->name('portfolio_projects');
     Route::get('/archive_projects', 'App\Http\Controllers\CollaborateController@archive_projects')->name('archive_projects');

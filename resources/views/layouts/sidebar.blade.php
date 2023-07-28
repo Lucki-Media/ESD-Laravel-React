@@ -3,8 +3,8 @@
 $currentPage = url()->current();
 function isActivePage($pageName)
 {
-    echo $currentPage;
-    exit();
+    // echo $currentPage;
+    // exit();
 
     global $currentPage;
     echo $currentPage === $pageName ? 'actie' : '';
@@ -46,7 +46,7 @@ function isActivePage($pageName)
                 <li class="nav-item">
                     <a class="nav-link menu-link <?php echo url()->current() === url('admin/dashboard') ? 'active' : ''; ?>"
                         href="{{ url('admin/dashboard') }}">
-                        <i class="ri-home-3-line"></i> <span>@lang('translation.dashboard')</span>
+                        <i class="ri-home-3-line"></i> <span>Dashboard</span>
                     </a>
                 </li>
 

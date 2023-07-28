@@ -22,6 +22,7 @@ if (varyingcontentModal) {
         var modalBodyInput = varyingcontentModal.querySelector('.modal-body input')
 
         // modalTitle.textContent = 'New message to ' + recipient
-        modalBodyInput.value = recipient
+        // modalBodyInput.value = recipient
+        // console.log(modalBodyInput.value);
     })
 }

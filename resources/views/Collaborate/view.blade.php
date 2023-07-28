@@ -87,6 +87,21 @@
         </div>
     </div>
     <!-- end row -->
+    @if(session()->has('success'))
+    <div class="alert alert-success">
+        {{ session()->get('success') }}
+    </div>
+    @endif
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    
     <div class="row">
         <div class="col-lg-12">
             <div class="tab-content text-muted">
@@ -140,10 +155,20 @@
                                                 @foreach($images as $value)
                                                     <div class="border m-2 rounded">
                                                         <div class=" align-items-center card-body position-relative">
-                                                            <img src="{{ URL::asset('thumbnail/'.$value) }}" alt="" class="img-fluid" width="150px" />
-                                                            <a class="btn btn-icon text-muted btn-sm fs-18 position-absolute fs-5 top-0 end-0 mt-0 me-0" href="{{url('admin/delete_image/'.$portfolio['id'].'/'.$value)}}" style=" transform: translate(10px,-10px);" aria-expanded="false"> <i class="ri-close-fill"></i>  </a>
+                                                            <img src="{{ URL::asset('thumbnail/'.$value['image']) }}" alt="" class="img-fluid" width="150px" />
+                                                            <a class="btn btn-icon text-muted btn-sm fs-18 position-absolute fs-5 top-0 end-0 mt-0 me-0" href="{{url('admin/delete_image/'.$value['id'])}}" style=" transform: translate(10px,-10px);" aria-expanded="false"> <i class="ri-close-fill"></i>  </a>
                                                         </div>
                                                     </div> 
+                                                @endforeach
+                                                @foreach($videos as $link)
+                                                    <a href="{{$link['video_link']}}"target="_blank" >
+                                                    <div  class="border m-2 rounded" >
+                                                        <div class=" align-items-center card-body position-relative">
+                                                            <img src="{{ URL::asset('images/video_image.png') }}" alt="" class="img-fluid" width="150px" />
+                                                            <a class="btn btn-icon text-muted btn-sm fs-18 position-absolute fs-5 top-0 end-0 mt-0 me-0" href="{{url('admin/delete_image/'.$link['id'])}}" style=" transform: translate(10px,-10px);" aria-expanded="false"> <i class="ri-close-fill"></i>  </a>
+                                                        </div>
+                                                    </div>
+                                                    </a> 
                                                 @endforeach
                                             </div>
                                             <!-- end row -->
@@ -239,10 +264,35 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+
                         <div class="mb-3">
+                            <label for="validationCustom01" class="form-label">Type</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="type" value="1" id="type1" required>
+                                <label class="form-check-label" for="type1">
+                                    Video
+                                </label>
+                                <div class="invalid-feedback">Choose one of the type</div>
+                            </div><div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="type" value="2" id="type2" required>
+                                <label class="form-check-label" for="type2">
+                                    Image
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3"  id="show_image" style="display:none;">
                             <label for="customer-image" class="col-form-label">Select Images:</label>
-                            <input class="form-control" id="" type="file" name="image[]"
-                            accept="image/png, image/gif, image/jpeg" multiple>
+                            <input class="form-control" id="valid_image" type="file" name="image[]" required
+                            accept="image/png, image/gif, image/jpeg" multiple >
+                        </div>
+
+                        <div class="mb-3"  id="show_video" style="display:none;">
+                            <label for="validationCustom02" class="form-label">Video Link</label>
+                            <input type='text' name="video_link" class="form-control" id="validationCustom02" placeholder="Enter Video Link Here..." value="{{old('video_link')}}" required>
+                            <div class="invalid-feedback">
+                                Please enter data in the Video Link field.
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -255,6 +305,27 @@
     </div>
 @endsection
 @section('script')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('input[type=radio][name=type]').change(function() {
+            if (this.value == '2') {
+                $('#show_image').show();
+                $('#show_video').hide();
+                $('#valid_image').prop('required', true);
+                $('#validationCustom02').prop('required', false);
+            }
+            else if (this.value == '1') {
+                $('#show_image').hide();
+                $('#show_video').show();
+                $('#validationCustom02').prop('required', true);
+                $('#valid_image').prop('required', false);
+                
+            } 
+        });
+    });
+    </script>
+
     <script src="{{ URL::asset('build/js/pages/modal.init.js') }}"></script>
     <script src="{{ URL::asset('build/js/pages/project-overview.init.js') }}"></script>
     <script src="{{ URL::asset('build/js/app.js') }}"></script>
