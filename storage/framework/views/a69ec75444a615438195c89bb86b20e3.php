@@ -707,7 +707,7 @@ function isActivePage($pageName)
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarPages">
-                        <i data-feat her="command" class="icon-dual"></i> <span><?php echo app('translator')->get('translation.pages'); ?></span>
+                        <i data-feather="command" class="icon-dual"></i> <span><?php echo app('translator')->get('translation.pages'); ?></span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarPages">
                         <ul cla ss="nav nav-sm flex-column">
@@ -949,7 +949,7 @@ function isActivePage($pageName)
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarAdvanceUI" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarAdvanceUI">
-                        <i data-feath er="layers" class="icon-dual"></i> <span><?php echo app('translator')->get('translation.advance-ui'); ?></span>
+                        <i data-feather="layers" class="icon-dual"></i> <span><?php echo app('translator')->get('translation.advance-ui'); ?></span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarAdvanceUI">
                         <ul class="nav nav-sm flex-column">
@@ -1107,7 +1107,7 @@ function isActivePage($pageName)
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarCharts" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarCharts">
-                        <i data- feather="pie-chart" class="icon-dual"></i> <span><?php echo app('translator')->get('translation.charts'); ?></span>
+                        <i data-feather="pie-chart" class="icon-dual"></i> <span><?php echo app('translator')->get('translation.charts'); ?></span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarCharts">
                         <ul class="nav nav-sm flex-column">
@@ -1218,7 +1218,7 @@ function isActivePage($pageName)
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarIcons" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarIcons">
-                        <i data -feather="archive" class="icon-dual"></i> <span><?php echo app('translator')->get('translation.icons'); ?></span>
+                        <i data-feather="archive" class="icon-dual"></i> <span><?php echo app('translator')->get('translation.icons'); ?></span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarIcons">
                         <ul class="nav nav-sm flex-column">

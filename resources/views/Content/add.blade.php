@@ -88,6 +88,12 @@
                                         Portfolio
                                     </label>
                                 </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="module" value="archive" id="module4">
+                                    <label class="form-check-label" for="module4">
+                                        Archive
+                                    </label>
+                                </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="module" value="service" id="module2">
                                     <label class="form-check-label" for="module2">

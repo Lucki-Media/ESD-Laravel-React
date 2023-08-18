@@ -418,8 +418,7 @@
                                             values with remove button</label>
                                             <p class="text-muted">Set <code>data-choices data-choices-limit="Required Limit" data-choices-removeItem</code>
                                                 attribute.</p>
-                                        <input class="form-control" id="choices-text-remove-button" data-choices data-choices-limit="3" data-choices-removeItem type="text"
-                                            value="Task-1" />
+                                        <input class="form-control" id="choices-text-remove-button" data-choices data-choices-limit="3" data-choices-removeItem type="text" value="Task-1" />
                                     </div>
                                 </div>
                                 <!-- end col -->

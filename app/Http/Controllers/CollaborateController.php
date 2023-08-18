@@ -374,10 +374,22 @@ class CollaborateController extends Controller
                 }
                 if ($value['module'] == 'service') {
                     $array['type'] = $value['module'];
-                    $services = ServiceLinks::select('service_links.title')
-                        ->where('deleted_status', '1')
-                        ->get()->toArray();
-                    $array['description'] = $services;
+                    $services = Service::where('deleted_status', '1')
+                    ->get()->toArray();
+
+                    foreach ($services as $sub_service) {
+                        $subService = ServiceLinks::where('deleted_status', '1')
+                        ->where('service_id', $sub_service['id'])
+                        ->pluck('title')->toArray();
+
+                        if ($subService) {
+                            $array['description'][] = [
+                                'service_title' => $sub_service['service'],
+                                'sub_services' => $subService,
+                            ];
+                        }
+                    }
+
                 }
                 if ($value['module'] == 'partner') {
                     $array['type'] = $value['module'];
@@ -400,6 +412,10 @@ class CollaborateController extends Controller
                             'projects' => $projects,
                         ];
                     }
+                }
+                if ($value['module'] == 'archive') {
+                    $array['type'] = $value['module'];
+                    $array['description'] = [];
                 }
             }elseif ($value['type'] == 'form') {
                 $array['type'] = $value['type'];
@@ -440,6 +456,7 @@ class CollaborateController extends Controller
                 $partner[] = ConvergeLinks::where('id', $partner_id)->select('partner as partner_title', 'link as partner_link')->first();
             }
             $array[] = [
+                'id' => $project['id'],
                 'portfolio_title' => $project['title'],
                 'content' => $project['content'],
                 'year' => $project['year'],

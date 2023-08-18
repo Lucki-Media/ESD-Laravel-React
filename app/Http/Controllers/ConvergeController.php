@@ -75,11 +75,22 @@ class ConvergeController extends Controller
                 }
                 if ($value['module'] == 'service') {
                     $array['type'] = $value['module'];
-                    $services = ServiceLinks::select('service_links.title')
-                        ->where('deleted_status', '1')
-                        ->get()->toArray();
+                    $services = Service::where('deleted_status', '1')
+                    ->get()->toArray();
 
-                    $array['description'] = $services;
+                    foreach ($services as $sub_service) {
+                        $subService = ServiceLinks::where('deleted_status', '1')
+                        ->where('service_id', $sub_service['id'])
+                        ->pluck('title')->toArray();
+
+                        if ($subService) {
+                            $array['description'][] = [
+                                'service_title' => $sub_service['service'],
+                                'sub_services' => $subService,
+                            ];
+                        }
+                    }
+
                 }
                 if ($value['module'] == 'partner') {
                     $array['type'] = $value['module'];
@@ -102,6 +113,10 @@ class ConvergeController extends Controller
                             'projects' => $projects,
                         ];
                     }
+                }
+                if ($value['module'] == 'archive') {
+                    $array['type'] = $value['module'];
+                    $array['description'] = [];
                 }
             }elseif ($value['type'] == 'form') {
                 $array['type'] = $value['type'];
