@@ -42,101 +42,76 @@ var url="build/json/";
 var allmemberlist = '';
 
 // Reading JSON with Fetch API
-fetch("partnerData/", {
-    method: "GET",
-    headers: {
-        "Content-Type": "application/json",
-    },
-})
-    .then((res) => res.json())
+fetch(url+"team-member-list.json")
+    .then(res => res.json())
     .then((data) => {
-        // console.log(data);
         allmemberlist = data;
         loadTeamData(allmemberlist);
-    })
-    .catch((err) => console.error(err));
+}).catch(err => console.error(err));
 
 // load team data
 function loadTeamData(datas) {
-    document.querySelector("#team-member-list").innerHTML = "";
+    document.querySelector("#team-member-list").innerHTML = '';
 
     Array.from(datas).forEach(function (teamData, index) {
         var checkBookmark = teamData.bookmark ? "active" : "";
-        var isUserProfile = teamData.memberImg
-            ? '<img src="' +
-              teamData.memberImg +
-              '" alt="" class="member-img img-fluid d-block rounded-circle" />'
-            : '<div class="avatar-title border bg-light text-primary rounded-circle text-uppercase">' +
-              teamData.nickname +
-              "</div>";
+        var isUserProfile = teamData.memberImg ? '<img src="'+teamData.memberImg+'" alt="" class="member-img img-fluid d-block rounded-circle" />'
+                    : '<div class="avatar-title border bg-light text-primary rounded-circle text-uppercase">' + teamData.nickname + '</div>';
 
         document.querySelector("#team-member-list").innerHTML +=
-            '<div class="col">\
+        '<div class="col">\
             <div class="card team-box">\
                 <div class="team-cover">\
-                    <img src="' +
-            teamData.coverImg +
-            '" alt="" class="img-fluid" />\
+                    <img src="'+teamData.coverImg+'" alt="" class="img-fluid" />\
                 </div>\
                 <div class="card-body p-4">\
                     <div class="row align-items-center team-row">\
                         <div class="col team-settings">\
                             <div class="row">\
                                 <div class="col">\
+                                    <div class="flex-shrink-0 me-2">\
+                                        <button type="button" class="btn btn-light btn-icon rounded-circle btn-sm favourite-btn ' + checkBookmark + '">\
+                                            <i class="ri-star-fill fs-14"></i>\
+                                        </button>\
+                                    </div>\
                                 </div>\
                                 <div class="col text-end dropdown">\
                                     <a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false">\
                                         <i class="ri-more-fill fs-17"></i>\
                                     </a>\
                                     <ul class="dropdown-menu dropdown-menu-end">\
-                                        <li><a class="dropdown-item" href="' +
-            teamData.edit_link +
-            '" ><i class="ri-pencil-line me-2 align-bottom text-muted"></i>Edit</a></li>\
-                                        <li><a class="dropdown-item" href="' +
-            teamData.delete_link +
-            '"><i class="ri-delete-bin-5-line me-2 align-bottom text-muted"></i>Remove</a></li>\
+                                        <li><a class="dropdown-item edit-list" href="#addmemberModal"  data-bs-toggle="modal" data-edit-id="'+teamData.id+'"><i class="ri-pencil-line me-2 align-bottom text-muted"></i>Edit</a></li>\
+                                        <li><a class="dropdown-item remove-list" href="#removeMemberModal" data-bs-toggle="modal" data-remove-id="'+teamData.id+'"><i class="ri-delete-bin-5-line me-2 align-bottom text-muted"></i>Remove</a></li>\
                                     </ul>\
                                 </div>\
                             </div>\
                         </div>\
                         <div class="col-lg-4 col">\
                             <div class="team-profile-img">\
-                                <div class="avatar-lg img-thumbnail rounded-circle flex-shrink-0">' +
-            isUserProfile +
-            '</div>\
+                                <div class="avatar-lg img-thumbnail rounded-circle flex-shrink-0">'+isUserProfile+'</div>\
                                 <div class="team-content">\
                                     <a class="member-name" data-bs-toggle="offcanvas" href="#member-overview" aria-controls="member-overview">\
-                                        <h5 class="fs-16 mb-1">' +
-            teamData.memberName +
-            '</h5>\
+                                        <h5 class="fs-16 mb-1">'+teamData.memberName+'</h5>\
                                     </a>\
-                                    <p class="text-muted member-designation mb-0">' +
-            teamData.position +
-            '</p>\
+                                    <p class="text-muted member-designation mb-0">'+teamData.position+'</p>\
                                 </div>\
                             </div>\
                         </div>\
                         <div class="col-lg-4 col">\
                             <div class="row text-muted text-center">\
                                 <div class="col-6 border-end border-end-dashed">\
-                                    <h5 class="mb-1 projects-num">' +
-            teamData.projects +
-            '</h5>\
+                                    <h5 class="mb-1 projects-num">'+teamData.projects+'</h5>\
                                     <p class="text-muted mb-0">Projects</p>\
                                 </div>\
                                 <div class="col-6">\
-                                    <h5 class="mb-1 tasks-num">' +
-            teamData.tasks +
-            '</h5>\
-                                    <p class="text-muted mb-0">Services</p>\
+                                    <h5 class="mb-1 tasks-num">'+teamData.tasks+'</h5>\
+                                    <p class="text-muted mb-0">Tasks</p>\
                                 </div>\
                             </div>\
                         </div>\
                         <div class="col-lg-2 col">\
                             <div class="text-end">\
-                                <a href="' +
-            teamData.view_link +
-            '" class="btn btn-light view-btn">View</a>\
+                                <a href="pages-profile" class="btn btn-light view-btn">View Profile</a>\
                             </div>\
                         </div>\
                     </div>\
@@ -168,17 +143,17 @@ bookmarkBtn();
 var editlist = false;
 
 // member image
-// document.querySelector("#member-image-input").addEventListener("change", function () {
-//     var preview = document.querySelector("#member-img");
-//     var file = document.querySelector("#member-image-input").files[0];
-//     var reader = new FileReader();
-//     reader.addEventListener("load",function () {
-//         preview.src = reader.result;
-//     },false);
-//     if (file) {
-//         reader.readAsDataURL(file);
-//     }
-// });
+document.querySelector("#member-image-input").addEventListener("change", function () {
+    var preview = document.querySelector("#member-img");
+    var file = document.querySelector("#member-image-input").files[0];
+    var reader = new FileReader();
+    reader.addEventListener("load",function () {
+        preview.src = reader.result;
+    },false);
+    if (file) {
+        reader.readAsDataURL(file);
+    }
+});
 
 function editMemberList() {
     var getEditid = 0;
@@ -213,17 +188,17 @@ function editMemberList() {
 
 
 // cover image
-// document.querySelector("#cover-image-input").addEventListener("change", function () {
-//     var preview = document.querySelector("#cover-img");
-//     var file = document.querySelector("#cover-image-input").files[0];
-//     var reader = new FileReader();
-//     reader.addEventListener("load",function () {
-//         preview.src = reader.result;
-//     },false);
-//     if (file) {
-//         reader.readAsDataURL(file);
-//     }
-// });
+document.querySelector("#cover-image-input").addEventListener("change", function () {
+    var preview = document.querySelector("#cover-img");
+    var file = document.querySelector("#cover-image-input").files[0];
+    var reader = new FileReader();
+    reader.addEventListener("load",function () {
+        preview.src = reader.result;
+    },false);
+    if (file) {
+        reader.readAsDataURL(file);
+    }
+});
 
 Array.from(document.querySelectorAll(".addMembers-modal")).forEach(function (elem) {
     elem.addEventListener('click', function (event) {

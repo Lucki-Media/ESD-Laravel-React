@@ -14,9 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('React.build');
-});
+Route::get('/', function () {return view('React.build');});
+Route::get('/converge', function () {return view('React.build');});
+Route::get('/collaborate', function () {return view('React.build');});
+Route::get('/cogitate', function () {return view('React.build');});
+Route::get('/communicate', function () {return view('React.build');});
+Route::get('/archive', function () {return view('React.build');});
 
 Route::get('/admin', function () {
     return view('auth.login');

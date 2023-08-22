@@ -14,17 +14,12 @@ const loader = document.querySelector("#elmLoader");
 //mail list by json
 var getJSON = function (jsonurl, callback) {
     var xhr = new XMLHttpRequest();
-    xhr.open(
-        "GET",
-        "http://127.0.0.1:8000/build/json/mail-list.init.json",
-        true
-    );
-    // xhr.open("GET", url + jsonurl, true);
+    xhr.open("GET", url + jsonurl, true);
     xhr.responseType = "json";
     xhr.onload = function () {
         var status = xhr.status;
         if (status === 200) {
-            document.getElementById("elmLoader").innerHTML = "";
+            document.getElementById("elmLoader").innerHTML = '';
             callback(null, xhr.response);
         } else {
             callback(status, xhr.response);
@@ -33,102 +28,70 @@ var getJSON = function (jsonurl, callback) {
     xhr.send();
 };
 
-let myState = {
-    messageData: [],
-    messageDetails: [],
-};
-
-
 // load mail data
-function loadMailData() {
-    var filter_id = document.querySelector(".mail-list a.active").id;
-    // console.log(filter_id);
-    fetch("messageData/" + filter_id, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            // Handle the response data
-            // console.log(data);
-            myState.messageData = data;
-            updateUI();
-        })
-        .catch((error) => {
-            // Handle the error
-            console.error(error);
-        });
-    // console.log(myState.messageData);
-    var triggerEl = document.querySelector(
-        '#mail-filter-navlist button[data-bs-target="#pills-primary"]'
-    );
-    triggerEl.click();
-    document.querySelector("#mail-list").innerHTML = "";
-}
+function loadMailData(datas) {
+    var triggerEl = document.querySelector('#mail-filter-navlist button[data-bs-target="#pills-primary"]')
+    triggerEl.click()
+    document.querySelector("#mail-list").innerHTML = '';
 
-function updateUI() {
-    Array.from(myState.messageData).forEach(function (mailData, index) {
-        // console.log(mailData);
-        var checkReaded = mailData.read_status == '0' ? "" : "unread";
+    Array.from(datas).forEach(function (mailData, index) {
+
+        var checkReaded = mailData.readed ? "" : "unread";
+        var checkStarred = mailData.starred ? "active" : "";
+        var mailcounted = mailData.counted ? '(' + mailData.counted + ')' : "";
+
         document.querySelector("#mail-list").innerHTML +=
-            '<li class="' +
-            checkReaded +
-            '">\
+            '<li class="' + checkReaded + '">\
         <div class="col-mail col-mail-1">\
-            <div class="form-check checkbox-wrapper-mail fs-14">' +
-            mailData.id +
-            '</div>\
-            <a href="javascript: void(0);" class="title"><span class="title-name">' +
-            mailData.full_name +
-            '</span></a>\
+            <div class="form-check checkbox-wrapper-mail fs-14">\
+                <input class="form-check-input" type="checkbox" value="' + mailData.id + '" id="checkbox-' + mailData.id + '">\
+                <label class="form-check-label" for="checkbox-' + mailData.id + '"></label>\
+            </div>\
+            <input type="hidden" value=' + mailData.userImg + ' class="mail-userimg" />\
+            <button type="button" class="btn avatar-xs p-0 favourite-btn fs-15 ' + checkStarred + '">\
+            <i class="ri-star-fill"></i>\
+            </button>\
+            <a href="javascript: void(0);" class="title"><span class="title-name">' + mailData.name + '</span> ' + mailcounted + '</a>\
         </div>\
         <div class="col-mail col-mail-2">\
-            <a href="javascript: void(0);" class="subject"><span class="subject-title teaser">' +
-            mailData.message +
-            '</span>\
+            <a href="javascript: void(0);" class="subject"><span class="subject-title">' + mailData.title + '</span> – <span class="teaser">' + mailData.description + '</span>\
             </a>\
-            <div class="date">' +
-            new Date(mailData.created_at).toLocaleString("default", {
-                month: "short",
-                day: "numeric",
-            }) +
-            "</div>\
+            <div class="date">' + mailData.date + '</div>\
         </div>\
-    </li>";
+    </li>';
         favouriteBtn();
         emailDetailShow();
         emailDetailChange();
         checkBoxAll();
     });
 }
+
 // load social mail data
 function loadSocialMailData(datas) {
     Array.from(datas).forEach(function (mailData, index) {
-        // var checkReaded = mailData.readed ? "" : "unread";
-        // var checkStarred = mailData.starred ? "active" : "";
-        // var mailcounted = mailData.counted ? '(' + mailData.counted + ')' : "";
+        var checkReaded = mailData.readed ? "" : "unread";
+        var checkStarred = mailData.starred ? "active" : "";
+        var mailcounted = mailData.counted ? '(' + mailData.counted + ')' : "";
 
-        // document.getElementById("social-mail-list").innerHTML +=
-        //     '<li class="' + checkReaded + '">\
-        //         <div class="col-mail col-mail-1">\
-        //             <div class="form-check checkbox-wrapper-mail fs-14">\
-        //                 <input class="form-check-input" type="checkbox" value="' + mailData.id + '" id="checkbox-' + mailData.id + '">\
-        //                 <label class="form-check-label" for="checkbox-' + mailData.id + '"></label>\
-        //             </div>\
-        //             <input type="hidden" value=' + mailData.userImg + ' class="mail-userimg" />\
-        //             <button type="button" class="btn avatar-xs p-0 favourite-btn fs-15 ' + checkStarred + '">\
-        //             <i class="ri-star-fill"></i>\
-        //             </button>\
-        //             <a href="javascript: void(0);" class="title"><span class="title-name">' + mailData.name + '</span> ' + mailcounted + '</a>\
-        //         </div>\
-        //         <div class="col-mail col-mail-2">\
-        //             <a href="javascript: void(0);" class="subject"><span class="subject-title">' + mailData.title + '</span> – <span class="teaser">' + mailData.description + '</span>\
-        //             </a>\
-        //             <div class="date">' + mailData.date + '</div>\
-        //         </div>\
-        //     </li>';
+        document.getElementById("social-mail-list").innerHTML +=
+            '<li class="' + checkReaded + '">\
+                <div class="col-mail col-mail-1">\
+                    <div class="form-check checkbox-wrapper-mail fs-14">\
+                        <input class="form-check-input" type="checkbox" value="' + mailData.id + '" id="checkbox-' + mailData.id + '">\
+                        <label class="form-check-label" for="checkbox-' + mailData.id + '"></label>\
+                    </div>\
+                    <input type="hidden" value=' + mailData.userImg + ' class="mail-userimg" />\
+                    <button type="button" class="btn avatar-xs p-0 favourite-btn fs-15 ' + checkStarred + '">\
+                    <i class="ri-star-fill"></i>\
+                    </button>\
+                    <a href="javascript: void(0);" class="title"><span class="title-name">' + mailData.name + '</span> ' + mailcounted + '</a>\
+                </div>\
+                <div class="col-mail col-mail-2">\
+                    <a href="javascript: void(0);" class="subject"><span class="subject-title">' + mailData.title + '</span> – <span class="teaser">' + mailData.description + '</span>\
+                    </a>\
+                    <div class="date">' + mailData.date + '</div>\
+                </div>\
+            </li>';
         emailDetailShow();
         emailDetailChange();
         checkBoxAll();
@@ -137,34 +100,34 @@ function loadSocialMailData(datas) {
 
 // load promotions mail data
 function loadPromotionsMailData(datas) {
-    // Array.from(datas).forEach(function (mailData, index) {
-    //     var checkReaded = mailData.readed ? "" : "unread";
-    //     var checkStarred = mailData.starred ? "active" : "";
-    //     var mailcounted = mailData.counted ? '(' + mailData.counted + ')' : "";
+    Array.from(datas).forEach(function (mailData, index) {
+        var checkReaded = mailData.readed ? "" : "unread";
+        var checkStarred = mailData.starred ? "active" : "";
+        var mailcounted = mailData.counted ? '(' + mailData.counted + ')' : "";
 
-    //     document.getElementById("promotions-mail-list").innerHTML +=
-    //         '<li class="' + checkReaded + '">\
-    //             <div class="col-mail col-mail-1">\
-    //                 <div class="form-check checkbox-wrapper-mail fs-14">\
-    //                     <input class="form-check-input" type="checkbox" value="' + mailData.id + '" id="checkbox-' + mailData.id + '">\
-    //                     <label class="form-check-label" for="checkbox-' + mailData.id + '"></label>\
-    //                 </div>\
-    //                 <input type="hidden" value=' + mailData.userImg + ' class="mail-userimg" />\
-    //                 <button type="button" class="btn avatar-xs p-0 favourite-btn fs-15 ' + checkStarred + '">\
-    //                 <i class="ri-star-fill"></i>\
-    //                 </button>\
-    //                 <a href="javascript: void(0);" class="title"><span class="title-name">' + mailData.name + '</span> ' + mailcounted + '</a>\
-    //             </div>\
-    //             <div class="col-mail col-mail-2">\
-    //                 <a href="javascript: void(0);" class="subject"><span class="subject-title">' + mailData.title + '</span> – <span class="teaser">' + mailData.description + '</span>\
-    //                 </a>\
-    //                 <div class="date">' + mailData.date + '</div>\
-    //             </div>\
-    //         </li>';
-    //     emailDetailShow();
-    //     emailDetailChange();
-    //     checkBoxAll();
-    // });
+        document.getElementById("promotions-mail-list").innerHTML +=
+            '<li class="' + checkReaded + '">\
+                <div class="col-mail col-mail-1">\
+                    <div class="form-check checkbox-wrapper-mail fs-14">\
+                        <input class="form-check-input" type="checkbox" value="' + mailData.id + '" id="checkbox-' + mailData.id + '">\
+                        <label class="form-check-label" for="checkbox-' + mailData.id + '"></label>\
+                    </div>\
+                    <input type="hidden" value=' + mailData.userImg + ' class="mail-userimg" />\
+                    <button type="button" class="btn avatar-xs p-0 favourite-btn fs-15 ' + checkStarred + '">\
+                    <i class="ri-star-fill"></i>\
+                    </button>\
+                    <a href="javascript: void(0);" class="title"><span class="title-name">' + mailData.name + '</span> ' + mailcounted + '</a>\
+                </div>\
+                <div class="col-mail col-mail-2">\
+                    <a href="javascript: void(0);" class="subject"><span class="subject-title">' + mailData.title + '</span> – <span class="teaser">' + mailData.description + '</span>\
+                    </a>\
+                    <div class="date">' + mailData.date + '</div>\
+                </div>\
+            </li>';
+        emailDetailShow();
+        emailDetailChange();
+        checkBoxAll();
+    });
 }
 
 // get json
@@ -176,7 +139,7 @@ getJSON("mail-list.init.json", function (err, data) {
         socialmaillist = data[0].social;
         promotionsmaillist = data[0].promotions;
 
-        loadMailData();
+        loadMailData(allmaillist);
         loadSocialMailData(socialmaillist);
         loadPromotionsMailData(promotionsmaillist);
     }
@@ -207,7 +170,7 @@ Array.from(document.querySelectorAll('.mail-list a')).forEach(function (mailTab)
                 document.getElementById("mail-filter-navlist").style.display = "block";
             }
         }
-        loadMailData();
+        loadMailData(filterData);
         favouriteBtn();
     });
 })
@@ -269,12 +232,12 @@ function emailDetailShow() {
 }
 
 // editor
-// ClassicEditor.create(document.querySelector('#email-editor')).then(function (editor) {
-//         editor.ui.view.editable.element.style.height = '200px';
-//     })
-//     .catch(function (error) {
-//         console.error(error);
-//     });
+ClassicEditor.create(document.querySelector('#email-editor')).then(function (editor) {
+        editor.ui.view.editable.element.style.height = '200px';
+    })
+    .catch(function (error) {
+        console.error(error);
+    });
 
 // check all
 function checkBoxAll() {
@@ -360,23 +323,23 @@ function checkBoxAll() {
 
 //User current Id
 var currentChatId = "users-chat";
-// scrollToBottom(currentChatId);
+scrollToBottom(currentChatId);
 // // Scroll to Bottom
-// function scrollToBottom(id) {
-//     setTimeout(function () {
-//         var simpleBar = (document.getElementById(id).querySelector("#chat-conversation .simplebar-content-wrapper")) ?
-//             document.getElementById(id).querySelector("#chat-conversation .simplebar-content-wrapper") : ''
+function scrollToBottom(id) {
+    setTimeout(function () {
+        var simpleBar = (document.getElementById(id).querySelector("#chat-conversation .simplebar-content-wrapper")) ?
+            document.getElementById(id).querySelector("#chat-conversation .simplebar-content-wrapper") : ''
 
-//         var offsetHeight = document.getElementsByClassName("chat-conversation-list")[0] ?
-//             document.getElementById(id).getElementsByClassName("chat-conversation-list")[0].scrollHeight - window.innerHeight + 750 : 0;
+        var offsetHeight = document.getElementsByClassName("chat-conversation-list")[0] ?
+            document.getElementById(id).getElementsByClassName("chat-conversation-list")[0].scrollHeight - window.innerHeight + 750 : 0;
 
-//         if (offsetHeight && simpleBar)
-//             simpleBar.scrollTo({
-//                 top: offsetHeight,
-//                 behavior: "smooth"
-//             });
-//     }, 100);
-// }
+        if (offsetHeight && simpleBar)
+            simpleBar.scrollTo({
+                top: offsetHeight,
+                behavior: "smooth"
+            });
+    }, 100);
+}
 
 // removeItems
 function removeItems() {
@@ -426,7 +389,7 @@ function removeSingleItem() {
                 }
                 filtered = arrayRemove(allmaillist, getid);
                 allmaillist = filtered;
-                loadMailData();
+                loadMailData(allmaillist);
                 document.getElementById("close-btn-email").click();
             });
         });
@@ -434,24 +397,24 @@ function removeSingleItem() {
 }
 removeSingleItem();
 
-// var markAllReadBtn = document.getElementById("mark-all-read");
+var markAllReadBtn = document.getElementById("mark-all-read");
 
-// markAllReadBtn.addEventListener('click', function (event) {
-//     if (document.querySelectorAll(".message-list li.unread").length === 0) {
-//         document.getElementById("unreadConversations").style.display = "block";
-//         setTimeout(hideclipboardNew, 1000);
+markAllReadBtn.addEventListener('click', function (event) {
+    if (document.querySelectorAll(".message-list li.unread").length === 0) {
+        document.getElementById("unreadConversations").style.display = "block";
+        setTimeout(hideclipboardNew, 1000);
 
-//         function hideclipboardNew() {
-//             document.getElementById("unreadConversations").style.display = "none";
-//         }
-//     };
+        function hideclipboardNew() {
+            document.getElementById("unreadConversations").style.display = "none";
+        }
+    };
 
-//     Array.from(document.querySelectorAll(".message-list li.unread")).forEach(function (element) {
-//         if (element.classList.contains("unread")) {
-//             element.classList.remove("unread");
-//         }
-//     });
-// });
+    Array.from(document.querySelectorAll(".message-list li.unread")).forEach(function (element) {
+        if (element.classList.contains("unread")) {
+            element.classList.remove("unread");
+        }
+    });
+});
 
 var dummyUserImage = "build/images/users/user-dummy-img.jpg";
 
@@ -499,91 +462,36 @@ document.querySelectorAll(".email-chat-list a").forEach(function (item) {
     });
 });
 
-// document.getElementById("emailchat-btn-close").addEventListener("click", function () {
-//     document.getElementById("emailchat-detailElem").style.display = "none";
-//     mailChatDetailElm = false;
-//     document.querySelector(".email-chat-list a.active").classList.remove("active");
-// })
+document.getElementById("emailchat-btn-close").addEventListener("click", function () {
+    document.getElementById("emailchat-detailElem").style.display = "none";
+    mailChatDetailElm = false;
+    document.querySelector(".email-chat-list a.active").classList.remove("active");
+})
 
 // emailDetailChange
 function emailDetailChange() {
     Array.from(document.querySelectorAll(".message-list li")).forEach(function (item) {
         item.addEventListener("click", function () {
-            var mailListId = item.querySelector(".checkbox-wrapper-mail").innerHTML;
-            fetch("messageDetails/" + mailListId, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    // console.log(data);
-                    myState.messageDetails = data;
-                    updateDetail();
-                })
-                // .catch((error) => {
-                //     console.error(error);
-                // });
+            var mailListId = item.querySelector(".checkbox-wrapper-mail .form-check-input").value
+            document.querySelector(".remove-mail").setAttribute("data-remove-id", mailListId);;
+            var subjectTitle = item.querySelector(".subject-title").innerHTML;
+            document.querySelector(".email-subject-title").innerHTML = subjectTitle;
 
-            // console.log(mailListId);
-            // document.querySelector(".remove-mail").setAttribute("data-remove-id", mailListId);
-            // var subjectTitle = item.querySelector(".subject-title").innerHTML;
-            // document.querySelector(".email-subject-title").innerHTML = subjectTitle;
+            var emailTitleLeftName = item.querySelector(".title-name").innerHTML;
+            Array.from(document.querySelectorAll(".accordion-item.left")).forEach(function (subitem) {
+                subitem.querySelector(".email-user-name").innerHTML = emailTitleLeftName;
+                var userImg = item.querySelector(".mail-userimg").value;
+                subitem.querySelector("img").setAttribute("src", userImg)
+            });
 
-            // var emailTitleLeftName = item.querySelector(".title-name").innerHTML;
-            // Array.from(document.querySelectorAll(".accordion-item.left")).forEach(function (subitem) {
-            //     subitem.querySelector(".email-user-name").innerHTML = emailTitleLeftName;
-            //     var userImg = item.querySelector(".mail-userimg").value;
-            //     subitem.querySelector("img").setAttribute("src", userImg)
-            // });
-
-            // var messageUserName = document.querySelector(".user-name-text").innerHTML;
-            // var usermailProfile = document.querySelector(".header-profile-user").getAttribute("src");
-            // Array.from(document.querySelectorAll(".accordion-item.right")).forEach(function (subitem) {
-            //     subitem.querySelector(".email-user-name-right").innerHTML = messageUserName;
-            //     subitem.querySelector("img").setAttribute("src", usermailProfile);
-            // });
+            var messageUserName = document.querySelector(".user-name-text").innerHTML;
+            var usermailProfile = document.querySelector(".header-profile-user").getAttribute("src");
+            Array.from(document.querySelectorAll(".accordion-item.right")).forEach(function (subitem) {
+                subitem.querySelector(".email-user-name-right").innerHTML = messageUserName;
+                subitem.querySelector("img").setAttribute("src", usermailProfile);
+            });
         });
     });
-}
-
-function updateDetail() {
-    // console.log(myState.messageDetails);
-    var item = myState.messageDetails;
-    var project;
-    switch (item.project) {
-        case "1":
-            project = "BRAND & COMMS";
-            break;
-        case "2":
-            project = "WEB & MOBILE";
-            break;
-        case "3":
-            project = "SPACE & EXPERIENCE";
-            break;
-        case "4":
-            project = "OTHER";
-            break;
-        default:
-            project = "INQUIRY MESSAGE";
-            break;
-    }
-    document.querySelector(".email-subject-title").innerHTML = project;
-    document.querySelector(".email-user-name").innerHTML = item.full_name;
-    document.querySelector(".email-user-company").innerHTML = 'From : ' + item.company_name;
-    document.querySelector(".email-user-email-address").innerHTML = 'Email : ' + item.email;
-    document.querySelector(".email-user-contact").innerHTML = 'Contact : ' + item.contact_number;
-    document.querySelector(".email-user-message").innerHTML = item.message;
-    document.querySelector(".email-user-time").innerHTML = 
-        new Date(item.created_at).toLocaleString("default", {
-            day: '2-digit',
-            month: 'short',
-            year: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-            hour12: true
-        });
 }
 
 const triggerTabList = document.querySelectorAll('#mail-filter-navlist .nav-tabs button')

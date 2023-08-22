@@ -885,154 +885,68 @@ File: Main Js File
 			}
 			// navbar-nav
 			var a = document.getElementById("navbar-nav").querySelector('[href="' + currentPath + '"]');
-        if (a) {
-            a.classList.add("active");
-            var parentCollapseDiv = a.closest(".collapse.menu-dropdown");
-            if (
-                parentCollapseDiv &&
-                parentCollapseDiv.parentElement.closest(
-                    ".collapse.menu-dropdown"
-                )
-            ) {
-                parentCollapseDiv.classList.add("show");
-                parentCollapseDiv.parentElement.children[0].classList.add(
-                    "active"
-                );
-                parentCollapseDiv.parentElement
-                    .closest(".collapse.menu-dropdown")
-                    .parentElement.classList.add("twocolumn-item-show");
-                if (
-                    parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(
-                        ".collapse.menu-dropdown"
-                    )
-                ) {
-                    var menuIdSub =
-                        parentCollapseDiv.parentElement.parentElement.parentElement.parentElement
-                            .closest(".collapse.menu-dropdown")
-                            .getAttribute("id");
-                    parentCollapseDiv.parentElement.parentElement.parentElement.parentElement
-                        .closest(".collapse.menu-dropdown")
-                        .parentElement.classList.add("twocolumn-item-show");
-                    parentCollapseDiv.parentElement
-                        .closest(".collapse.menu-dropdown")
-                        .parentElement.classList.remove("twocolumn-item-show");
-                    if (
-                        document
-                            .getElementById("two-column-menu")
-                            .querySelector('[href="#' + menuIdSub + '"]')
-                    )
-                        document
-                            .getElementById("two-column-menu")
-                            .querySelector('[href="#' + menuIdSub + '"]')
-                            .classList.add("active");
-                }
-                var menuId = parentCollapseDiv.parentElement
-                    .closest(".collapse.menu-dropdown")
-                    .getAttribute("id");
-                if (
-                    document
-                        .getElementById("two-column-menu")
-                        .querySelector('[href="#' + menuId + '"]')
-                )
-                    document
-                        .getElementById("two-column-menu")
-                        .querySelector('[href="#' + menuId + '"]')
-                        .classList.add("active");
-            } else {
-                a.closest(
-                    ".collapse.menu-dropdown"
-                ).parentElement.classList.add("twocolumn-item-show");
-                var menuId = parentCollapseDiv.getAttribute("id");
-                if (
-                    document
-                        .getElementById("two-column-menu")
-                        .querySelector('[href="#' + menuId + '"]')
-                )
-                    document
-                        .getElementById("two-column-menu")
-                        .querySelector('[href="#' + menuId + '"]')
-                        .classList.add("active");
-            }
-        } else {
-            document.body.classList.add("twocolumn-panel");
-        }
+			if (a) {
+				a.classList.add("active");
+				var parentCollapseDiv = a.closest(".collapse.menu-dropdown");
+				if (parentCollapseDiv && parentCollapseDiv.parentElement.closest(".collapse.menu-dropdown")) {
+					parentCollapseDiv.classList.add("show");
+					parentCollapseDiv.parentElement.children[0].classList.add("active");
+					parentCollapseDiv.parentElement.closest(".collapse.menu-dropdown").parentElement.classList.add("twocolumn-item-show");
+					if (parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse.menu-dropdown")) {
+						var menuIdSub = parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse.menu-dropdown").getAttribute("id");
+						parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse.menu-dropdown").parentElement.classList.add("twocolumn-item-show");
+						parentCollapseDiv.parentElement.closest(".collapse.menu-dropdown").parentElement.classList.remove("twocolumn-item-show");
+						if (document.getElementById("two-column-menu").querySelector('[href="#' + menuIdSub + '"]'))
+							document.getElementById("two-column-menu").querySelector('[href="#' + menuIdSub + '"]').classList.add("active");
+					}
+					var menuId = parentCollapseDiv.parentElement.closest(".collapse.menu-dropdown").getAttribute("id");
+					if (document.getElementById("two-column-menu").querySelector('[href="#' + menuId + '"]'))
+						document.getElementById("two-column-menu").querySelector('[href="#' + menuId + '"]').classList.add("active");
+				} else {
+					a.closest(".collapse.menu-dropdown").parentElement.classList.add("twocolumn-item-show");
+					var menuId = parentCollapseDiv.getAttribute("id");
+					if (document.getElementById("two-column-menu").querySelector('[href="#' + menuId + '"]'))
+						document.getElementById("two-column-menu").querySelector('[href="#' + menuId + '"]').classList.add("active");
+				}
+			} else {
+				document.body.classList.add("twocolumn-panel");
+			}
 		}
 	}
 
 	// two-column sidebar active js
 	function initActiveMenu() {
 		var currentPath = location.pathname == "/" ? "index" : location.pathname.substring(1);
-		currentPath = location.href;
-        if (currentPath) {
-            // navbar-nav
-            var a = document
-                .getElementById("navbar-nav")
-                .querySelector('[href="' + currentPath + '"]');
-		// console.log(currentPath);
-        if (a) {
-            a.classList.add("active");
-            var parentCollapseDiv = a.closest(".collapse.menu-dropdown");
-            if (parentCollapseDiv) {
-                parentCollapseDiv.classList.add("show");
-                parentCollapseDiv.parentElement.children[0].classList.add(
-                    "active"
-                );
-                parentCollapseDiv.parentElement.children[0].setAttribute(
-                    "aria-expanded",
-                    "true"
-                );
-                if (
-                    parentCollapseDiv.parentElement.closest(
-                        ".collapse.menu-dropdown"
-                    )
-                ) {
-                    parentCollapseDiv.parentElement
-                        .closest(".collapse")
-                        .classList.add("show");
-                    if (
-                        parentCollapseDiv.parentElement.closest(".collapse")
-                            .previousElementSibling
-                    )
-                        parentCollapseDiv.parentElement
-                            .closest(".collapse")
-                            .previousElementSibling.classList.add("active");
+		currentPath = currentPath.substring(currentPath.lastIndexOf("/") + 1);
+		if (currentPath) {
+			// navbar-nav
+			var a = document.getElementById("navbar-nav").querySelector('[href="' + currentPath + '"]');
+			if (a) {
+				a.classList.add("active");
+				var parentCollapseDiv = a.closest(".collapse.menu-dropdown");
+				if (parentCollapseDiv) {
+					parentCollapseDiv.classList.add("show");
+					parentCollapseDiv.parentElement.children[0].classList.add("active");
+					parentCollapseDiv.parentElement.children[0].setAttribute("aria-expanded", "true");
+					if (parentCollapseDiv.parentElement.closest(".collapse.menu-dropdown")) {
+						parentCollapseDiv.parentElement.closest(".collapse").classList.add("show");
+						if (parentCollapseDiv.parentElement.closest(".collapse").previousElementSibling)
+							parentCollapseDiv.parentElement.closest(".collapse").previousElementSibling.classList.add("active");
 
-                    if (
-                        parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(
-                            ".collapse.menu-dropdown"
-                        )
-                    ) {
-                        parentCollapseDiv.parentElement.parentElement.parentElement.parentElement
-                            .closest(".collapse")
-                            .classList.add("show");
-                        if (
-                            parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(
-                                ".collapse"
-                            ).previousElementSibling
-                        ) {
-                            parentCollapseDiv.parentElement.parentElement.parentElement.parentElement
-                                .closest(".collapse")
-                                .previousElementSibling.classList.add("active");
-                            if (
-                                document.documentElement.getAttribute(
-                                    "data-layout"
-                                ) == "horizontal" &&
-                                parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.closest(
-                                    ".collapse"
-                                )
-                            ) {
-                                parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
-                                    .closest(".collapse")
-                                    .previousElementSibling.classList.add(
-                                        "active"
-                                    );
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        }
+						if (parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse.menu-dropdown")) {
+							parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse").classList.add("show");
+							if (parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse").previousElementSibling) {
+
+								parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse").previousElementSibling.classList.add("active");
+								if ((document.documentElement.getAttribute("data-layout") == "horizontal") && parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.closest(".collapse")) {
+									parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.closest(".collapse").previousElementSibling.classList.add("active")
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	function elementInViewport(el) {
@@ -1114,15 +1028,14 @@ File: Main Js File
 						}
 						var emptyNotificationElem = elem.querySelector(".empty-notification-elem")
 						if (!emptyNotificationElem) {
-							elem.innerHTML +=
-                                '<div class="empty-notification-elem">\
+							elem.innerHTML += '<div class="empty-notification-elem">\
 							<div class="w-25 w-sm-50 pt-3 mx-auto">\
-								<img src="https://ergosumdeus.luckistore.in/build/images/svg/bell.svg" class="img-fluid" alt="user-pic">\
+								\
 							</div>\
 							<div class="text-center pb-5 mt-2">\
 								<h6 class="fs-18 fw-semibold lh-base">Hey! You have no any notifications </h6>\
 							</div>\
-						</div>';
+						</div>'
 						}
 					}
 				});

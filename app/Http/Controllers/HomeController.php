@@ -26,6 +26,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+
+    public function index_view(){
+        echo "hello";
+        exit;
+        return view('welcome');
+        // return response()->view('welcome')->header('Content-Type','application/liquid');
+    }
+
     public function index(Request $request)
     {
         if (view()->exists($request->path())) {
