@@ -1097,11 +1097,11 @@ supportDraggable = documentExists && !ChromeForAndroid && !IOS && 'draggable' in
   return dragElS1Opp === targetS1Opp || dragElS2Opp === targetS2Opp || dragElS1Opp + dragElOppLength / 2 === targetS1Opp + targetOppLength / 2;
 },
 
-/**
- * Detects first nearest empty sortable to X and Y position using emptyInsertThreshold.
- * @param  {Number} x      X position
- * @param  {Number} y      Y position
- * @return {HTMLElement}   Element of the first found nearest Sortable
+/**
+ * Detects first nearest empty sortable to X and Y position using emptyInsertThreshold.
+ * @param  {Number} x      X position
+ * @param  {Number} y      Y position
+ * @return {HTMLElement}   Element of the first found nearest Sortable
  */
 _detectNearestEmptySortable = function _detectNearestEmptySortable(x, y) {
   var ret;
@@ -1209,10 +1209,10 @@ var _checkOutsideTargetEl = function _checkOutsideTargetEl(evt) {
     dragEl.parentNode[expando]._isOutsideThisEl(evt.target);
   }
 };
-/**
- * @class  Sortable
- * @param  {HTMLElement}  el
- * @param  {Object}       [options]
+/**
+ * @class  Sortable
+ * @param  {HTMLElement}  el
+ * @param  {Object}       [options]
  */
 
 
@@ -2358,9 +2358,9 @@ Sortable.prototype =
     }
   },
 
-  /**
-   * Serializes the item into an array of string.
-   * @returns {String[]}
+  /**
+   * Serializes the item into an array of string.
+   * @returns {String[]}
    */
   toArray: function toArray() {
     var order = [],
@@ -2381,9 +2381,9 @@ Sortable.prototype =
     return order;
   },
 
-  /**
-   * Sorts the elements according to the array.
-   * @param  {String[]}  order  order of the items
+  /**
+   * Sorts the elements according to the array.
+   * @param  {String[]}  order  order of the items
    */
   sort: function sort(order, useAnimation) {
     var items = {},
@@ -2405,29 +2405,29 @@ Sortable.prototype =
     useAnimation && this.animateAll();
   },
 
-  /**
-   * Save the current sorting
+  /**
+   * Save the current sorting
    */
   save: function save() {
     var store = this.options.store;
     store && store.set && store.set(this);
   },
 
-  /**
-   * For each element in the set, get the first element that matches the selector by testing the element itself and traversing up through its ancestors in the DOM tree.
-   * @param   {HTMLElement}  el
-   * @param   {String}       [selector]  default: `options.draggable`
-   * @returns {HTMLElement|null}
+  /**
+   * For each element in the set, get the first element that matches the selector by testing the element itself and traversing up through its ancestors in the DOM tree.
+   * @param   {HTMLElement}  el
+   * @param   {String}       [selector]  default: `options.draggable`
+   * @returns {HTMLElement|null}
    */
   closest: function closest$1(el, selector) {
     return closest(el, selector || this.options.draggable, this.el, false);
   },
 
-  /**
-   * Set/get option
-   * @param   {string} name
-   * @param   {*}      [value]
-   * @returns {*}
+  /**
+   * Set/get option
+   * @param   {string} name
+   * @param   {*}      [value]
+   * @returns {*}
    */
   option: function option(name, value) {
     var options = this.options;
@@ -2449,8 +2449,8 @@ Sortable.prototype =
     }
   },
 
-  /**
-   * Destroy
+  /**
+   * Destroy
    */
   destroy: function destroy() {
     pluginEvent('destroy', this);
@@ -2627,11 +2627,11 @@ function _getSwapDirection(evt, target, targetRect, vertical, swapThreshold, inv
 
   return 0;
 }
-/**
- * Gets the direction dragEl must be swapped relative to target in order to make it
- * seem that dragEl has been "inserted" into that element's position
- * @param  {HTMLElement} target       The target whose position dragEl is being inserted at
- * @return {Number}                   Direction dragEl must be swapped
+/**
+ * Gets the direction dragEl must be swapped relative to target in order to make it
+ * seem that dragEl has been "inserted" into that element's position
+ * @param  {HTMLElement} target       The target whose position dragEl is being inserted at
+ * @return {Number}                   Direction dragEl must be swapped
  */
 
 
@@ -2642,11 +2642,11 @@ function _getInsertDirection(target) {
     return -1;
   }
 }
-/**
- * Generate id
- * @param   {HTMLElement} el
- * @returns {String}
- * @private
+/**
+ * Generate id
+ * @param   {HTMLElement} el
+ * @returns {String}
+ * @private
  */
 
 
@@ -2710,18 +2710,18 @@ Sortable.utils = {
   detectDirection: _detectDirection,
   getChild: getChild
 };
-/**
- * Get the Sortable instance of an element
- * @param  {HTMLElement} element The element
- * @return {Sortable|undefined}         The instance of Sortable
+/**
+ * Get the Sortable instance of an element
+ * @param  {HTMLElement} element The element
+ * @return {Sortable|undefined}         The instance of Sortable
  */
 
 Sortable.get = function (element) {
   return element[expando];
 };
-/**
- * Mount a plugin to Sortable
- * @param  {...SortablePlugin|SortablePlugin[]} plugins       Plugins being mounted
+/**
+ * Mount a plugin to Sortable
+ * @param  {...SortablePlugin|SortablePlugin[]} plugins       Plugins being mounted
  */
 
 
@@ -2740,10 +2740,10 @@ Sortable.mount = function () {
     PluginManager.mount(plugin);
   });
 };
-/**
- * Create sortable instance
- * @param {HTMLElement}  el
- * @param {Object}      [options]
+/**
+ * Create sortable instance
+ * @param {HTMLElement}  el
+ * @param {Object}      [options]
  */
 
 
@@ -3661,9 +3661,9 @@ function MultiDragPlugin() {
     // Static methods & properties
     pluginName: 'multiDrag',
     utils: {
-      /**
-       * Selects the provided multi-drag item
-       * @param  {HTMLElement} el    The element to be selected
+      /**
+       * Selects the provided multi-drag item
+       * @param  {HTMLElement} el    The element to be selected
        */
       select: function select(el) {
         var sortable = el.parentNode[expando];
@@ -3679,9 +3679,9 @@ function MultiDragPlugin() {
         multiDragElements.push(el);
       },
 
-      /**
-       * Deselects the provided multi-drag item
-       * @param  {HTMLElement} el    The element to be deselected
+      /**
+       * Deselects the provided multi-drag item
+       * @param  {HTMLElement} el    The element to be deselected
        */
       deselect: function deselect(el) {
         var sortable = el.parentNode[expando],
@@ -3751,10 +3751,10 @@ function insertMultiDragElements(clonesInserted, rootEl) {
     }
   });
 }
-/**
- * Insert multi-drag clones
- * @param  {[Boolean]} elementsInserted  Whether the multi-drag elements are inserted
- * @param  {HTMLElement} rootEl
+/**
+ * Insert multi-drag clones
+ * @param  {[Boolean]} elementsInserted  Whether the multi-drag elements are inserted
+ * @param  {HTMLElement} rootEl
  */
 
 

@@ -400,7 +400,7 @@
                         <i class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Settings</span></a>
                         <a class="dropdown-item" href="#"><i class="mdi mdi-lock text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Lock screen</span></a> -->
 
-                        <a class="dropdown-item "  href="https://ergosumdeus.luckistore.in/" target="_blank"><i class="ri-external-link-fill text-muted font-size-16 align-middle me-1"></i> <span key="t-logout">Visit Site</span></a>
+                        <a class="dropdown-item "  href="https://ergosumdeus.com/" target="_blank"><i class="ri-external-link-fill text-muted font-size-16 align-middle me-1"></i> <span key="t-logout">Visit Site</span></a>
                         <a class="dropdown-item " href="<?php echo e(url('logout')); ?>"><i class="bx bx-power-off text-muted font-size-16 align-middle me-1"></i> <span key="t-logout"><?php echo app('translator')->get('translation.logout'); ?></span></a>
                     </div>
                 </div>

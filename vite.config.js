@@ -9,7 +9,7 @@ export default vite.defineConfig({
     build: {
         manifest: true,
         rtl: true,
-        outDir: 'public/build/',
+        outDir: 'public_html/build/',
         cssCodeSplit: true,
         rollupOptions: {
             output: {
