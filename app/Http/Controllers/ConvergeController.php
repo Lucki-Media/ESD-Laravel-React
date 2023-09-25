@@ -41,7 +41,12 @@ class ConvergeController extends Controller
             $array['title'] = $value['title'] == null ? "" : $value['title'];
             if ($value['type'] == 'content') {
                 $array['type'] = $value['type'];
-                $array['description'] = $value['description'];
+                // Remove <p></p>
+                $content = str_replace('<p></p>', '', $value['description']);
+
+                // Remove <p><br></p>
+                $content = str_replace('<p><br></p>', '', $content);
+                $array['description'] = $content;
             } elseif ($value['type'] == 'module') {
                 if ($value['module'] == 'portfolio') {
                     $array['type'] = $value['module'];
@@ -51,6 +56,14 @@ class ConvergeController extends Controller
                         $images = [];
                         $service = [];
                         $partner = [];
+
+                        // Remove <p></p>
+                        $content = str_replace('<p></p>', '', $project['content']);
+
+                        // Remove <p><br></p>
+                        $content = str_replace('<p><br></p>', '', $content);
+
+
                         foreach ($imageData as $image) {
                             $images[] = URL::asset('thumbnail/' . $image);
                         }
@@ -64,7 +77,7 @@ class ConvergeController extends Controller
                         }
                         $array['description'][] = [
                             'portfolio_title' => $project['title'],
-                            'content' => $project['content'],
+                            'content' => $content,
                             'year' => $project['year'],
                             'services' => $service,
                             'partners' => $partner,
@@ -76,12 +89,12 @@ class ConvergeController extends Controller
                 if ($value['module'] == 'service') {
                     $array['type'] = $value['module'];
                     $services = Service::where('deleted_status', '1')
-                    ->get()->toArray();
+                        ->get()->toArray();
 
                     foreach ($services as $sub_service) {
                         $subService = ServiceLinks::where('deleted_status', '1')
-                        ->where('service_id', $sub_service['id'])
-                        ->pluck('title')->toArray();
+                            ->where('service_id', $sub_service['id'])
+                            ->pluck('title')->toArray();
 
                         if ($subService) {
                             $array['description'][] = [
@@ -118,10 +131,10 @@ class ConvergeController extends Controller
                     $array['type'] = $value['module'];
                     $array['description'] = [];
                 }
-            }elseif ($value['type'] == 'form') {
+            } elseif ($value['type'] == 'form') {
                 $array['type'] = $value['type'];
                 $array['description'] = "";
-  
+
             }
             $details[] = $array;
         }

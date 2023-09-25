@@ -92,7 +92,12 @@ class CommunicateController extends Controller
             $array['title'] = $value['title'] == null ? "" : $value['title'];
             if ($value['type'] == 'content') {
                 $array['type'] = $value['type'];
-                $array['description'] = $value['description'];
+                // Remove <p></p>
+                $content = str_replace('<p></p>', '', $value['description']);
+
+                // Remove <p><br></p>
+                $content = str_replace('<p><br></p>', '', $content);
+                $array['description'] = $content;
             } elseif ($value['type'] == 'module') {
                 if ($value['module'] == 'portfolio') {
                     $array['type'] = $value['module'];
@@ -102,6 +107,14 @@ class CommunicateController extends Controller
                         $images = [];
                         $service = [];
                         $partner = [];
+
+                        // Remove <p></p>
+                        $content = str_replace('<p></p>', '', $project['content']);
+
+                        // Remove <p><br></p>
+                        $content = str_replace('<p><br></p>', '', $content);
+
+
                         foreach ($imageData as $image) {
                             $images[] = URL::asset('thumbnail/' . $image);
                         }
@@ -115,7 +128,7 @@ class CommunicateController extends Controller
                         }
                         $array['description'][] = [
                             'portfolio_title' => $project['title'],
-                            'content' => $project['content'],
+                            'content' => $content,
                             'year' => $project['year'],
                             'services' => $service,
                             'partners' => $partner,
