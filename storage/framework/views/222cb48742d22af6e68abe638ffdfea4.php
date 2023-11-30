@@ -1,53 +1,53 @@
-@extends('layouts.master')
-@section('title')
+<?php $__env->startSection('title'); ?>
     Add Portfolio
-@endsection
-@section('css')
-    <link href="{{ URL::asset('build/libs/quill/quill.core.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('build/libs/quill/quill.bubble.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('build/libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('build/libs/dropzone/dropzone.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ URL::asset('build/libs/filepond/filepond.min.css') }}" type="text/css" />
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('css'); ?>
+    <link href="<?php echo e(URL::asset('build/libs/quill/quill.core.css')); ?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo e(URL::asset('build/libs/quill/quill.bubble.css')); ?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo e(URL::asset('build/libs/quill/quill.snow.css')); ?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo e(URL::asset('build/libs/dropzone/dropzone.css')); ?>" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/filepond/filepond.min.css')); ?>" type="text/css" />
     <link rel="stylesheet"
-        href="{{ URL::asset('build/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css') }}">
+        href="<?php echo e(URL::asset('build/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css')); ?>">
 
-@endsection
-@section('content')
-    @component('components.breadcrumb')
-        @slot('li_1')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+    <?php $__env->startComponent('components.breadcrumb'); ?>
+        <?php $__env->slot('li_1'); ?>
             ERGOSUMDEUS
-        @endslot
-        @slot('title')
+        <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?>
             Portfolio
-        @endslot
-    @endcomponent
-    <form class="row g-3 needs-validatin" method="POST" enctype="multipart/form-data" action="{!! route('admin.save_portfolio') !!}"
+        <?php $__env->endSlot(); ?>
+    <?php echo $__env->renderComponent(); ?>
+    <form class="row g-3 needs-validatin" method="POST" enctype="multipart/form-data" action="<?php echo route('admin.save_portfolio'); ?>"
         novalidate>
-        @csrf
+        <?php echo csrf_field(); ?>
 
 
         <div class="row">
-            @if (session()->has('success'))
+            <?php if(session()->has('success')): ?>
                 <div class="alert alert-success">
-                    {{ session()->get('success') }}
+                    <?php echo e(session()->get('success')); ?>
+
                 </div>
-            @endif
-            @if ($errors->any())
+            <?php endif; ?>
+            <?php if($errors->any()): ?>
                 <div class="alert alert-danger">
                     <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
+                        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <li><?php echo e($error); ?></li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
                 </div>
-            @endif
+            <?php endif; ?>
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
                         <div class="mb-3">
                             <label class="form-label" for="project-title-input">Project Title</label>
                             <input type="text" name="title" class="form-control" id="project-title-input"
-                                placeholder="Enter project title" value="{{ old('title') }}" required>
+                                placeholder="Enter project title" value="<?php echo e(old('title')); ?>" required>
                             <div class="invalid-feedback">
                                 Please enter data in the Title field.
                             </div>
@@ -56,7 +56,7 @@
                         <div class="mb-3">
                             <label class="form-label" for="project-thumbnail-img">Thumbnail Image</label>
                             <input class="form-control" id="project-thumbnail-img" type="file" name="logo_image"
-                                accept="image/png, image/jpg, image/gif, image/jpeg">
+                                accept="image/png, image/gif, image/jpeg">
                         </div>
 
                         <div class="mb-3">
@@ -92,7 +92,7 @@
                                 <div>
                                     <label for="datepicker-deadline-input" class="form-label">Year</label>
                                     <input type="text" class="form-control" name="year" placeholder="YYYY"
-                                        value="{{ old('year') }}" id="date-format " required>
+                                        value="<?php echo e(old('year')); ?>" id="date-format " required>
                                 </div>
                             </div>
                         </div>
@@ -123,7 +123,7 @@
                 </div> -->
 
                 <div class="text-end mb-4">
-                    <a href="{{ url('admin/collaborate_portfolio') }}" class="btn btn-danger w-sm">Cancel</a>
+                    <a href="<?php echo e(url('admin/collaborate_portfolio')); ?>" class="btn btn-danger w-sm">Cancel</a>
                     <button type="submit" class="btn btn-primary w-sm">Create</button>
                 </div>
             </div>
@@ -164,10 +164,10 @@
                             <!-- <label for="choices-text-input" class="form-label">Services</label> -->
                             <select class="form-control" id="choices-multiple-remove-button" data-choices
                                 data-choices-removeItem name="services[]" multiple>
-                                @foreach ($services as $value)
-                                    <option value="{{ $value['id'] }}">
-                                        {{ $value['title'] }}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($value['id']); ?>">
+                                        <?php echo e($value['title']); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                     </div>
@@ -184,10 +184,10 @@
                             <!-- <label for="choices-multiple-remove-button" class="form-label">Partners</label> -->
                             <select class="form-control" id="choices-multiple-remove-button" data-choices
                                 data-choices-removeItem name="partners[]" multiple>
-                                @foreach ($parners as $value)
-                                    <option value="{{ $value['id'] }}">
-                                        {{ $value['partner'] }}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $parners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($value['id']); ?>">
+                                        <?php echo e($value['partner']); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
 
@@ -197,7 +197,7 @@
                                     <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip"
                                         data-bs-trigger="hover" data-bs-placement="top" title="Brent Gonzalez">
                                         <div class="avatar-xs">
-                                            <img src="{{ URL::asset('build/images/users/avatar-3.jpg') }}" alt="" class="rounded-circle img-fluid">
+                                            <img src="<?php echo e(URL::asset('build/images/users/avatar-3.jpg')); ?>" alt="" class="rounded-circle img-fluid">
                                         </div>
                                     </a>
                                     <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip"
@@ -211,7 +211,7 @@
                                     <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip"
                                         data-bs-trigger="hover" data-bs-placement="top" title="Ellen Smith">
                                         <div class="avatar-xs">
-                                            <img src="{{ URL::asset('build/images/users/avatar-4.jpg') }}" alt="" class="rounded-circle img-fluid">
+                                            <img src="<?php echo e(URL::asset('build/images/users/avatar-4.jpg')); ?>" alt="" class="rounded-circle img-fluid">
                                         </div>
                                     </a>
                                     <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip"
@@ -236,7 +236,7 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <input type="number" name="order_number" class="form-control" id="project-order-input"
-                                placeholder="Enter Order Number" value="{{ old('order_number') }}">
+                                placeholder="Enter Order Number" value="<?php echo e(old('order_number')); ?>">
                         </div>
                     </div>
                 </div>
@@ -247,27 +247,27 @@
         <!-- end row -->
     </form>
 
-@endsection
-@section('script')
-    <script src="{{ URL::asset('build/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/dropzone/dropzone-min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/quill/quill.min.js') }}"></script>
-    <script src="{{ URL::asset('build/js/pages/form-editor.init.js') }}"></script>
-    <script src="{{ URL::asset('build/js/pages/form-validation.init.js') }}"></script>
-    <script src="{{ URL::asset('build/js/pages/project-create.init.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/filepond/filepond.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js') }}">
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
+    <script src="<?php echo e(URL::asset('build/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/libs/dropzone/dropzone-min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/libs/quill/quill.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/form-editor.init.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/form-validation.init.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/project-create.init.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/libs/filepond/filepond.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js')); ?>">
     </script>
     <script
-        src="{{ URL::asset('build/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js') }}">
+        src="<?php echo e(URL::asset('build/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js')); ?>">
     </script>
     <script
-        src="{{ URL::asset('build/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js') }}">
+        src="<?php echo e(URL::asset('build/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js')); ?>">
     </script>
-    <script src="{{ URL::asset('build/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js')); ?>"></script>
 
-    <script src="{{ URL::asset('build/js/pages/form-file-upload.init.js') }}"></script>
-    <script src="{{ URL::asset('build/js/app.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/form-file-upload.init.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -315,4 +315,6 @@
             });
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_7.4\htdocs\ESD-Laravel\resources\views/Collaborate/addPortfolio.blade.php ENDPATH**/ ?>
