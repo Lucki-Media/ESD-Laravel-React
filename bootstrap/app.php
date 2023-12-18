@@ -15,8 +15,8 @@ $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
 
-// FOR CHANGING PATH TO PUBLIC TO PUBLIC_HTML
-$app->usePublicPath($app->basePath('public_html'));
+// // FOR CHANGING PATH TO PUBLIC TO PUBLIC_HTML
+// $app->usePublicPath($app->basePath('public_html'));
 
 /*
 |--------------------------------------------------------------------------

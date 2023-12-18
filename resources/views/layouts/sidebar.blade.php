@@ -74,7 +74,7 @@ function isActivePage($pageName)
                                 <a href="{{ url('admin/collaborate_portfolio') }}" class="nav-link">All</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('admin/portfolio_projects') }}" class="nav-link">Portfolo</a>
+                                <a href="{{ url('admin/portfolio_projects') }}" class="nav-link">Portfolio</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ url('admin/archive_projects') }}" class="nav-link">Archived</a>

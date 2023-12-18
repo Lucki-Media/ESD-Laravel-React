@@ -1,17 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.413c4b12.css",
-    "main.js": "/static/js/main.4db2d5b6.js",
+    "main.css": "/static/css/main.ddb99296.css",
+    "main.js": "/static/js/main.33df92b0.js",
     "static/js/787.a3229275.chunk.js": "/static/js/787.a3229275.chunk.js",
     "static/media/bebaskai-webfont.woff": "/static/media/bebaskai-webfont.fd2182c00368cf5122f3.woff",
     "static/media/bebaskai-webfont.woff2": "/static/media/bebaskai-webfont.ea8b377a7841bc91d452.woff2",
     "index.html": "/index.html",
-    "main.413c4b12.css.map": "/static/css/main.413c4b12.css.map",
-    "main.4db2d5b6.js.map": "/static/js/main.4db2d5b6.js.map",
+    "static/media/arrow.svg": "/static/media/arrow.fea9b9879e782636243a.svg",
+    "static/media/accordianup.svg": "/static/media/accordianup.4fd89e79a84bbf458c8e.svg",
+    "main.ddb99296.css.map": "/static/css/main.ddb99296.css.map",
+    "main.33df92b0.js.map": "/static/js/main.33df92b0.js.map",
     "787.a3229275.chunk.js.map": "/static/js/787.a3229275.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.413c4b12.css",
-    "static/js/main.4db2d5b6.js"
+    "static/css/main.ddb99296.css",
+    "static/js/main.33df92b0.js"
   ]
 }
