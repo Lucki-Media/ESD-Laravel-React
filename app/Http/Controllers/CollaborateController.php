@@ -214,6 +214,14 @@ class CollaborateController extends Controller
 
     public function image_upload(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'image.*' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:10240',
+        ], [
+            'image.*.image' => 'Each file must be an image.',
+            'image.*.mimes' => 'Each image must be a JPEG, PNG, JPG, or GIF file.',
+            'image.*.max' => 'Each image must not exceed 10 megabytes in size.',
+        ]);
+
         if ($request->type) {
             if ($request->type== "2" && $request->file('image')) {
                 $image = $request->file('image');
