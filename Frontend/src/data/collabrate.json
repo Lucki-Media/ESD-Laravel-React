@@ -1,0 +1,60 @@
+{
+    "status": "success",
+    "message": "Converge Data Get Successfully..",
+    "data": {
+        "heading": "When trying to design something completely foolproof THE COMMON mistake is to  underestimate the ingenuity of complete fools.",
+        "portfolioData": [
+            {
+                "title": "lhmv check",
+                "content": "<p><strong>general write up on the project</strong></p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi morbi tempus iaculis urna id. Morbi non arcu risus quis varius quam quisque id diam. Ac turpis egestas sed tempus urna. Neque egestas congue quisque egestas. Ac ut consequat semper viverra nam libero justo.&nbsp;</p><p>Pretium fusce id velit ut tortor pretium viverra suspendisse potenti. Dignissim convallis aenean et tortor at risus viverra adipiscing. Pharetra pharetra massa massa ultricies mi.</p>",
+                "status": "portfolio",
+                "images": [
+                    "https://ergosumdeus.luckistore.in/thumbnail/649c2dab819f0.png",
+                    "https://ergosumdeus.luckistore.in/thumbnail/649c2dabcfda3.png",
+                    "https://ergosumdeus.luckistore.in/thumbnail/649c2e5419afd.jpg"
+                ],
+                "features": [
+                    "the exhibit",
+                    "Hey",
+                    "deevakar"
+                ]
+            },
+            {
+                "title": "ewaa",
+                "content": "<p>general write up on the project</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi morbi tempus iaculis urna id. Morbi non arcu risus quis varius quam quisque id diam. Ac turpis egestas sed tempus urna. Neque egestas congue quisque egestas. Ac ut consequat semper viverra nam libero justo.&nbsp;</p><p><br></p><p>Pretium fusce id velit ut tortor pretium viverra suspendisse potenti. Dignissim convallis aenean et tortor at risus viverra adipiscing. Pharetra pharetra massa massa ultricies mi.</p>",
+                "status": "portfolio",
+                "images": [
+                    "https://ergosumdeus.luckistore.in/thumbnail/649c2dab819f0.png",
+                    "https://ergosumdeus.luckistore.in/thumbnail/649c2dabcfda3.png",
+                    "https://ergosumdeus.luckistore.in/thumbnail/649c2e5419afd.jpg"
+                ],
+                "features": [
+                    "123"
+                ]
+            }
+        ],
+        "archiveData": [
+            {
+                "title": "mypedia clinic",
+                "content": "<h3><br></h3>",
+                "status": "archive",
+                "images": [],
+                "features": []
+            },
+            {
+                "title": "heal hub",
+                "content": "<h3><strong style=\"background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);\">Lorem Ipsum</strong><span style=\"background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);\">&nbsp;</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);\" class=\"ql-font-monospace\">is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></h3>",
+                "status": "archive",
+                "images": [
+                    "https://ergosumdeus.luckistore.in/thumbnail/649c3089691ee.png",
+                    "https://ergosumdeus.luckistore.in/thumbnail/649c3089e82a9.png",
+                    "https://ergosumdeus.luckistore.in/thumbnail/649c308a45de0.png"
+                ],
+                "features": [
+                    "the exhibit",
+                    "User friendly"
+                ]
+            }
+        ]
+    }
+}

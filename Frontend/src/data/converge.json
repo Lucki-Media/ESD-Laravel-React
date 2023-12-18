@@ -1,0 +1,107 @@
+{
+  "status": "success",
+  "message": "Converge Data Get Successfully..",
+  "data": {
+    "heading": "When you are doing something neat, and you're doing it with neat people, and there is that convergence, something amazing will happen.",
+    "topic_data": [
+      {
+        "topic_id": 1,
+        "title": "01 / ergo sum deus",
+        "description": "<p><span style=\"color: rgb(230, 0, 0);\">about esd and general idea behind the brad / agency.....</span></p><p>If you want to change a system, you have to have a solution from outside the system. That's who we are. We are the outsiders.We want to hear your story and how it evolves around your purpose and beliefs. Together. We will find ways to create engagement and earn trust while always sticking to your truth. Pretium fusce id velit ut tortor pretium viverra suspendisse potenti. Dignissim convallis aenean et tortor at risus viverra adipiscing. Pharetra pharetra massa massa ultricies mi quis hendrerit dolor magna. Amet commodo nulla facilisi nullam vehicula ipsum a arcu. Interdum velit euismod in pellentesque massa placerat duis ultricies. Sem et tortor consequat id. Facilisis sed odio morbi quis commodo odio. Bibendum neque egestas congue quisque egestas. Risus commodo viverra maecenas accumsan lacus vel. A erat nam at lectus urna duis convallis convallis. Dignissim convallis aenean et tortor at risus viverra adipiscing. Pharetra pharetra massa massa ultricies mi quis hendrerit dolor magna.</p>",
+        "created_at": "2023-06-27T06:31:56.000000Z",
+        "updated_at": "2023-06-27T07:52:56.000000Z"
+      },
+      {
+        "topic_id": 5,
+        "title": "02 / co-op",
+        "description": "<p><span>Life is always better when we have some friends along for the ride. In much the same way, we believe that every project requires inputs from sources to build and develop the most fool-prof solution. Morbi non arcu risus quis varius quam quisque id diam. Ac turpis egestas sed tempus urna. Neque egestas congue quisque egestas.&nbsp;</span></p>",
+        "created_at": "2023-06-27T08:30:25.000000Z",
+        "updated_at": "2023-06-27T08:30:36.000000Z"
+      }
+    ],
+    "link_data": [
+    {
+        "text": "1405 DESIGN STUDIO"
+    },
+    {
+        "text": "Alex Gabrielle"
+    },
+    {
+        "text": "Amar Diwakar"
+    },
+    {
+        "text": "Aravind Patnaik"
+    },
+    {
+        "text": "both"
+    },
+    {
+        "text": "BUILD YOUR INNOVATION"
+    },
+    {
+        "text": "Carolina D’Souza"
+    },
+    {
+        "text": "Content Charisma"
+    },
+    {
+        "text": "deevakar"
+    },
+    {
+        "text": "Esstec"
+    },
+    {
+        "text": "Haridas Narvekar"
+    },
+    {
+        "text": "Imran KhaN"
+    },
+    {
+        "text": "Knownsense Studios"
+    },
+    {
+        "text": "LMB Productions"
+    },
+    {
+        "text": "lot sula jr."
+    },
+    {
+        "text": "Lucki Media"
+    },
+    {
+        "text": "MINDLOOP STUDIOS"
+    },
+    {
+        "text": "Rajiv"
+    },
+    {
+        "text": "Said Al Akklouk"
+    },
+    {
+        "text": "simpa-mr"
+    },
+    {
+        "text": "shoot at sight"
+    },
+    {
+        "text": "studio 360"
+    },
+    {
+        "text": "SUMIT PAUL"
+    }
+    ,
+    {
+        "text": "taproot media"
+    }
+    ,
+    {
+        "text": "The Exhibit"
+    }
+    ,
+    {
+        "text": "the company films"
+    }
+
+    ]
+  }
+}

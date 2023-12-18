@@ -1,0 +1,357 @@
+@import url(../src/css/fonts.css);
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import '~bootstrap/scss/bootstrap';
+@import url('./css/global.scss');
+@import url('./css/accordian.scss');
+@import url('../src/components/Loader/loader.scss');
+@import url('../src/css/form.scss');
+
+
+html, body,*{
+  box-sizing: border-box;
+}
+body{
+
+  font-family: 'Inter', sans-serif;
+}
+h1, h2, h3, h4, h5{
+  margin: 0;
+  padding: 0;
+  font-family: 'bebas_kairegular';
+}
+.editorSection{
+  h1, h2, h3, h4, h5{
+    font-family: 'Inter', sans-serif;
+  }
+  b, strong{
+    font-weight: bold;
+  }
+}
+a{
+  text-decoration: none;
+  color: #212121;
+}
+.customScroll > div:last-child div {
+  background-color: #000 !important;
+}
+img{
+  max-width: 100%;
+}
+/* Detail Page css*/
+.detailPage{
+ 
+  @media only screen and (min-width: 991px) {
+    display: flex;
+  }
+  &__left{
+
+    background-color:#e5e5e5;
+    padding: 40px 20px;
+    @media only screen and (min-width: 991px) {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 40%;
+      height: 100%;
+      border-right: 1px solid #212121;
+    }
+  }
+  &__right{
+    
+    @media only screen and (min-width: 991px) {
+      margin-left: 40%;
+      width: 60%;
+      
+    }
+    .blackBanner{
+     
+      margin-top: 40px;
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 1;
+      @media only screen and (min-width: 991px) {
+        margin-bottom: 100px;
+      }
+      @media only screen and (min-width: 1000px) {
+        margin-left: -5%;
+      }
+      @media only screen and (min-width: 1300px) {
+        margin-left: -10%;
+      }
+      @media only screen and (min-width: 1600px) {
+        margin-left: -13%;
+      }
+      @media only screen and (min-width: 1700px) {
+        margin-left: -15%;
+      }
+      @media only screen and (min-width: 1800px) {
+        margin-left: -20%;
+      }
+     
+     
+     
+    
+      // @media only screen and (min-width: 991px) {
+      //   margin-left: 0;
+      // }
+    }
+  }
+  &__right-content{
+    padding: 20px;
+    @media only screen and (min-width: 768px) {
+      padding: 0px 40px 40px;
+    }
+  }
+}
+
+.convergeData{
+  margin-bottom: 50px;
+  .sectionTitle{
+    margin-bottom: 0px;
+  }
+  .editorSection {
+    p:empty{
+display: none;
+    }
+  }
+}
+.cacheSection{
+  a{
+    border: 0;
+    font-family: "Inter", sans-serif;
+    color: #212121;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 100px;
+    letter-spacing: 2.4px;
+    padding: 0;
+    border-top: 1px solid #212121;
+    border-bottom: 1px solid #212121;
+    display: block;
+    position: relative;
+    &:after{
+      background-image: url(../src/images/accordianup.svg);
+      content: "";
+    height: 21px;
+    width: 22px;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 45px;
+    }
+  }
+}
+.carousel_Data_links{
+  display: block;
+  @media only screen and (min-width: 768px) {
+    display: flex;
+  }
+  .m_left{
+   
+    @media only screen and (min-width: 768px) {
+      margin-right: 15px;
+    }
+  }
+  .links {    
+    @media only screen and (min-width: 768px) {
+      width:40%;
+    }
+  ul{
+    display: block;
+    li{
+      text-transform: uppercase;
+      font-size: 14px;
+      line-height: 32px;
+    }
+  }
+  }
+  .links--styled ul:before{
+    content: none;
+  }
+}
+.links{
+  margin-top: 20px;
+  @media only screen and (min-width: 768px) {
+    margin-top: 30px;
+  }
+  ul{
+      margin: 0;
+      padding: 0;
+      list-style:none;
+      
+      @media only screen and (min-width: 768px) {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      li{
+          
+          margin-bottom: 15px;
+          @media only screen and (min-width: 768px) {
+            margin-bottom: 10px;
+            flex:  0 0 50%;
+          }
+          a{
+              color: #212121;
+              font-size: 14px;
+              font-weight: 300;
+              line-height: 20px;
+              letter-spacing: 1.2px;
+              text-transform: lowercase;
+              transition: 0.2s ease all;
+              @media only screen and (min-width: 768px) {
+                font-size: 14px;
+              line-height: 25px;
+              }
+              &:hover{
+                  text-decoration: underline;
+                  font-weight:bold;
+                  transition: 0.2s ease all;
+              }
+          }
+      }
+  }
+  &--styled{
+    border-bottom: 1px solid #000;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    ul{
+      padding-bottom: 20px;
+      position:relative;
+      &:before{
+       
+        @media only screen and (min-width: 768px) {
+          content: "";
+          height: 5px;
+          width: 50px;
+          position: absolute;
+          left: 50%;
+          background-color: #fff;
+          bottom: -2px;
+          margin-left: -50px;
+        }
+      }
+      li{
+        margin-bottom: 0;
+        a{
+          color: #212121;
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 30px;
+          letter-spacing: 2px;
+          position: relative;
+          padding-left: 30px;
+          // @media only screen and (min-width: 768px) {
+          //   font-size: 20px;
+          //   font-weight: 400;
+          //   line-height: 30px;
+          //   letter-spacing: 2px;
+          // }
+          &:before{
+            content: "—";
+            position: absolute;
+            left: 0;
+            top: 1px;
+            line-height: 1;
+          }
+        }
+      }
+    }
+  }
+&.linksThreeColumn{
+  ul{
+      justify-content: space-between;
+    li{
+      width: 31%;
+      flex: 0 0 31%;
+      margin-bottom: 5px;
+      span.private_link{
+        text-decoration: line-through;
+      }
+    }
+  }
+}
+}
+
+.archivePage{
+  margin-bottom: 20px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #212121;
+}
+.archivePageHeader{
+  display: flex;
+  flex-direction: row;
+  &__left{
+    flex: 0 0 40%;
+    .mainNav{
+      background-color: #e5e5e5;
+      padding: 20px;
+      border-right: 1px solid #212121;
+    }
+  }
+  &__right{
+    flex: 0 0 60%;
+    .blackBanner{
+      margin-left: -20%;
+      margin-top: 30px;
+      position: relative;
+      z-index: 1;
+    }
+  }
+}
+.archiveList{
+
+  margin-bottom: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+  ul{
+    li{
+      padding-left: 50px;
+      cursor: pointer;
+      &:hover{
+        text-decoration: underline;
+      }
+      &:first-child, &:nth-child(2), &:nth-child(3){
+        padding-top: 30px;
+        border-top: 1px solid #212121;
+      }
+    }
+  }
+}
+.archiveListData{
+  padding: 0 30px;
+  .accordionCustom{
+    .accordion{
+      .accordion-button{
+        padding-left: 50px;
+      }
+    }
+  }
+}
+
+.twoColumn{
+  display: flex;
+  
+  &__left{
+    flex:0 0 50%;
+    padding-left: 50px;
+    padding-right: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .links {
+      border: 0;
+      margin-top: 20px;
+      ul{
+        display: block;
+      }
+    }
+  }
+  &__right{
+    flex: 0 0 50%;
+  }
+}
+
+/* Detail Page css ends */
+
+

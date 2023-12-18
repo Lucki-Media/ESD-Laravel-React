@@ -1,0 +1,317 @@
+
+.randomNum{
+    
+    position: relative;
+    @media only screen and (min-width: 768px) {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+    }
+  }
+  .homepageTile{
+    margin-bottom: 10px;
+    padding: 20px;
+    @media only screen and (min-width: 768px) {
+      position: absolute;
+      padding: 0;
+      border: 5px solid #fff;
+      margin-bottom: 0;
+    }
+    
+  }
+  .randomNum .homepageTile:nth-child(3) a{
+    color: #000;
+    font-size: 5vw;
+  }
+  .homepageTile a{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    color: #fff;
+    font-size: 5vw;
+    letter-spacing: 5%;
+    font-weight: 400;
+    line-height: 5vw;
+    white-space: break-spaces;
+    font-family: 'bebas_kairegular';
+  }
+
+  .randomNum .homepageTile span{
+   
+    @media only screen and (min-width: 768px) {
+      width: 300px;
+    }
+  }
+  .randomNum.randomNum1 .homepageTile:nth-child(2), .randomNum.randomNum1 .homepageTile:nth-child(4){
+    a{
+        justify-content: flex-end;
+        span{
+            width: 300px;
+        }
+    }
+  }
+  .randomNum .homepageTile:first-child{
+    
+    background-color: #FFF500;
+    color:#fff;
+   
+    @media only screen and (min-width: 768px) {
+      width: 35%;
+    left: 0;
+    top: 0;
+      height: 55%;
+    }
+  }
+  .randomNum.randomNum1 .homepageTile:first-child span{
+    width: 300px; 
+    text-align: right;
+  }
+  .randomNum .homepageTile:nth-child(2){
+   
+    left: 35%;
+    right: 0;
+    top: 0;
+    background-color: #EB00FF;
+    color:#fff;
+    
+    @media only screen and (min-width: 768px) {
+      width: 65%;
+      height: 45%;
+    }
+   
+  }
+  
+  .randomNum .homepageTile:nth-child(3){
+   
+    color: #000;
+   
+    text-align: center;
+    @media only screen and (min-width: 768px) {
+      left: 38%;
+      right: 0;
+      top: 45%;
+      width: 20%;
+      height: 10%;
+    }
+  }
+  .randomNum .homepageTile:nth-child(4){ 
+    background-color: #000;
+    color:#fff;
+    @media only screen and (min-width: 768px) {
+      width: 35%;
+      right: 0;
+      bottom: 0;
+      height: 55%;
+    }
+  }
+  .randomNum .homepageTile:nth-child(5){
+   
+    background-color: #00E0FF;
+    color:#fff;
+    
+    @media only screen and (min-width: 768px) {
+      width: 65%;
+      left: 0;
+      bottom: 0;
+      height: 45%;
+    }
+  }
+  .randomNum.randomNum1 .homepageTile:nth-child(5) span{
+    width:300px;
+    text-align: right;
+  }
+  
+  /* random number 2*/
+  
+  .randomNum.randomNum2 .homepageTile:first-child{
+   
+    background-color: #FFF500;
+    color: #fff;
+  
+    @media only screen and (min-width: 768px) {
+      width: 35%;
+      left: inherit;
+      top: inherit;
+      height: 55%;
+      right: 0;
+      bottom: 0;
+    }
+    a{
+        justify-content: flex-end;
+        span{
+            text-align:left;
+        }
+    }
+  }
+  .randomNum.randomNum2 .homepageTile:nth-child(2){
+    width: 65%;
+    left: 0;
+    right: inherit;
+    top: inherit;
+    background-color: #EB00FF;
+    color: #fff;
+    height: 45%;
+    bottom: 0;
+    a{
+        span{
+            text-align: right;
+        }
+    }
+  }
+  .randomNum.randomNum2 .homepageTile:nth-child(3){
+    left: 38%;
+    right: 0;
+    top: 45%;
+    color: #000;
+    width: 20%;
+    height: 10%;
+    text-align: center;
+  }
+  .randomNum.randomNum2 .homepageTile:nth-child(4){
+    width: 35%;
+    right: inherit;
+    bottom: inherit;
+    background-color: #000;
+    color: #fff;
+    height: 55%;
+    top: 0;
+    left: 0;
+    a{
+        span{
+            text-align: right;
+        }
+    }
+  }
+  .randomNum.randomNum2 .homepageTile:nth-child(5){
+    width: 65%;
+    left: 35%;
+    bottom: inherit;
+    background-color: #00E0FF;
+    color: #fff;
+    top: 0;
+    height: 45%;
+    a{
+       justify-content:  flex-end;
+        span{
+            text-align: left;
+        }
+    }
+  }
+  
+  
+  /* random number 3*/
+  .randomNum.randomNum3 .homepageTile:first-child{
+    width: 35%;
+      left: inherit;
+      top: inherit;
+      background-color: #FFF500;
+      color: #fff;
+      height: 55%;
+      right: 0;
+      bottom: 0;
+      a{
+        justify-content: flex-end;
+      }
+  }
+  .randomNum.randomNum3 .homepageTile:nth-child(2){
+    width: 65%;
+    left: 0;
+    right: inherit;
+    top: inherit;
+    background-color: #EB00FF;
+    color: #fff;
+    height: 45%;
+    bottom: 0;
+    a{
+        span{
+            text-align: right;
+        }
+    }
+  }
+  .randomNum.randomNum3 .homepageTile:nth-child(3){
+    left: 38%;
+    right: 0;
+    top: 45%;
+    color: #000;
+    width: 20%;
+    height: 10%;
+    text-align: center;
+  }
+  .randomNum.randomNum3 .homepageTile:nth-child(4){
+    width: 65%;
+    left: 35%;
+    right: 0;
+    top: 0;
+    background-color: #000;
+    color:#fff;
+    height: 45%;
+    a{
+        justify-content: flex-end;
+
+    }
+  }
+  .randomNum.randomNum3 .homepageTile:nth-child(5){
+    width: 35%;
+    left: 0;
+    top: 0;
+    background-color: #00E0FF;
+    color:#fff;
+    height: 55%;
+    a{
+        span{
+            text-align: right;
+        }
+    }
+  }
+  
+  
+  /* random number 4*/
+  .randomNum.randomNum4 .homepageTile:first-child{
+    width: 35%;
+    left: inherit;
+    top: inherit;
+    background-color: #FFF500;
+    color: #fff;
+    height: 55%;
+    right: 0;
+    bottom: 0;
+  }
+  .randomNum.randomNum4 .homepageTile:nth-child(2){
+    width: 65%;
+    left: 0;
+    right: inherit;
+    top: inherit;
+    background-color: #EB00FF;
+    color: #fff;
+    height: 45%;
+    bottom: 0;
+  }
+  .randomNum.randomNum4 .homepageTile:nth-child(3){
+    left: 38%;
+    right: 0;
+    top: 45%;
+    color: #000;
+    width: 20%;
+    height: 10%;
+    text-align: center;
+  }
+  .randomNum.randomNum4 .homepageTile:nth-child(4){
+    width: 35%;
+    right: inherit;
+    bottom: inherit;
+    background-color: #000;
+    color: #fff;
+    height: 55%;
+    top: 0;
+    left: 0;
+  }
+  .randomNum.randomNum4 .homepageTile:nth-child(5){
+    width: 65%;
+    left: 35%;
+    bottom: inherit;
+    background-color: #00E0FF;
+    color: #fff;
+    top: 0;
+    height: 45%;
+  }

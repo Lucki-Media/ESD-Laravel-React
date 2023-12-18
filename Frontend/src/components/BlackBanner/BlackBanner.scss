@@ -1,0 +1,20 @@
+.blackBanner{
+    background: #212121;
+    padding: 20px 20px;
+    //max-width: 1250px;
+
+    @media only screen and (min-width: 768px) {
+        padding: 36px 40px;
+    }
+ 
+
+    h2{
+        color: #FFF;
+        font-size: 30px;
+        letter-spacing: 3px;
+        font-weight:normal;
+        @media only screen and (min-width: 768px) {
+            font-size: 40px;
+        }
+    }
+}

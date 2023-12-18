@@ -1,0 +1,21 @@
+p:empty{
+    display: none;
+        }
+.text-red{
+    color: #FF0000;
+}
+.text-bold{
+    font-weight: bold;
+}
+
+.sectionTitle{
+    font-size: 22px;
+    line-height: 50px;
+    letter-spacing: 4px;
+    font-weight: normal;
+    font-family: Inter;
+    @media only screen and (min-width: 768px) {
+        font-size: 26px;
+    line-height: 100px;
+    }
+}

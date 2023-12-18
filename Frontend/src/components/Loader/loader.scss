@@ -1,0 +1,31 @@
+.pos-center {
+    position: absolute;
+    z-index: 100;
+  right: 0;
+    width: 60%;
+    height: 100%;
+    text-align: center;
+  }
+  
+  .loader {
+    border: 10px solid #fff;
+    border-top: 10px solid #000;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    top: 50%;
+    position: absolute;
+    left: 50%;
+    margin-left: -40px;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
