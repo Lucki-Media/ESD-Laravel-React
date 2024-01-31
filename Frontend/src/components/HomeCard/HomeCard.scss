@@ -2,7 +2,8 @@
 .randomNum{
     
     position: relative;
-    @media only screen and (min-width: 768px) {
+    display: none;
+    @media only screen and (min-width: 769px) {
       display: flex;
       width: 100vw;
       height: 100vh;
@@ -11,7 +12,7 @@
   .homepageTile{
     margin-bottom: 10px;
     padding: 20px;
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 769px) {
       position: absolute;
       padding: 0;
       border: 5px solid #fff;
@@ -33,13 +34,16 @@
     letter-spacing: 5%;
     font-weight: 400;
     line-height: 5vw;
-    white-space: break-spaces;
     font-family: 'bebas_kairegular';
+    @media only screen and (min-width: 769px) {
+
+      white-space: break-spaces;
+    }
   }
 
   .randomNum .homepageTile span{
    
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 769px) {
       width: 300px;
     }
   }
@@ -56,7 +60,7 @@
     background-color: #FFF500;
     color:#fff;
    
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 769px) {
       width: 35%;
     left: 0;
     top: 0;
@@ -75,7 +79,7 @@
     background-color: #EB00FF;
     color:#fff;
     
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 769px) {
       width: 65%;
       height: 45%;
     }
@@ -87,7 +91,7 @@
     color: #000;
    
     text-align: center;
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 769px) {
       left: 38%;
       right: 0;
       top: 45%;
@@ -98,7 +102,7 @@
   .randomNum .homepageTile:nth-child(4){ 
     background-color: #000;
     color:#fff;
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 769px) {
       width: 35%;
       right: 0;
       bottom: 0;
@@ -110,7 +114,7 @@
     background-color: #00E0FF;
     color:#fff;
     
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 769px) {
       width: 65%;
       left: 0;
       bottom: 0;
@@ -129,7 +133,7 @@
     background-color: #FFF500;
     color: #fff;
   
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 769px) {
       width: 35%;
       left: inherit;
       top: inherit;
@@ -314,4 +318,69 @@
     color: #fff;
     top: 0;
     height: 45%;
+  }
+
+
+
+
+  .randomNum_mobile{
+    display: none;
+    @media only screen and (max-width: 769px) {
+      display: block;
+      padding: 40px 15px 20px;
+      .homepageTile{
+        border: 5px solid #212121;
+        background: #FFF;
+        &:first-child{
+          border: none;
+          background-color: transparent;
+          a{
+            color: #FFF;
+            text-align: center;
+            font-size: 80px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 90px; 
+            letter-spacing: -4px;
+            text-transform: lowercase;
+          }
+        }
+        a{
+          justify-content: center;
+          color: #212121;
+          text-align: center;          
+          font-size: 30px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 40px; 
+          letter-spacing: 7.5px;
+          text-transform: uppercase;
+        }
+      }
+      .Social_media_linkss{
+        margin-top: 50px;
+        ul{
+          padding: 0;
+          margin: 0;
+          display: flex;
+          align-items: center;
+          list-style: none;
+          justify-content: center;
+          li{
+            margin: 0 20px;
+            list-style: none;
+          }
+        }
+      }
+      .copyrights{
+        margin-top: 35px;
+        color: #FFF;
+        text-align: center;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: 36px; /* 240% */
+        letter-spacing: 0.75px;
+      }
+    }
   }
