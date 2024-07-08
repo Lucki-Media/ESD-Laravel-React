@@ -1,5 +1,5 @@
 <!doctype html >
-<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>" data-layout="vertical" data-topbar="light" data-sidebar="light" data-sidebar-size="lg" data-sidebar-image="none" data-layout-mode="light" data-body-image="img-1" data-preloader="disable">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>" data-layout="semibox" data-topbar="light" data-sidebar="light" data-sidebar-size="lg" data-layout-mode="light" data-body-image="none" data-preloader="enable" data-sidebar-visibility="show" data-layout-style="default" data-layout-width="fluid" data-layout-position="scrollable">
 
 <head>
     <meta charset="utf-8" />
